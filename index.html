@@ -28,32 +28,32 @@
     <footer>
        <p>© 2026 Escape The Algorithm</p>
     </footer>
-<!-- GhostChat - Zero Storage Chat Widget (Fully Fixed) -->
+<!-- GhostChat - Zero Storage Chat Widget (COMPLETELY FIXED) -->
 <div id="ghostchat-container" style="position: fixed; bottom: 20px; right: 20px; width: 320px; height: 400px; z-index: 1000; display: none;"></div>
 
 <script>
   (function() {
-    // CONFIGURATION - YOUR WORKER URL
+    // CONFIGURATION
     const SIGNALING_SERVER = 'https://ghostchat-signaling.nt00-161.workers.dev';
     const ROOM_NAME = 'escape_algorithm_radio';
+    const TEN_MINUTES = 10 * 60 * 1000; // 600,000 ms
     
-    // Track seen messages to prevent duplicates
-    const seenMessages = new Set();
+    // Generate unique client ID
+    const clientId = Math.random().toString(36).substring(2, 10);
     
-    // Load saved messages from localStorage (with timestamps)
-    let localMessages = [];
+    // Track message IDs we've seen
+    const seenMessageIds = new Set();
+    
+    // Load saved messages from localStorage
+    let messageHistory = [];
     try {
-      const saved = localStorage.getItem(`chat_${ROOM_NAME}_messages`);
+      const saved = localStorage.getItem(`chat_history_${ROOM_NAME}`);
       if (saved) {
         const parsed = JSON.parse(saved);
         const now = Date.now();
-        const tenMinutes = 10 * 60 * 1000;
-        
         // Only keep messages less than 10 minutes old
-        localMessages = parsed.filter(msg => (now - msg.timestamp) < tenMinutes);
-        
-        // Save back cleaned list
-        localStorage.setItem(`chat_${ROOM_NAME}_messages`, JSON.stringify(localMessages));
+        messageHistory = parsed.filter(msg => (now - msg.timestamp) < TEN_MINUTES);
+        localStorage.setItem(`chat_history_${ROOM_NAME}`, JSON.stringify(messageHistory));
       }
     } catch (e) {
       // Ignore localStorage errors
@@ -62,7 +62,7 @@
     // Create chat container
     const container = document.getElementById('ghostchat-container');
     
-    // Add toggle button (black theme)
+    // Add toggle button
     const toggleBtn = document.createElement('button');
     toggleBtn.innerHTML = '💬 Chat';
     toggleBtn.style.cssText = `
@@ -94,12 +94,12 @@
     };
     document.body.appendChild(toggleBtn);
     
-    // Create chat interface (all black theme)
+    // Create chat interface
     container.innerHTML = `
       <div style="display: flex; flex-direction: column; height: 100%; background: #000000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid #333333;">
         <div style="background: #111111; padding: 12px; color: #ffffff; font-weight: bold; display: flex; justify-content: space-between; border-bottom: 1px solid #333333;">
           <span>💬 Radio Chat</span>
-          <span style="font-size: 12px; opacity: 0.8;">⏱️ 10min retention</span>
+          <span style="font-size: 12px; opacity: 0.8;">⏱️ 10min</span>
         </div>
         
         <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 12px; color: #ffffff; font-size: 14px; background: #000000;"></div>
@@ -110,42 +110,17 @@
             <button id="send-btn" style="background: #333333; color: #ffffff; border: 1px solid #444444; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-weight: bold;">Send</button>
           </div>
           <div style="font-size: 11px; color: #666666; margin-top: 8px; text-align: center;">
-            ⚡ Messages saved for 10 minutes • Close button works!
+            ⚡ Messages saved for 10 minutes
           </div>
         </div>
       </div>
     `;
     
-    // Chat logic
-    const peerId = Math.random().toString(36).substring(2, 8);
     const messagesDiv = document.getElementById('chat-messages');
     
-    // Save messages to localStorage
-    function saveMessages() {
-      try {
-        localStorage.setItem(`chat_${ROOM_NAME}_messages`, JSON.stringify(localMessages));
-      } catch (e) {
-        // Ignore storage errors
-      }
-    }
-    
-    // Load and display existing messages
-    function loadExistingMessages() {
-      const now = Date.now();
-      const tenMinutes = 10 * 60 * 1000;
-      
-      localMessages.forEach(msg => {
-        if (now - msg.timestamp < tenMinutes) {
-          displayMessage(msg.sender, msg.text, msg.isSelf, false);
-        }
-      });
-    }
-    
-    // Display message without saving
-    function displayMessage(sender, text, isSelf = false, addToStorage = true) {
+    // Display a message in the chat
+    function displayMessage(sender, text, isSelf = false, timestamp = Date.now()) {
       const msgContainer = document.createElement('div');
-      msgContainer.classList.add('message-timestamp');
-      msgContainer.dataset.timestamp = Date.now();
       msgContainer.style.cssText = `margin: 8px 0; display: flex; ${isSelf ? 'justify-content: flex-end;' : 'justify-content: flex-start;'}`;
       
       const msgBubble = document.createElement('div');
@@ -161,7 +136,7 @@
       
       const nameSpan = document.createElement('div');
       nameSpan.style.cssText = 'font-size: 11px; opacity: 0.7; margin-bottom: 4px; color: #999999;';
-      nameSpan.textContent = sender === peerId ? 'You' : 'Listener ' + sender.substr(0, 4);
+      nameSpan.textContent = sender === clientId ? 'You' : 'Listener ' + sender.substr(0, 4);
       
       const textSpan = document.createElement('div');
       textSpan.textContent = text;
@@ -171,86 +146,85 @@
       msgContainer.appendChild(msgBubble);
       messagesDiv.appendChild(msgContainer);
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+    
+    // Load message history
+    function loadMessageHistory() {
+      // Clear existing messages except system message
+      messagesDiv.innerHTML = '';
       
-      if (addToStorage) {
-        localMessages.push({
-          sender,
-          text,
-          isSelf,
-          timestamp: Date.now()
-        });
-        saveMessages();
+      // Add system message
+      const systemMsg = document.createElement('div');
+      systemMsg.style.cssText = 'color: #666666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
+      systemMsg.textContent = '✨ Messages saved for 10 minutes.';
+      messagesDiv.appendChild(systemMsg);
+      
+      // Display history
+      messageHistory.forEach(msg => {
+        displayMessage(msg.sender, msg.text, msg.sender === clientId, msg.timestamp);
+        if (msg.id) seenMessageIds.add(msg.id);
+      });
+    }
+    
+    // Save message to history
+    function saveMessage(message) {
+      messageHistory.push(message);
+      
+      // Keep only last 100 messages
+      if (messageHistory.length > 100) {
+        messageHistory = messageHistory.slice(-100);
+      }
+      
+      try {
+        localStorage.setItem(`chat_history_${ROOM_NAME}`, JSON.stringify(messageHistory));
+      } catch (e) {
+        // Ignore localStorage errors
       }
     }
     
-    // Clean old messages function
+    // Clean old messages
     function cleanOldMessages() {
       const now = Date.now();
-      const tenMinutes = 10 * 60 * 1000;
+      const beforeCount = messageHistory.length;
+      messageHistory = messageHistory.filter(msg => (now - msg.timestamp) < TEN_MINUTES);
       
-      // Filter localMessages
-      const beforeCount = localMessages.length;
-      localMessages = localMessages.filter(msg => (now - msg.timestamp) < tenMinutes);
-      
-      if (beforeCount !== localMessages.length) {
-        saveMessages();
-        
-        // Refresh display
-        messagesDiv.innerHTML = '';
-        
-        // Add system message back
-        const systemMsg = document.createElement('div');
-        systemMsg.style.cssText = 'color: #666666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
-        systemMsg.textContent = '✨ Messages last for 10 minutes.';
-        messagesDiv.appendChild(systemMsg);
-        
-        // Redisplay messages
-        localMessages.forEach(msg => {
-          displayMessage(msg.sender, msg.text, msg.isSelf, false);
-        });
+      if (beforeCount !== messageHistory.length) {
+        try {
+          localStorage.setItem(`chat_history_${ROOM_NAME}`, JSON.stringify(messageHistory));
+        } catch (e) {}
+        loadMessageHistory();
       }
     }
     
-    // Add system message
-    const systemMsg = document.createElement('div');
-    systemMsg.style.cssText = 'color: #666666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
-    systemMsg.textContent = '✨ Messages last for 10 minutes.';
-    messagesDiv.appendChild(systemMsg);
-    
-    // Load any existing messages
-    loadExistingMessages();
-    
-    // Run cleanup every minute
-    setInterval(cleanOldMessages, 60000);
-    
-    // Send message function
+    // Send message
     async function sendMessage() {
       const input = document.getElementById('chat-input');
       const text = input.value.trim();
       if (!text) return;
       
-      // Create unique message ID
-      const messageId = Date.now() + '-' + Math.random().toString(36);
+      const messageId = Date.now() + '-' + Math.random().toString(36).substring(2);
       const timestamp = Date.now();
       
-      // Display locally
-      displayMessage(peerId, text, true);
+      // Create message object
+      const message = {
+        id: messageId,
+        sender: clientId,
+        text: text,
+        timestamp: timestamp
+      };
       
-      // Send to signaling server
+      // Display immediately
+      displayMessage(clientId, text, true, timestamp);
+      saveMessage(message);
+      seenMessageIds.add(messageId);
+      
+      // Send to server
       try {
         await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: messageId,
-            sender: peerId,
-            text: text,
-            timestamp: timestamp
-          })
+          body: JSON.stringify(message)
         });
-        
-        // Mark as seen
-        seenMessages.add(messageId);
       } catch (err) {
         console.log('Send error:', err);
       }
@@ -259,51 +233,54 @@
     }
     
     // Poll for new messages
+    let pollCount = 0;
     async function pollMessages() {
       try {
         const response = await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`);
-        const data = await response.json();
+        const messages = await response.json();
         
-        const now = Date.now();
-        const tenMinutes = 10 * 60 * 1000;
-        
-        // Handle single message
-        if (data.id && !seenMessages.has(data.id) && data.sender !== peerId) {
-          if (now - data.timestamp < tenMinutes) {
-            seenMessages.add(data.id);
-            displayMessage(data.sender, data.text, false);
-          }
-        }
-        
-        // Handle array of messages
-        if (Array.isArray(data)) {
-          data.forEach(msg => {
-            if (!seenMessages.has(msg.id) && msg.sender !== peerId) {
-              if (now - msg.timestamp < tenMinutes) {
-                seenMessages.add(msg.id);
-                displayMessage(msg.sender, msg.text, false);
-              }
+        if (Array.isArray(messages)) {
+          messages.forEach(msg => {
+            // Skip if we've already seen this message
+            if (seenMessageIds.has(msg.id)) return;
+            
+            // Skip our own messages (already displayed)
+            if (msg.sender === clientId) {
+              seenMessageIds.add(msg.id);
+              return;
+            }
+            
+            // Check if message is still valid (less than 10 minutes old)
+            const now = Date.now();
+            if (now - msg.timestamp < TEN_MINUTES) {
+              seenMessageIds.add(msg.id);
+              displayMessage(msg.sender, msg.text, false, msg.timestamp);
+              saveMessage(msg);
             }
           });
         }
       } catch (err) {
-        // Silent fail
+        // Silent fail after first few attempts
+        pollCount++;
+        if (pollCount < 5) console.log('Poll error:', err);
       }
     }
     
-    // Send message on button click or Enter
+    // Set up event listeners
     document.getElementById('send-btn').onclick = sendMessage;
     document.getElementById('chat-input').onkeypress = (e) => {
       if (e.key === 'Enter') sendMessage();
     };
     
-    // Poll for new messages every 3 seconds
-    setInterval(pollMessages, 3000);
+    // Initialize
+    loadMessageHistory();
     
-    // Clear old seen messages every 10 minutes
-    setInterval(() => {
-      seenMessages.clear();
-    }, 600000);
+    // Start polling
+    setInterval(pollMessages, 3000);
+    setInterval(cleanOldMessages, 60000); // Clean every minute
+    
+    // Poll immediately
+    setTimeout(pollMessages, 1000);
     
   })();
 </script>
