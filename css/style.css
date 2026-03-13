@@ -6,11 +6,12 @@
 
 html, body {
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     font-family: Arial, sans-serif;
-    /* Fixed background - no stretching! */
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
                 url('../images/background.jpg') no-repeat center center fixed;
     background-size: cover;
@@ -18,52 +19,47 @@ body {
     color: white;
     width: 100%;
     overflow-x: hidden;
+}
+
+/* Page wrapper for flex layout */
+.page-wrapper {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
 
 /* Navigation */
 .main-nav {
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
-    padding: 0.8rem 0.5rem;
+    padding: 1rem;
     position: sticky;
     top: 0;
     z-index: 100;
-    text-align: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    width: 100%;
 }
 
 .nav-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    max-width: 100%;
+    gap: 2rem;
+    max-width: 1200px;
     margin: 0 auto;
-    gap: 0.2rem;
 }
 
 .main-nav a {
     color: white;
     text-decoration: none;
-    margin: 0.1rem;
-    padding: 0.3rem 0.7rem;
+    padding: 0.5rem 1rem;
     border-radius: 30px;
     transition: all 0.3s ease;
     font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    white-space: nowrap;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .main-nav a:hover {
     background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .main-nav a.active {
@@ -74,13 +70,12 @@ body {
 /* Header */
 .station-header {
     text-align: center;
-    padding: 1rem 1rem 0.5rem 1rem;
-    width: 100%;
+    padding: 2rem 1rem 1rem 1rem;
 }
 
 .station-header h1 {
-    font-size: 1.8rem;
-    margin-bottom: 0.2rem;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -90,38 +85,41 @@ body {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Main Content - Player positioned slightly left */
-main {
+/* Main content - grows to push footer down */
+.main-content {
     flex: 1;
     width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    padding: 0 1rem;
-    margin: 0.5rem 0 1rem 5%;
+    padding: 0 2rem;
+}
+
+/* Player wrapper - left aligned on desktop */
+.player-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 5%; /* Creates space on right */
 }
 
 .player-container {
     width: 100%;
-    max-width: 380px; /* SMALLER player width */
-    margin-left: 2%;
+    max-width: 400px; /* Compact player width */
 }
 
 .player-container iframe {
     width: 100% !important;
-    height: 120px !important; /* SMALLER player height */
+    height: 130px !important;
     border: 0;
-    border-radius: 14px !important;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 16px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Footer - Stays at bottom */
+/* Footer */
 footer {
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1rem 0.5rem;
+    padding: 1.5rem;
     width: 100%;
-    margin-top: auto;
+    margin-top: 2rem;
 }
 
 .footer-content {
@@ -130,24 +128,23 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
-/* Social Icons - UNCHANGED (keeping your preferred size) */
+/* Social Icons */
 .social-icons {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
 }
 
 .social-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     font-size: 22px;
     transition: all 0.3s ease;
@@ -186,12 +183,12 @@ footer {
 }
 
 .copyright {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: #888;
     text-align: center;
 }
 
-/* Chat Widget - Positioned on right */
+/* Chat Widget */
 #simple-chat-wrapper {
     position: fixed;
     bottom: 20px;
@@ -204,42 +201,121 @@ footer {
     color: white;
     border: 1px solid #333;
     border-radius: 50px;
-    padding: 8px 16px;
-    font-size: 13px;
+    padding: 10px 20px;
+    font-size: 14px;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     font-weight: bold;
-    width: 100px;
+    width: 110px;
+    transition: transform 0.2s;
+}
+
+#simple-chat-button:hover {
+    transform: scale(1.05);
 }
 
 #simple-chat-window {
     position: absolute;
-    bottom: 55px;
+    bottom: 60px;
     right: 0;
-    width: 280px;
-    height: 350px;
+    width: 300px;
+    height: 380px;
     background: #000;
     border-radius: 12px;
     border: 1px solid #333;
     box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
 }
 
-/* Responsive */
+.chat-header {
+    background: #111;
+    padding: 12px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #333;
+}
+
+.chat-timer {
+    font-size: 12px;
+    background: #222;
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: #aaa;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    background: #000;
+}
+
+.chat-input-area {
+    padding: 12px;
+    border-top: 1px solid #333;
+    display: flex;
+    gap: 8px;
+}
+
+#chat-input {
+    flex: 1;
+    padding: 8px 12px;
+    background: #000;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 20px;
+    outline: none;
+}
+
+#send-btn {
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#send-btn:hover {
+    background: #444;
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+    .player-wrapper {
+        padding-left: 10%; /* More space on right for desktop */
+    }
+}
+
+/* Mobile styles */
 @media (max-width: 768px) {
-    main {
-        justify-content: center;
-        margin-left: 0;
-        padding: 0 0.5rem;
+    .nav-container {
+        gap: 1rem;
     }
     
-    .player-container {
-        max-width: 350px;
+    .main-nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
     }
-}
-
-@media (max-width: 600px) {
+    
     .station-header h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+    }
+    
+    .main-content {
+        padding: 0 1rem;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .player-wrapper {
+        padding-left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
     
     .player-container {
@@ -247,36 +323,72 @@ footer {
     }
     
     .player-container iframe {
-        height: 115px !important;
+        height: 120px !important;
     }
     
-    /* Social icons remain same size on mobile */
     .social-icon {
         width: 42px;
         height: 42px;
-        font-size: 22px;
+        font-size: 20px;
+    }
+    
+    #simple-chat-window {
+        width: 280px;
+        height: 350px;
     }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 480px) {
+    .station-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .station-tagline {
+        font-size: 0.9rem;
+    }
+    
+    .nav-container {
+        gap: 0.5rem;
+    }
+    
+    .main-nav a {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .player-container iframe {
+        height: 115px !important;
+    }
+    
+    .social-icons {
+        gap: 15px;
+    }
+    
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .copyright {
+        font-size: 0.75rem;
+    }
+    
+    #simple-chat-window {
+        width: 260px;
+        height: 330px;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
     .player-container iframe {
         height: 110px !important;
     }
     
-    #simple-chat-window {
-        width: 250px;
-        height: 330px;
-    }
-    
-    /* Social icons still same size even on small mobile */
     .social-icon {
-        width: 42px;
-        height: 42px;
-        font-size: 22px;
-    }
-}
-    
-    .social-icons {
-        gap: 15px;
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
     }
 }
