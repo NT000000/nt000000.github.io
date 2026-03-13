@@ -83,6 +83,7 @@
             const SIGNALING_SERVER = 'https://ghostchat-signaling.nt00-161.workers.dev';
             const ROOM_NAME = 'escape_algorithm_radio';
             const clientId = Math.random().toString(36).substring(2, 10);
+            console.log('My client ID:', clientId);
             
             // Get elements
             const button = document.getElementById('simple-chat-button');
@@ -170,22 +171,39 @@
                 input.value = '';
             }
             
-            // Get messages
-            async function getMessages() {
-                try {
-                    const res = await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`);
-                    const messages = await res.json();
-                    
-                    if (Array.isArray(messages)) {
-                        messages.forEach(msg => {
-                            if (!seenIds.has(msg.id) && msg.sender !== clientId) {
-                                seenIds.add(msg.id);
-                                addMessage(msg.sender, msg.text, false);
-                            }
-                        });
-                    }
-                } catch(e) {}
-            }
+           // Get messages
+async function getMessages() {
+    try {
+        const res = await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`);
+        const messages = await res.json();
+        console.log('📥 Received messages:', messages); // DEBUG: See what comes from server
+        console.log('🆔 My client ID:', clientId); // DEBUG: See your ID
+        
+        if (Array.isArray(messages)) {
+            messages.forEach(msg => {
+                console.log('🔍 Checking message:', { 
+                    id: msg.id, 
+                    sender: msg.sender, 
+                    myId: clientId,
+                    isFromMe: msg.sender === clientId,
+                    alreadySeen: seenIds.has(msg.id)
+                }); // DEBUG: Check each message
+                
+                if (!seenIds.has(msg.id) && msg.sender !== clientId) {
+                    console.log('✅ ADDING message from:', msg.sender); // DEBUG: Message will be added
+                    seenIds.add(msg.id);
+                    addMessage(msg.sender, msg.text, false);
+                } else {
+                    console.log('⏭️ SKIPPING message - reason:', 
+                        seenIds.has(msg.id) ? 'already seen' : 'from myself'
+                    ); // DEBUG: Why message was skipped
+                }
+            });
+        }
+    } catch(e) {
+        console.log('❌ Error fetching messages:', e);
+    }
+}
             
             // Event listeners
             sendBtn.onclick = sendMessage;
