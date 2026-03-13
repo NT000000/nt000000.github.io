@@ -281,40 +281,46 @@ footer {
 /* ===== SOCIAL ICONS STYLES ===== */
 .social-icons {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
 .social-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: #222;
-    color: white;
-    font-size: 24px;
+    font-size: 30px;
     transition: all 0.3s ease;
     text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.social-icon:hover {
-    transform: translateY(-3px);
-}
-
-.social-icon.instagram:hover {
+/* Brand colors - always visible */
+.social-icon.instagram {
     background: linear-gradient(45deg, #f09433, #d62976, #962fbf, #4f5bd5);
+    color: white;
 }
 
-.social-icon.youtube:hover {
+.social-icon.youtube {
     background: #ff0000;
+    color: white;
 }
 
-.social-icon.soundcloud:hover {
+.social-icon.soundcloud {
     background: #ff7700;
+    color: white;
+}
+
+/* Hover effect - lift up */
+.social-icon:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* Screen reader only text */
@@ -332,8 +338,12 @@ footer {
 /* Responsive for mobile */
 @media (max-width: 600px) {
     .social-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+    
+    .social-icons {
+        gap: 15px;
     }
 }
