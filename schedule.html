@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* Compact schedule styling - fits without scrolling */
+        /* ULTRA COMPACT SCHEDULE - FITS WITHOUT SCROLLING */
         .schedule-container {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(15px);
-            border-radius: 16px;
-            padding: 1rem;
+            border-radius: 12px;
+            padding: 0.6rem;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
@@ -25,81 +25,82 @@
         .schedule-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0.8rem;
+            gap: 0.4rem;
         }
         
         .day-card {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 0.8rem;
-            border-left: 3px solid #667eea;
+            border-radius: 6px;
+            padding: 0.4rem;
+            border-left: 2px solid #667eea;
         }
         
         .day-card h3 {
             color: #fff;
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: 400;
-            margin-bottom: 0.5rem;
-            padding-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
+            padding-bottom: 0.1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            letter-spacing: 0.02em;
         }
         
         .show-item {
-            margin: 0.3rem 0;
-            padding: 0.2rem;
+            margin: 0.15rem 0;
+            padding: 0.1rem;
             background: rgba(255, 255, 255, 0.02);
-            border-radius: 4px;
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
         }
         
         .show-time {
             color: #aaa;
-            font-size: 0.7rem;
-            display: block;
+            font-size: 0.6rem;
+            font-weight: 300;
         }
         
         .show-title {
             color: #fff;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 350;
+            line-height: 1.2;
         }
         
         .show-host {
             color: #888;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 300;
         }
         
-        /* Mobile styles - no scrolling needed */
+        /* Mobile styles */
         @media (max-width: 768px) {
             .schedule-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 0.5rem;
+                gap: 0.3rem;
             }
             
             .schedule-container {
-                padding: 0.6rem;
+                padding: 0.4rem;
             }
             
             .day-card {
-                padding: 0.5rem;
+                padding: 0.3rem;
             }
             
             .day-card h3 {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
             }
         }
         
         @media (max-width: 480px) {
             .schedule-grid {
                 grid-template-columns: 1fr;
-                gap: 0.4rem;
+                gap: 0.2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation - Schedule is active -->
     <nav class="main-nav">
         <div class="nav-container">
             <a href="index.html">🔊 Listen</a>
@@ -108,185 +109,78 @@
         </div>
     </nav>
     
-    <!-- Header -->
     <header class="station-header">
         <h1>Weekly Schedule</h1>
         <p class="station-tagline">Escape The Algorithm · 24/7</p>
     </header>
     
-    <!-- Main Content with Schedule -->
     <main class="main-content">
         <div class="schedule-container">
             <div class="schedule-grid">
                 <!-- Monday -->
                 <div class="day-card">
                     <h3>MON</h3>
-                    <div class="show-item">
-                        <span class="show-time">06-10</span>
-                        <span class="show-title">Morning Drive</span>
-                        <span class="show-host">Sarah</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">10-14</span>
-                        <span class="show-title">Midday Mix</span>
-                        <span class="show-host">Mike</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">14-18</span>
-                        <span class="show-title">Drive Time</span>
-                        <span class="show-host">Alex</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">18-22</span>
-                        <span class="show-title">Evening Chill</span>
-                        <span class="show-host">Emma</span>
-                    </div>
+                    <div class="show-item"><span class="show-time">06-10</span><span class="show-title">Morning Drive</span><span class="show-host">Sarah</span></div>
+                    <div class="show-item"><span class="show-time">10-14</span><span class="show-title">Midday Mix</span><span class="show-host">Mike</span></div>
+                    <div class="show-item"><span class="show-time">14-18</span><span class="show-title">Drive Time</span><span class="show-host">Alex</span></div>
+                    <div class="show-item"><span class="show-time">18-22</span><span class="show-title">Evening Chill</span><span class="show-host">Emma</span></div>
                 </div>
                 
                 <!-- Tuesday -->
                 <div class="day-card">
                     <h3>TUE</h3>
-                    <div class="show-item">
-                        <span class="show-time">06-10</span>
-                        <span class="show-title">Morning Drive</span>
-                        <span class="show-host">Sarah</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">10-14</span>
-                        <span class="show-title">Midday Mix</span>
-                        <span class="show-host">Mike</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">14-18</span>
-                        <span class="show-title">Drive Time</span>
-                        <span class="show-host">Alex</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">18-22</span>
-                        <span class="show-title">Evening Chill</span>
-                        <span class="show-host">Emma</span>
-                    </div>
+                    <div class="show-item"><span class="show-time">06-10</span><span class="show-title">Morning Drive</span><span class="show-host">Sarah</span></div>
+                    <div class="show-item"><span class="show-time">10-14</span><span class="show-title">Midday Mix</span><span class="show-host">Mike</span></div>
+                    <div class="show-item"><span class="show-time">14-18</span><span class="show-title">Drive Time</span><span class="show-host">Alex</span></div>
+                    <div class="show-item"><span class="show-time">18-22</span><span class="show-title">Evening Chill</span><span class="show-host">Emma</span></div>
                 </div>
                 
                 <!-- Wednesday -->
                 <div class="day-card">
                     <h3>WED</h3>
-                    <div class="show-item">
-                        <span class="show-time">06-10</span>
-                        <span class="show-title">Morning Drive</span>
-                        <span class="show-host">Sarah</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">10-14</span>
-                        <span class="show-title">Midday Mix</span>
-                        <span class="show-host">Mike</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">14-18</span>
-                        <span class="show-title">Drive Time</span>
-                        <span class="show-host">Alex</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">18-22</span>
-                        <span class="show-title">Evening Chill</span>
-                        <span class="show-host">Emma</span>
-                    </div>
+                    <div class="show-item"><span class="show-time">06-10</span><span class="show-title">Morning Drive</span><span class="show-host">Sarah</span></div>
+                    <div class="show-item"><span class="show-time">10-14</span><span class="show-title">Midday Mix</span><span class="show-host">Mike</span></div>
+                    <div class="show-item"><span class="show-time">14-18</span><span class="show-title">Drive Time</span><span class="show-host">Alex</span></div>
+                    <div class="show-item"><span class="show-time">18-22</span><span class="show-title">Evening Chill</span><span class="show-host">Emma</span></div>
                 </div>
                 
                 <!-- Thursday -->
                 <div class="day-card">
                     <h3>THU</h3>
-                    <div class="show-item">
-                        <span class="show-time">06-10</span>
-                        <span class="show-title">Morning Drive</span>
-                        <span class="show-host">Sarah</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">10-14</span>
-                        <span class="show-title">Midday Mix</span>
-                        <span class="show-host">Mike</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">14-18</span>
-                        <span class="show-title">Drive Time</span>
-                        <span class="show-host">Alex</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">18-22</span>
-                        <span class="show-title">Evening Chill</span>
-                        <span class="show-host">Emma</span>
-                    </div>
+                    <div class="show-item"><span class="show-time">06-10</span><span class="show-title">Morning Drive</span><span class="show-host">Sarah</span></div>
+                    <div class="show-item"><span class="show-time">10-14</span><span class="show-title">Midday Mix</span><span class="show-host">Mike</span></div>
+                    <div class="show-item"><span class="show-time">14-18</span><span class="show-title">Drive Time</span><span class="show-host">Alex</span></div>
+                    <div class="show-item"><span class="show-time">18-22</span><span class="show-title">Evening Chill</span><span class="show-host">Emma</span></div>
                 </div>
                 
                 <!-- Friday -->
                 <div class="day-card">
                     <h3>FRI</h3>
-                    <div class="show-item">
-                        <span class="show-time">06-10</span>
-                        <span class="show-title">Morning Drive</span>
-                        <span class="show-host">Sarah</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">10-14</span>
-                        <span class="show-title">Midday Mix</span>
-                        <span class="show-host">Mike</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">14-18</span>
-                        <span class="show-title">Drive Time</span>
-                        <span class="show-host">Alex</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">18-00</span>
-                        <span class="show-title">Friday Party</span>
-                        <span class="show-host">Spark</span>
-                    </div>
+                    <div class="show-item"><span class="show-time">06-10</span><span class="show-title">Morning Drive</span><span class="show-host">Sarah</span></div>
+                    <div class="show-item"><span class="show-time">10-14</span><span class="show-title">Midday Mix</span><span class="show-host">Mike</span></div>
+                    <div class="show-item"><span class="show-time">14-18</span><span class="show-title">Drive Time</span><span class="show-host">Alex</span></div>
+                    <div class="show-item"><span class="show-time">18-00</span><span class="show-title">Friday Party</span><span class="show-host">Spark</span></div>
                 </div>
                 
                 <!-- Saturday -->
                 <div class="day-card">
                     <h3>SAT</h3>
-                    <div class="show-item">
-                        <span class="show-time">08-12</span>
-                        <span class="show-title">Weekend Breakfast</span>
-                        <span class="show-host">Chris</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">12-18</span>
-                        <span class="show-title">Saturday Sessions</span>
-                        <span class="show-host">Taylor</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">18-02</span>
-                        <span class="show-title">Night Live</span>
-                        <span class="show-host">Storm</span>
-                    </div>
+                    <div class="show-item"><span class="show-time">08-12</span><span class="show-title">Breakfast</span><span class="show-host">Chris</span></div>
+                    <div class="show-item"><span class="show-time">12-18</span><span class="show-title">Sessions</span><span class="show-host">Taylor</span></div>
+                    <div class="show-item"><span class="show-time">18-02</span><span class="show-title">Night Live</span><span class="show-host">Storm</span></div>
                 </div>
                 
                 <!-- Sunday -->
                 <div class="day-card">
                     <h3>SUN</h3>
-                    <div class="show-item">
-                        <span class="show-time">08-12</span>
-                        <span class="show-title">Sunday Morning</span>
-                        <span class="show-host">Chris</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">12-18</span>
-                        <span class="show-title">Relaxation</span>
-                        <span class="show-host">Taylor</span>
-                    </div>
-                    <div class="show-item">
-                        <span class="show-time">18-22</span>
-                        <span class="show-title">Evening Acoustics</span>
-                        <span class="show-host">Emma</span>
-                    </div>
+                    <div class="show-item"><span class="show-time">08-12</span><span class="show-title">Morning</span><span class="show-host">Chris</span></div>
+                    <div class="show-item"><span class="show-time">12-18</span><span class="show-title">Relaxation</span><span class="show-host">Taylor</span></div>
+                    <div class="show-item"><span class="show-time">18-22</span><span class="show-title">Acoustics</span><span class="show-host">Emma</span></div>
                 </div>
             </div>
         </div>
     </main>
     
-    <!-- Footer (same as index.html) -->
     <footer>
         <div class="footer-content">
             <div class="social-icons">
