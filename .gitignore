@@ -1,0 +1,22 @@
+# Sensitive files - NEVER commit these
+.env
+*.key
+*.pem
+*.secret
+config/secrets.json
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local development
+node_modules/
+npm-debug.log
+yarn-error.log
