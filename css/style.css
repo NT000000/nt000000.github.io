@@ -104,18 +104,13 @@ body {
     padding: 0.5rem 1.5rem;
 }
 
-/* Player section */
+/* Player section - FIXED: Centered on PC */
 .player-section {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-}
-
-/* Desktop player positioning */
-@media (min-width: 769px) {
-    .player-section {
-        padding-left: 8%;
-    }
+    display: flex;
+    justify-content: center; /* This centers the player on PC */
 }
 
 .player-container {
@@ -344,59 +339,49 @@ footer {
     color: rgba(255, 255, 255, 0.95);
 }
 
-/* MOBILE OPTIMIZATIONS */
+/* FIXED: Mobile optimizations - NO SCROLLING */
 @media (max-width: 768px) {
+    html, body {
+        height: 100%;
+        overflow: hidden; /* Prevents any scrolling */
+    }
+    
     body {
-        min-height: 100vh;
         display: flex;
         flex-direction: column;
+        height: 100vh;
+        overflow-y: auto; /* Allows internal scrolling only if needed */
     }
     
     .station-header {
-        padding: 0.8rem 0.5rem 0.3rem 0.5rem;
+        padding: 0.5rem 0.5rem 0.2rem 0.5rem;
     }
     
     .station-header h1 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         margin-bottom: 0.1rem;
     }
     
     .station-tagline {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        opacity: 0.5;
     }
     
     .main-content {
         justify-content: flex-start;
-        padding: 0.2rem 0.8rem;
-        flex: 1 1 auto;
+        padding: 0.1rem 0.8rem;
+        flex: 0 1 auto; /* Takes only needed space */
     }
     
     .player-section {
         display: flex;
         justify-content: center;
         padding-left: 0;
-        margin: 0.2rem 0;
+        margin: 0.1rem 0;
     }
     
-    .player-container iframe {
-        height: 115px !important;
-    }
-    
-    footer {
-        padding: 0.5rem 0.3rem;
-        margin-top: auto;
-    }
-    
-    #simple-chat-wrapper {
-        bottom: 10px;
-        right: 10px;
-    }
-}
-
-/* Small mobile */
-@media (max-width: 480px) {
-    .station-header h1 {
-        font-size: 1.5rem;
+    .player-container {
+        max-width: 100%;
     }
     
     .player-container iframe {
@@ -405,11 +390,85 @@ footer {
     
     footer {
         padding: 0.4rem 0.3rem;
+        margin-top: auto;
+        flex-shrink: 0;
+    }
+    
+    .social-icons {
+        gap: 1rem;
+    }
+    
+    .social-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    .copyright {
+        font-size: 0.6rem;
+    }
+    
+    .tech-badge {
+        font-size: 0.5rem;
+    }
+    
+    #simple-chat-wrapper {
+        bottom: 8px;
+        right: 8px;
+    }
+    
+    #simple-chat-button {
+        padding: 6px 14px;
+        font-size: 12px;
     }
 }
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .station-header h1 {
+        font-size: 1.4rem;
+    }
     
-    #simple-chat-window {
-        width: 260px;
-        height: 340px;
+    .station-tagline {
+        font-size: 0.7rem;
+    }
+    
+    .player-container iframe {
+        height: 105px !important;
+    }
+    
+    .social-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 0.95rem;
+    }
+    
+    footer {
+        padding: 0.3rem 0.3rem;
+    }
+    
+    .copyright {
+        font-size: 0.55rem;
+    }
+    
+    .tech-badge {
+        font-size: 0.45rem;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+    .station-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .player-container iframe {
+        height: 100px !important;
+    }
+    
+    .social-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
     }
 }
