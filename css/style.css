@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
     /* Fixed background - no stretching! */
@@ -11,11 +15,12 @@ body {
                 url('../images/background.jpg') no-repeat center center fixed;
     background-size: cover;
     background-attachment: fixed;
-    min-height: 100vh;
     color: white;
     width: 100%;
     overflow-x: hidden;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Navigation */
@@ -66,158 +71,57 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.nav-icon {
-    font-size: 0.9rem;
-}
-
-.nav-text {
-    font-size: 0.85rem;
-}
-
 /* Header */
 .station-header {
     text-align: center;
     padding: 1rem 1rem 0.5rem 1rem;
-    max-width: 100%;
-    margin: 0 auto;
     width: 100%;
 }
 
-.logo-wrapper {
-    margin-bottom: 0.5rem;
-}
-
-.station-logo {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 2px solid white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease;
-    object-fit: cover;
-    max-width: 100%;
-}
-
-.station-logo:hover {
-    transform: scale(1.05);
-}
-
-.station-title {
+.station-header h1 {
     font-size: 1.8rem;
     margin-bottom: 0.2rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    word-break: break-word;
-    padding: 0 0.5rem;
 }
 
 .station-tagline {
     font-size: 1rem;
     opacity: 0.9;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    padding: 0 0.5rem;
-    margin-bottom: 0.3rem;
 }
 
-.live-badge {
-    background: #ff0000;
-    color: white;
-    padding: 0.2rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    display: inline-block;
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
-}
-
-/* Main Content - COMPACT */
+/* Main Content - Player positioned slightly left */
 main {
-    max-width: 700px;
-    width: 95%;
-    margin: 0 auto;
-    padding: 0 0.5rem 1rem;
-}
-
-.player-card {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(15px);
-    border-radius: 16px;
-    padding: 1rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex: 1;
     width: 100%;
-    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 1rem;
+    margin: 0.5rem 0 1rem 5%;
 }
 
-/* REMOVED: player-header with "Click to play" */
-/* REMOVED: track-info section */
-
-/* Player Embed - COMPACT */
-.player-embed {
+.player-container {
     width: 100%;
-    border-radius: 10px;
-    overflow: hidden;
+    max-width: 380px; /* SMALLER player width */
+    margin-left: 2%;
 }
 
-.player-embed iframe {
+.player-container iframe {
     width: 100% !important;
-    height: 130px !important; /* Smaller player */
-    border: none;
-    display: block;
-    max-width: 100%;
+    height: 120px !important; /* SMALLER player height */
+    border: 0;
+    border-radius: 14px !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Chat Container */
-#simple-chat-wrapper {
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-    z-index: 9999;
-    max-width: calc(100% - 30px);
-}
-
-#simple-chat-button {
-    background: #000000;
-    color: white;
-    border: 1px solid #333;
-    border-radius: 50px;
-    padding: 8px 16px;
-    font-size: 13px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    font-weight: bold;
-    width: 100px;
-    transition: transform 0.2s;
-}
-
-#simple-chat-window {
-    position: absolute;
-    bottom: 55px;
-    right: 0;
-    width: 280px;
-    height: 350px;
-    background: #000000;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-    border: 1px solid #333333;
-    max-width: 85vw;
-}
-
-/* Footer - COMPACT */
+/* Footer - Stays at bottom */
 footer {
-    text-align: center;
-    padding: 1rem 0.5rem;
-    margin-top: 1rem;
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0.5rem;
     width: 100%;
+    margin-top: auto;
 }
 
 .footer-content {
@@ -225,28 +129,16 @@ footer {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.footer-section h3 {
-    font-size: 1rem;
-    margin-bottom: 0.3rem;
-    color: #fff;
-}
-
-.footer-section p {
-    font-size: 0.8rem;
-    color: #ccc;
-    line-height: 1.3;
-}
-
-/* Social Icons - COMPACT */
+/* Social Icons - UNCHANGED (keeping your preferred size) */
 .social-icons {
     display: flex;
-    gap: 12px;
+    gap: 15px;
     justify-content: center;
     align-items: center;
-    margin: 5px 0;
     flex-wrap: wrap;
 }
 
@@ -254,17 +146,15 @@ footer {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    font-size: 20px;
+    font-size: 22px;
     transition: all 0.3s ease;
     text-decoration: none;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    flex-shrink: 0;
 }
 
-/* Brand colors */
 .social-icon.instagram {
     background: linear-gradient(45deg, #f09433, #d62976, #962fbf, #4f5bd5);
     color: white;
@@ -281,11 +171,11 @@ footer {
 }
 
 .social-icon:hover {
-    transform: translateY(-2px) scale(1.05);
+    transform: translateY(-3px) scale(1.05);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
 }
 
-/* Screen reader only text */
+/* Screen reader only */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -293,114 +183,83 @@ footer {
     padding: 0;
     margin: -1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
 }
 
-.copyright, .tech-badge {
-    font-size: 0.7rem;
+.copyright {
+    font-size: 0.8rem;
     color: #888;
-    margin: 0.1rem 0;
+    text-align: center;
 }
 
-/* Schedule Page Styles */
-.schedule-container {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(15px);
-    border-radius: 16px;
-    padding: 1rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-    width: 100%;
-    box-sizing: border-box;
+/* Chat Widget - Positioned on right */
+#simple-chat-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
 }
 
-.day {
-    margin-bottom: 1rem;
-    padding: 0.6rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    border-left: 3px solid #667eea;
+#simple-chat-button {
+    background: #000;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 50px;
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    font-weight: bold;
+    width: 100px;
 }
 
-.day h2 {
-    color: #fff;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
+#simple-chat-window {
+    position: absolute;
+    bottom: 55px;
+    right: 0;
+    width: 280px;
+    height: 350px;
+    background: #000;
+    border-radius: 12px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
 }
 
-.day p {
-    margin: 0.2rem 0;
-    padding: 0.2rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 5px;
-    word-break: break-word;
-    font-size: 0.85rem;
+/* Responsive */
+@media (max-width: 768px) {
+    main {
+        justify-content: center;
+        margin-left: 0;
+        padding: 0 0.5rem;
+    }
+    
+    .player-container {
+        max-width: 350px;
+    }
 }
 
-/* Responsive Design */
 @media (max-width: 600px) {
-    .station-title {
+    .station-header h1 {
         font-size: 1.5rem;
     }
     
-    .station-logo {
-        width: 70px;
-        height: 70px;
+    .player-container {
+        max-width: 100%;
     }
     
-    .main-nav {
-        padding: 0.5rem 0.2rem;
+    .player-container iframe {
+        height: 115px !important;
     }
     
-    .main-nav a {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.8rem;
-    }
-    
-    .nav-icon {
-        font-size: 0.8rem;
-    }
-    
-    .nav-text {
-        font-size: 0.75rem;
-    }
-    
-    .player-card {
-        padding: 0.8rem;
-    }
-    
-    .player-embed iframe {
-        height: 120px !important;
-    }
-    
+    /* Social icons remain same size on mobile */
     .social-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 18px;
-    }
-    
-    .social-icons {
-        gap: 8px;
+        width: 42px;
+        height: 42px;
+        font-size: 22px;
     }
 }
 
-/* Extra small devices */
 @media (max-width: 380px) {
-    .station-title {
-        font-size: 1.3rem;
-    }
-    
-    .station-logo {
-        width: 60px;
-        height: 60px;
-    }
-    
-    .main-nav a {
-        padding: 0.2rem 0.4rem;
-        font-size: 0.7rem;
-    }
-    
-    .player-embed iframe {
+    .player-container iframe {
         height: 110px !important;
     }
     
@@ -409,10 +268,11 @@ footer {
         height: 330px;
     }
     
+    /* Social icons still same size even on small mobile */
     .social-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 16px;
+        width: 42px;
+        height: 42px;
+        font-size: 22px;
     }
 }
     
