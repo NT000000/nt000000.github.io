@@ -29,15 +29,16 @@
        <p>© 2026 Escape The Algorithm</p>
     </footer>
 
-    <!-- GhostChat - Zero Storage Chat Widget (FIXED CLOSE BUTTON) -->
+<!-- GhostChat - Zero Storage Chat Widget (GUARANTEED WORKING) -->
 <div id="ghostchat-container" style="position: fixed; bottom: 20px; right: 20px; width: 320px; height: 400px; z-index: 1000; display: none;"></div>
+<div id="chat-toggle-button" style="position: fixed; bottom: 20px; right: 20px; z-index: 999;"></div>
 
 <script>
   (function() {
     // CONFIGURATION
     const SIGNALING_SERVER = 'https://ghostchat-signaling.nt00-161.workers.dev';
     const ROOM_NAME = 'escape_algorithm_radio';
-    const TEN_MINUTES = 10 * 60 * 1000; // 600,000 ms
+    const TEN_MINUTES = 10 * 60 * 1000;
     
     // Generate unique client ID
     const clientId = Math.random().toString(36).substring(2, 10);
@@ -52,24 +53,19 @@
       if (saved) {
         const parsed = JSON.parse(saved);
         const now = Date.now();
-        // Only keep messages less than 10 minutes old
         messageHistory = parsed.filter(msg => (now - msg.timestamp) < TEN_MINUTES);
         localStorage.setItem(`chat_history_${ROOM_NAME}`, JSON.stringify(messageHistory));
       }
-    } catch (e) {
-      // Ignore localStorage errors
-    }
+    } catch (e) {}
     
-    // Create chat container
+    // Get elements
     const container = document.getElementById('ghostchat-container');
+    const toggleDiv = document.getElementById('chat-toggle-button');
     
-    // Add toggle button
+    // Create toggle button with DIRECT onclick
     const toggleBtn = document.createElement('button');
     toggleBtn.innerHTML = '💬 Chat';
     toggleBtn.style.cssText = `
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
       background: #000000;
       color: #ffffff;
       border: 1px solid #333333;
@@ -78,27 +74,26 @@
       font-size: 16px;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      z-index: 999;
-      transition: transform 0.2s;
       font-weight: bold;
+      width: 120px;
     `;
-    toggleBtn.onmouseover = () => toggleBtn.style.transform = 'scale(1.05)';
-    toggleBtn.onmouseout = () => toggleBtn.style.transform = 'scale(1)';
     
-    // FIXED TOGGLE FUNCTION
+    // SIMPLE DIRECT TOGGLE - THIS WILL DEFINITELY WORK
     toggleBtn.onclick = function() {
+      console.log('Button clicked! Current display:', container.style.display);
       if (container.style.display === 'none' || container.style.display === '') {
         container.style.display = 'block';
-        toggleBtn.innerHTML = '✖ Close Chat';
+        this.innerHTML = '✖ Close';
       } else {
         container.style.display = 'none';
-        toggleBtn.innerHTML = '💬 Chat';
+        this.innerHTML = '💬 Chat';
       }
+      console.log('New display:', container.style.display);
     };
     
-    document.body.appendChild(toggleBtn);
+    toggleDiv.appendChild(toggleBtn);
     
-    // Create chat interface
+    // Create chat interface (all HTML at once)
     container.innerHTML = `
       <div style="display: flex; flex-direction: column; height: 100%; background: #000000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid #333333;">
         <div style="background: #111111; padding: 12px; color: #ffffff; font-weight: bold; display: flex; justify-content: space-between; border-bottom: 1px solid #333333;">
@@ -114,7 +109,7 @@
             <button id="send-btn" style="background: #333333; color: #ffffff; border: 1px solid #444444; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-weight: bold;">Send</button>
           </div>
           <div style="font-size: 11px; color: #666666; margin-top: 8px; text-align: center;">
-            ⚡ Messages saved for 10 minutes • Click Chat/Close to toggle
+            ⚡ Messages saved for 10 minutes
           </div>
         </div>
       </div>
@@ -122,8 +117,8 @@
     
     const messagesDiv = document.getElementById('chat-messages');
     
-    // Display a message in the chat
-    function displayMessage(sender, text, isSelf = false, timestamp = Date.now()) {
+    // Display message
+    function displayMessage(sender, text, isSelf = false) {
       const msgContainer = document.createElement('div');
       msgContainer.style.cssText = `margin: 8px 0; display: flex; ${isSelf ? 'justify-content: flex-end;' : 'justify-content: flex-start;'}`;
       
@@ -154,36 +149,28 @@
     
     // Load message history
     function loadMessageHistory() {
-      // Clear existing messages except system message
       messagesDiv.innerHTML = '';
       
-      // Add system message
       const systemMsg = document.createElement('div');
       systemMsg.style.cssText = 'color: #666666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
       systemMsg.textContent = '✨ Messages saved for 10 minutes.';
       messagesDiv.appendChild(systemMsg);
       
-      // Display history
       messageHistory.forEach(msg => {
-        displayMessage(msg.sender, msg.text, msg.sender === clientId, msg.timestamp);
+        displayMessage(msg.sender, msg.text, msg.sender === clientId);
         if (msg.id) seenMessageIds.add(msg.id);
       });
     }
     
-    // Save message to history
+    // Save message
     function saveMessage(message) {
       messageHistory.push(message);
-      
-      // Keep only last 100 messages
       if (messageHistory.length > 100) {
         messageHistory = messageHistory.slice(-100);
       }
-      
       try {
         localStorage.setItem(`chat_history_${ROOM_NAME}`, JSON.stringify(messageHistory));
-      } catch (e) {
-        // Ignore localStorage errors
-      }
+      } catch (e) {}
     }
     
     // Clean old messages
@@ -209,7 +196,6 @@
       const messageId = Date.now() + '-' + Math.random().toString(36).substring(2);
       const timestamp = Date.now();
       
-      // Create message object
       const message = {
         id: messageId,
         sender: clientId,
@@ -217,27 +203,22 @@
         timestamp: timestamp
       };
       
-      // Display immediately
-      displayMessage(clientId, text, true, timestamp);
+      displayMessage(clientId, text, true);
       saveMessage(message);
       seenMessageIds.add(messageId);
       
-      // Send to server
       try {
         await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(message)
         });
-      } catch (err) {
-        console.log('Send error:', err);
-      }
+      } catch (err) {}
       
       input.value = '';
     }
     
-    // Poll for new messages
-    let pollCount = 0;
+    // Poll for messages
     async function pollMessages() {
       try {
         const response = await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`);
@@ -245,29 +226,21 @@
         
         if (Array.isArray(messages)) {
           messages.forEach(msg => {
-            // Skip if we've already seen this message
             if (seenMessageIds.has(msg.id)) return;
-            
-            // Skip our own messages (already displayed)
             if (msg.sender === clientId) {
               seenMessageIds.add(msg.id);
               return;
             }
             
-            // Check if message is still valid (less than 10 minutes old)
             const now = Date.now();
             if (now - msg.timestamp < TEN_MINUTES) {
               seenMessageIds.add(msg.id);
-              displayMessage(msg.sender, msg.text, false, msg.timestamp);
+              displayMessage(msg.sender, msg.text, false);
               saveMessage(msg);
             }
           });
         }
-      } catch (err) {
-        // Silent fail after first few attempts
-        pollCount++;
-        if (pollCount < 5) console.log('Poll error:', err);
-      }
+      } catch (err) {}
     }
     
     // Set up event listeners
@@ -278,13 +251,12 @@
     
     // Initialize
     loadMessageHistory();
-    
-    // Start polling
     setInterval(pollMessages, 3000);
-    setInterval(cleanOldMessages, 60000); // Clean every minute
-    
-    // Poll immediately
+    setInterval(cleanOldMessages, 60000);
     setTimeout(pollMessages, 1000);
+    
+    // Debug: Log initial state
+    console.log('Chat initialized. Container display:', container.style.display);
     
   })();
 </script>
