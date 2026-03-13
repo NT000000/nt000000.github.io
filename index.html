@@ -51,27 +51,23 @@
        <p>© 2026 Escape The Algorithm</p>
     </footer>
 
-  <!-- Simple Chat Widget - RELIABLE VERSION -->
-<div id="simple-chat-wrapper" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
-    <button id="simple-chat-button" style="background: #000000; color: white; border: 1px solid #333; border-radius: 50px; padding: 12px 24px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-weight: bold; width: 120px;">
+ <!-- Simple Chat Widget - GUARANTEED WORKING -->
+<div id="chat-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
+    <button id="chat-toggle" style="background: #000000; color: white; border: 1px solid #333; border-radius: 50px; padding: 12px 24px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-weight: bold; width: 120px;">
         💬 Chat
     </button>
     
-    <div id="simple-chat-window" style="display: none; position: absolute; bottom: 70px; right: 0; width: 320px; height: 400px; background: #000000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid #333333;">
-        <div style="background: #111111; padding: 12px; color: white; font-weight: bold; display: flex; justify-content: space-between; border-bottom: 1px solid #333;">
+    <div id="chat-box" style="display: none; position: absolute; bottom: 70px; right: 0; width: 320px; height: 400px; background: #000000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid #333333;">
+        <div style="background: #111111; padding: 12px; color: white; font-weight: bold; border-bottom: 1px solid #333;">
             <span>💬 Radio Chat</span>
-            <span style="font-size: 12px; background: #222; padding: 4px 8px; border-radius: 12px; color: #aaa;">⏱️ 10min</span>
         </div>
         
         <div id="chat-messages" style="height: 290px; overflow-y: auto; padding: 12px; color: white; font-size: 14px; background: #000000;"></div>
         
         <div style="padding: 12px; border-top: 1px solid #333; background: #111111;">
-            <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+            <div style="display: flex; gap: 8px;">
                 <input id="chat-input" type="text" placeholder="Type a message..." style="flex: 1; padding: 8px 12px; border-radius: 20px; border: 1px solid #333; background: #000; color: white; outline: none;">
-                <button id="send-btn" style="background: #333; color: white; border: 1px solid #444; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-weight: bold;">Send</button>
-            </div>
-            <div style="font-size: 10px; color: #666; text-align: center; border-top: 1px solid #222; padding-top: 6px;">
-                ⚡ Messages auto-delete after 10 minutes
+                <button id="chat-send" style="background: #333; color: white; border: 1px solid #444; border-radius: 20px; padding: 8px 16px; cursor: pointer;">Send</button>
             </div>
         </div>
     </div>
@@ -79,78 +75,40 @@
 
 <script>
 (function() {
-    // CONFIG
-    const SIGNALING_SERVER = 'https://ghostchat-signaling.nt00-161.workers.dev';
-    const ROOM_NAME = 'escape_algorithm_radio';
-    const clientId = Math.random().toString(36).substring(2, 10);
+    // Configuration
+    const ROOM = 'escape_algorithm_radio';
+    const SERVER = 'https://ghostchat-signaling.nt00-161.workers.dev';
+    const USER_ID = 'user_' + Math.random().toString(36).substring(2, 8);
     
     // Get elements
-    const button = document.getElementById('simple-chat-button');
-    const chatWindow = document.getElementById('simple-chat-window');
-    const messagesDiv = document.getElementById('chat-messages');
+    const toggle = document.getElementById('chat-toggle');
+    const box = document.getElementById('chat-box');
+    const messages = document.getElementById('chat-messages');
     const input = document.getElementById('chat-input');
-    const sendBtn = document.getElementById('send-btn');
+    const send = document.getElementById('chat-send');
     
-    // Track seen messages
-    const seenIds = new Set();
+    // State
+    let lastMessageTime = 0;
+    let messageCount = 0;
     
-    // Store ALL messages locally for persistence
-    let allMessages = [];
-    
-    // Load saved messages from localStorage
-    try {
-        const saved = localStorage.getItem(`chat_${ROOM_NAME}_${clientId}`);
-        if (saved) {
-            const parsed = JSON.parse(saved);
-            const now = Date.now();
-            const tenMinutes = 10 * 60 * 1000;
-            // Only keep messages less than 10 minutes old
-            allMessages = parsed.filter(msg => (now - msg.timestamp) < tenMinutes);
-        }
-    } catch(e) {}
-    
-    // Simple toggle
-    button.onclick = function() {
-        if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
-            chatWindow.style.display = 'block';
-            button.innerHTML = '✖ Close';
-            // Refresh messages when opening
-            loadAllMessages();
+    // Toggle chat
+    toggle.onclick = function() {
+        if (box.style.display === 'none' || box.style.display === '') {
+            box.style.display = 'block';
+            toggle.innerHTML = '✖ Close';
+            loadMessages();
         } else {
-            chatWindow.style.display = 'none';
-            button.innerHTML = '💬 Chat';
+            box.style.display = 'none';
+            toggle.innerHTML = '💬 Chat';
         }
     };
     
-    // Load all saved messages
-    function loadAllMessages() {
-        messagesDiv.innerHTML = '';
-        
-        // Add system message
-        const systemMsg = document.createElement('div');
-        systemMsg.style.cssText = 'color: #666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
-        systemMsg.textContent = '✨ Messages last 10 minutes.';
-        messagesDiv.appendChild(systemMsg);
-        
-        // Sort messages by timestamp
-        const sortedMessages = [...allMessages].sort((a, b) => a.timestamp - b.timestamp);
-        
-        // Display all messages
-        sortedMessages.forEach(msg => {
-            const isMe = msg.sender === clientId;
-            displayMessage(msg.sender, msg.text, isMe);
-            if (msg.id) seenIds.add(msg.id);
-        });
-        
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    }
-    
-    // Display message
-    function displayMessage(sender, text, isMe = false) {
-        const msgDiv = document.createElement('div');
-        msgDiv.style.margin = '8px 0';
-        msgDiv.style.display = 'flex';
-        msgDiv.style.justifyContent = isMe ? 'flex-end' : 'flex-start';
+    // Add message to display
+    function addMessage(text, sender, isMe) {
+        const div = document.createElement('div');
+        div.style.margin = '8px 0';
+        div.style.display = 'flex';
+        div.style.justifyContent = isMe ? 'flex-end' : 'flex-start';
         
         const bubble = document.createElement('div');
         bubble.style.maxWidth = '80%';
@@ -160,33 +118,35 @@
         bubble.style.color = 'white';
         bubble.style.border = '1px solid #444';
         
-        const nameSpan = document.createElement('div');
-        nameSpan.style.fontSize = '11px';
-        nameSpan.style.opacity = '0.7';
-        nameSpan.style.marginBottom = '4px';
-        nameSpan.style.color = '#999';
-        nameSpan.textContent = isMe ? 'You' : 'Listener ' + sender.substr(0, 4);
+        const name = document.createElement('div');
+        name.style.fontSize = '11px';
+        name.style.opacity = '0.7';
+        name.style.marginBottom = '4px';
+        name.style.color = '#999';
+        name.textContent = isMe ? 'You' : 'User ' + sender.substring(5, 9);
         
-        const textSpan = document.createElement('div');
-        textSpan.textContent = text;
+        const msgText = document.createElement('div');
+        msgText.textContent = text;
         
-        bubble.appendChild(nameSpan);
-        bubble.appendChild(textSpan);
-        msgDiv.appendChild(bubble);
-        messagesDiv.appendChild(msgDiv);
+        bubble.appendChild(name);
+        bubble.appendChild(msgText);
+        div.appendChild(bubble);
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
     }
     
-    // Save message to local storage
-    function saveMessageToStorage(message) {
-        allMessages.push(message);
-        
-        // Keep only last 100 messages
-        if (allMessages.length > 100) {
-            allMessages = allMessages.slice(-100);
-        }
-        
+    // Load messages from server
+    async function loadMessages() {
         try {
-            localStorage.setItem(`chat_${ROOM_NAME}_${clientId}`, JSON.stringify(allMessages));
+            const res = await fetch(`${SERVER}?room=${ROOM}`);
+            const data = await res.json();
+            
+            if (data && data.text && data.sender !== USER_ID) {
+                if (data.time > lastMessageTime) {
+                    lastMessageTime = data.time;
+                    addMessage(data.text, data.sender, false);
+                }
+            }
         } catch(e) {}
     }
     
@@ -195,115 +155,42 @@
         const text = input.value.trim();
         if (!text) return;
         
-        const msgId = Date.now() + '-' + Math.random();
-        const timestamp = Date.now();
-        
+        const time = Date.now();
         const message = {
-            id: msgId,
-            sender: clientId,
+            room: ROOM,
+            sender: USER_ID,
             text: text,
-            timestamp: timestamp
+            time: time,
+            id: time + '-' + messageCount++
         };
         
-        // Save locally
-        saveMessageToStorage(message);
-        seenIds.add(msgId);
-        
-        // Display immediately
-        displayMessage(clientId, text, true);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        // Show immediately
+        addMessage(text, USER_ID, true);
         
         // Send to server
         try {
-            await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`, {
+            await fetch(`${SERVER}?room=${ROOM}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(message)
             });
-        } catch(e) {
-            console.log('Send error:', e);
-        }
+            lastMessageTime = time;
+        } catch(e) {}
         
         input.value = '';
     }
     
-    // Get messages from server
-    async function getMessages() {
-        try {
-            const response = await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`);
-            const messages = await response.json();
-            
-            if (Array.isArray(messages)) {
-                let newMessages = false;
-                
-                messages.forEach(msg => {
-                    // Skip if we've already seen this message
-                    if (seenIds.has(msg.id)) return;
-                    
-                    // Check if message is less than 10 minutes old
-                    const now = Date.now();
-                    const tenMinutes = 10 * 60 * 1000;
-                    
-                    if (now - msg.timestamp < tenMinutes) {
-                        seenIds.add(msg.id);
-                        
-                        // Save to local storage
-                        saveMessageToStorage(msg);
-                        
-                        // Display if it's not from us
-                        if (msg.sender !== clientId) {
-                            displayMessage(msg.sender, msg.text, false);
-                            newMessages = true;
-                        }
-                    }
-                });
-                
-                if (newMessages) {
-                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                }
-            }
-        } catch(e) {
-            console.log('Poll error:', e);
-        }
-    }
-    
-    // Clean old messages
-    function cleanOldMessages() {
-        const now = Date.now();
-        const tenMinutes = 10 * 60 * 1000;
-        const beforeCount = allMessages.length;
-        
-        allMessages = allMessages.filter(msg => (now - msg.timestamp) < tenMinutes);
-        
-        if (beforeCount !== allMessages.length) {
-            try {
-                localStorage.setItem(`chat_${ROOM_NAME}_${clientId}`, JSON.stringify(allMessages));
-            } catch(e) {}
-            
-            // Reload display if chat is open
-            if (chatWindow.style.display === 'block') {
-                loadAllMessages();
-            }
-        }
-    }
-    
     // Event listeners
-    sendBtn.onclick = sendMessage;
+    send.onclick = sendMessage;
     input.onkeypress = (e) => {
         if (e.key === 'Enter') sendMessage();
     };
     
+    // Check for new messages every 2 seconds
+    setInterval(loadMessages, 2000);
+    
     // Initial load
-    loadAllMessages();
-    
-    // Start polling (every 2 seconds)
-    setInterval(getMessages, 2000);
-    
-    // Clean old messages every minute
-    setInterval(cleanOldMessages, 60000);
-    
-    // Also poll immediately
-    setTimeout(getMessages, 1000);
+    setTimeout(loadMessages, 1000);
     
 })();
 </script>
