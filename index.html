@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NT00 Radio - Escape The Algorithm</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <a href="index.html" class="active">🎵 Listen</a>
+        <a href="schedule.html">📅 Schedule</a>
+    </nav>
+    
+    <header>
+        <h1>Escape The Algorithm</h1>
+        <p class="tagline">Freeform Radio</p>
+    </header>
+    
+    <main>
+        <div class="player-container">
+            <h2>Listen Live</h2>
+            
+            <audio id="radio-player" controls preload="none">
+                <source src="https://nt00.xyz/listen/escape_the_algorithm/radio.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            
+            <div class="now-playing">
+                <div class="song-title">Loading now playing...</div>
+                <div class="artist-name"></div>
+            </div>
+            
+            <div class="listener-count" id="listener-count">
+                🔴 LIVE
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>© 2024 Escape The Algorithm</p>
+    </footer>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>
