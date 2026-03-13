@@ -51,7 +51,7 @@
        <p>© 2026 Escape The Algorithm</p>
     </footer>
 
-   <!-- Simple Chat Widget - WORKING VERSION -->
+  <!-- Simple Chat Widget - RELIABLE VERSION -->
 <div id="simple-chat-wrapper" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
     <button id="simple-chat-button" style="background: #000000; color: white; border: 1px solid #333; border-radius: 50px; padding: 12px 24px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.5); font-weight: bold; width: 120px;">
         💬 Chat
@@ -94,19 +94,59 @@
     // Track seen messages
     const seenIds = new Set();
     
+    // Store ALL messages locally for persistence
+    let allMessages = [];
+    
+    // Load saved messages from localStorage
+    try {
+        const saved = localStorage.getItem(`chat_${ROOM_NAME}_${clientId}`);
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            const now = Date.now();
+            const tenMinutes = 10 * 60 * 1000;
+            // Only keep messages less than 10 minutes old
+            allMessages = parsed.filter(msg => (now - msg.timestamp) < tenMinutes);
+        }
+    } catch(e) {}
+    
     // Simple toggle
     button.onclick = function() {
         if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
             chatWindow.style.display = 'block';
             button.innerHTML = '✖ Close';
+            // Refresh messages when opening
+            loadAllMessages();
         } else {
             chatWindow.style.display = 'none';
             button.innerHTML = '💬 Chat';
         }
     };
     
+    // Load all saved messages
+    function loadAllMessages() {
+        messagesDiv.innerHTML = '';
+        
+        // Add system message
+        const systemMsg = document.createElement('div');
+        systemMsg.style.cssText = 'color: #666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
+        systemMsg.textContent = '✨ Messages last 10 minutes.';
+        messagesDiv.appendChild(systemMsg);
+        
+        // Sort messages by timestamp
+        const sortedMessages = [...allMessages].sort((a, b) => a.timestamp - b.timestamp);
+        
+        // Display all messages
+        sortedMessages.forEach(msg => {
+            const isMe = msg.sender === clientId;
+            displayMessage(msg.sender, msg.text, isMe);
+            if (msg.id) seenIds.add(msg.id);
+        });
+        
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+    
     // Display message
-    function addMessage(sender, text, isMe = false) {
+    function displayMessage(sender, text, isMe = false) {
         const msgDiv = document.createElement('div');
         msgDiv.style.margin = '8px 0';
         msgDiv.style.display = 'flex';
@@ -134,14 +174,21 @@
         bubble.appendChild(textSpan);
         msgDiv.appendChild(bubble);
         messagesDiv.appendChild(msgDiv);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
     
-    // System message
-    const systemMsg = document.createElement('div');
-    systemMsg.style.cssText = 'color: #666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
-    systemMsg.textContent = '✨ Messages last 10 minutes.';
-    messagesDiv.appendChild(systemMsg);
+    // Save message to local storage
+    function saveMessageToStorage(message) {
+        allMessages.push(message);
+        
+        // Keep only last 100 messages
+        if (allMessages.length > 100) {
+            allMessages = allMessages.slice(-100);
+        }
+        
+        try {
+            localStorage.setItem(`chat_${ROOM_NAME}_${clientId}`, JSON.stringify(allMessages));
+        } catch(e) {}
+    }
     
     // Send message
     async function sendMessage() {
@@ -149,16 +196,22 @@
         if (!text) return;
         
         const msgId = Date.now() + '-' + Math.random();
+        const timestamp = Date.now();
+        
         const message = {
             id: msgId,
             sender: clientId,
             text: text,
-            timestamp: Date.now()
+            timestamp: timestamp
         };
         
-        // Show immediately
-        addMessage(clientId, text, true);
+        // Save locally
+        saveMessageToStorage(message);
         seenIds.add(msgId);
+        
+        // Display immediately
+        displayMessage(clientId, text, true);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
         
         // Send to server
         try {
@@ -167,26 +220,71 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(message)
             });
-        } catch(e) {}
+        } catch(e) {
+            console.log('Send error:', e);
+        }
         
         input.value = '';
     }
     
-    // Get messages
+    // Get messages from server
     async function getMessages() {
         try {
-            const res = await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`);
-            const messages = await res.json();
+            const response = await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`);
+            const messages = await response.json();
             
             if (Array.isArray(messages)) {
+                let newMessages = false;
+                
                 messages.forEach(msg => {
-                    if (!seenIds.has(msg.id) && msg.sender !== clientId) {
+                    // Skip if we've already seen this message
+                    if (seenIds.has(msg.id)) return;
+                    
+                    // Check if message is less than 10 minutes old
+                    const now = Date.now();
+                    const tenMinutes = 10 * 60 * 1000;
+                    
+                    if (now - msg.timestamp < tenMinutes) {
                         seenIds.add(msg.id);
-                        addMessage(msg.sender, msg.text, false);
+                        
+                        // Save to local storage
+                        saveMessageToStorage(msg);
+                        
+                        // Display if it's not from us
+                        if (msg.sender !== clientId) {
+                            displayMessage(msg.sender, msg.text, false);
+                            newMessages = true;
+                        }
                     }
                 });
+                
+                if (newMessages) {
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                }
             }
-        } catch(e) {}
+        } catch(e) {
+            console.log('Poll error:', e);
+        }
+    }
+    
+    // Clean old messages
+    function cleanOldMessages() {
+        const now = Date.now();
+        const tenMinutes = 10 * 60 * 1000;
+        const beforeCount = allMessages.length;
+        
+        allMessages = allMessages.filter(msg => (now - msg.timestamp) < tenMinutes);
+        
+        if (beforeCount !== allMessages.length) {
+            try {
+                localStorage.setItem(`chat_${ROOM_NAME}_${clientId}`, JSON.stringify(allMessages));
+            } catch(e) {}
+            
+            // Reload display if chat is open
+            if (chatWindow.style.display === 'block') {
+                loadAllMessages();
+            }
+        }
     }
     
     // Event listeners
@@ -195,9 +293,17 @@
         if (e.key === 'Enter') sendMessage();
     };
     
-    // Start polling
+    // Initial load
+    loadAllMessages();
+    
+    // Start polling (every 2 seconds)
     setInterval(getMessages, 2000);
-    getMessages();
+    
+    // Clean old messages every minute
+    setInterval(cleanOldMessages, 60000);
+    
+    // Also poll immediately
+    setTimeout(getMessages, 1000);
     
 })();
 </script>
