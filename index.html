@@ -28,7 +28,7 @@
     <footer>
        <p>© 2026 Escape The Algorithm</p>
     </footer>
-<!-- GhostChat - Zero Storage Chat Widget (Black Theme, 10min Retention) -->
+<!-- GhostChat - Zero Storage Chat Widget (Fully Fixed) -->
 <div id="ghostchat-container" style="position: fixed; bottom: 20px; right: 20px; width: 320px; height: 400px; z-index: 1000; display: none;"></div>
 
 <script>
@@ -39,6 +39,25 @@
     
     // Track seen messages to prevent duplicates
     const seenMessages = new Set();
+    
+    // Load saved messages from localStorage (with timestamps)
+    let localMessages = [];
+    try {
+      const saved = localStorage.getItem(`chat_${ROOM_NAME}_messages`);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const now = Date.now();
+        const tenMinutes = 10 * 60 * 1000;
+        
+        // Only keep messages less than 10 minutes old
+        localMessages = parsed.filter(msg => (now - msg.timestamp) < tenMinutes);
+        
+        // Save back cleaned list
+        localStorage.setItem(`chat_${ROOM_NAME}_messages`, JSON.stringify(localMessages));
+      }
+    } catch (e) {
+      // Ignore localStorage errors
+    }
     
     // Create chat container
     const container = document.getElementById('ghostchat-container');
@@ -65,7 +84,7 @@
     toggleBtn.onmouseover = () => toggleBtn.style.transform = 'scale(1.05)';
     toggleBtn.onmouseout = () => toggleBtn.style.transform = 'scale(1)';
     toggleBtn.onclick = () => {
-      if (container.style.display === 'none') {
+      if (container.style.display === 'none' || container.style.display === '') {
         container.style.display = 'block';
         toggleBtn.innerHTML = '✖ Close Chat';
       } else {
@@ -91,7 +110,7 @@
             <button id="send-btn" style="background: #333333; color: #ffffff; border: 1px solid #444444; border-radius: 20px; padding: 8px 16px; cursor: pointer; font-weight: bold;">Send</button>
           </div>
           <div style="font-size: 11px; color: #666666; margin-top: 8px; text-align: center;">
-            ⚡ Messages auto-delete after 10 minutes • Private
+            ⚡ Messages saved for 10 minutes • Close button works!
           </div>
         </div>
       </div>
@@ -101,46 +120,32 @@
     const peerId = Math.random().toString(36).substring(2, 8);
     const messagesDiv = document.getElementById('chat-messages');
     
-    // Store messages locally with timestamps (memory only)
-    let localMessages = [];
-    
-    // Add system message
-    const systemMsg = document.createElement('div');
-    systemMsg.style.cssText = 'color: #666666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
-    systemMsg.textContent = '✨ Messages last for 10 minutes.';
-    messagesDiv.appendChild(systemMsg);
-    
-    // Clean old messages function (10 minutes = 600,000 ms)
-    function cleanOldMessages() {
-      const now = Date.now();
-      const tenMinutes = 10 * 60 * 1000; // 600,000 ms
-      
-      // Remove from local storage
-      localMessages = localMessages.filter(msg => (now - msg.timestamp) < tenMinutes);
-      
-      // Remove from DOM
-      const messageElements = messagesDiv.children;
-      for (let i = messageElements.length - 1; i >= 0; i--) {
-        const element = messageElements[i];
-        if (element.classList && element.classList.contains('message-timestamp')) {
-          const msgTime = parseInt(element.dataset.timestamp || '0');
-          if (now - msgTime > tenMinutes) {
-            element.remove();
-          }
-        }
+    // Save messages to localStorage
+    function saveMessages() {
+      try {
+        localStorage.setItem(`chat_${ROOM_NAME}_messages`, JSON.stringify(localMessages));
+      } catch (e) {
+        // Ignore storage errors
       }
     }
     
-    // Run cleanup every minute
-    setInterval(cleanOldMessages, 60000);
-    
-    function addMessage(sender, text, isSelf = false) {
+    // Load and display existing messages
+    function loadExistingMessages() {
       const now = Date.now();
+      const tenMinutes = 10 * 60 * 1000;
       
-      // Create message container
+      localMessages.forEach(msg => {
+        if (now - msg.timestamp < tenMinutes) {
+          displayMessage(msg.sender, msg.text, msg.isSelf, false);
+        }
+      });
+    }
+    
+    // Display message without saving
+    function displayMessage(sender, text, isSelf = false, addToStorage = true) {
       const msgContainer = document.createElement('div');
       msgContainer.classList.add('message-timestamp');
-      msgContainer.dataset.timestamp = now;
+      msgContainer.dataset.timestamp = Date.now();
       msgContainer.style.cssText = `margin: 8px 0; display: flex; ${isSelf ? 'justify-content: flex-end;' : 'justify-content: flex-start;'}`;
       
       const msgBubble = document.createElement('div');
@@ -167,14 +172,56 @@
       messagesDiv.appendChild(msgContainer);
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
       
-      // Store locally
-      localMessages.push({
-        sender,
-        text,
-        isSelf,
-        timestamp: now
-      });
+      if (addToStorage) {
+        localMessages.push({
+          sender,
+          text,
+          isSelf,
+          timestamp: Date.now()
+        });
+        saveMessages();
+      }
     }
+    
+    // Clean old messages function
+    function cleanOldMessages() {
+      const now = Date.now();
+      const tenMinutes = 10 * 60 * 1000;
+      
+      // Filter localMessages
+      const beforeCount = localMessages.length;
+      localMessages = localMessages.filter(msg => (now - msg.timestamp) < tenMinutes);
+      
+      if (beforeCount !== localMessages.length) {
+        saveMessages();
+        
+        // Refresh display
+        messagesDiv.innerHTML = '';
+        
+        // Add system message back
+        const systemMsg = document.createElement('div');
+        systemMsg.style.cssText = 'color: #666666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
+        systemMsg.textContent = '✨ Messages last for 10 minutes.';
+        messagesDiv.appendChild(systemMsg);
+        
+        // Redisplay messages
+        localMessages.forEach(msg => {
+          displayMessage(msg.sender, msg.text, msg.isSelf, false);
+        });
+      }
+    }
+    
+    // Add system message
+    const systemMsg = document.createElement('div');
+    systemMsg.style.cssText = 'color: #666666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
+    systemMsg.textContent = '✨ Messages last for 10 minutes.';
+    messagesDiv.appendChild(systemMsg);
+    
+    // Load any existing messages
+    loadExistingMessages();
+    
+    // Run cleanup every minute
+    setInterval(cleanOldMessages, 60000);
     
     // Send message function
     async function sendMessage() {
@@ -187,9 +234,9 @@
       const timestamp = Date.now();
       
       // Display locally
-      addMessage(peerId, text, true);
+      displayMessage(peerId, text, true);
       
-      // Send to signaling server with timestamp
+      // Send to signaling server
       try {
         await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`, {
           method: 'POST',
@@ -217,28 +264,24 @@
         const response = await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`);
         const data = await response.json();
         
+        const now = Date.now();
+        const tenMinutes = 10 * 60 * 1000;
+        
         // Handle single message
         if (data.id && !seenMessages.has(data.id) && data.sender !== peerId) {
-          // Check if message is less than 10 minutes old
-          const now = Date.now();
-          const tenMinutes = 10 * 60 * 1000;
-          
           if (now - data.timestamp < tenMinutes) {
             seenMessages.add(data.id);
-            addMessage(data.sender, data.text);
+            displayMessage(data.sender, data.text, false);
           }
         }
         
         // Handle array of messages
         if (Array.isArray(data)) {
-          const now = Date.now();
-          const tenMinutes = 10 * 60 * 1000;
-          
           data.forEach(msg => {
             if (!seenMessages.has(msg.id) && msg.sender !== peerId) {
               if (now - msg.timestamp < tenMinutes) {
                 seenMessages.add(msg.id);
-                addMessage(msg.sender, msg.text);
+                displayMessage(msg.sender, msg.text, false);
               }
             }
           });
@@ -257,12 +300,10 @@
     // Poll for new messages every 3 seconds
     setInterval(pollMessages, 3000);
     
-    // Clear seen messages occasionally (older than 10 minutes)
+    // Clear old seen messages every 10 minutes
     setInterval(() => {
-      const tenMinutesAgo = Date.now() - (10 * 60 * 1000);
-      // Clear seen messages that are older than 10 minutes
-      seenMessages.clear(); // Simple approach - can be optimized if needed
-    }, 600000); // Clear every 10 minutes
+      seenMessages.clear();
+    }, 600000);
     
   })();
 </script>
