@@ -28,7 +28,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Navigation - Minimal & Elegant */
+/* Navigation */
 .main-nav {
     background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(12px);
@@ -70,7 +70,7 @@ body {
     opacity: 1;
 }
 
-/* Header - Minimal */
+/* Header */
 .station-header {
     text-align: center;
     padding: 1.2rem 1rem 0.5rem 1rem;
@@ -132,7 +132,7 @@ body {
     opacity: 1;
 }
 
-/* Footer - Minimal & Elegant */
+/* Footer */
 footer {
     background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(12px);
@@ -152,7 +152,7 @@ footer {
     gap: 0.4rem;
 }
 
-/* Social Icons - Subtle & Clean */
+/* Social Icons */
 .social-icons {
     display: flex;
     gap: 1.2rem;
@@ -195,7 +195,7 @@ footer {
     color: white;
 }
 
-/* Footer Text - Ultra Subtle */
+/* Footer Text */
 .copyright {
     font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.35);
@@ -222,7 +222,7 @@ footer {
     overflow: hidden;
 }
 
-/* Chat Widget - Minimal Design */
+/* Chat Widget */
 #simple-chat-wrapper {
     position: fixed;
     bottom: 15px;
@@ -339,22 +339,20 @@ footer {
     color: rgba(255, 255, 255, 0.95);
 }
 
-/* FIXED: Mobile optimizations - Social icons fully visible */
+/* ===== MOBILE FIXES - COMPLETELY REVISED ===== */
 @media (max-width: 768px) {
-    html, body {
-        height: 100%;
-    }
-    
+    /* Reset body for mobile */
     body {
-        display: flex;
-        flex-direction: column;
         min-height: 100vh;
         height: auto;
-        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto; /* Allow scrolling only if absolutely needed */
     }
     
+    /* Compact header */
     .station-header {
-        padding: 0.6rem 0.5rem 0.2rem 0.5rem;
+        padding: 0.5rem 0.5rem 0.2rem 0.5rem;
     }
     
     .station-header h1 {
@@ -367,33 +365,32 @@ footer {
         opacity: 0.5;
     }
     
+    /* Main content - takes exactly the space it needs */
     .main-content {
-        justify-content: flex-start;
+        flex: 0 1 auto; /* Don't grow, just take needed space */
         padding: 0.1rem 0.8rem;
-        flex: 1 1 auto;
+        justify-content: flex-start;
     }
     
+    /* Player section */
     .player-section {
-        display: flex;
-        justify-content: center;
-        padding-left: 0;
-        margin: 0.2rem 0;
+        margin: 0.1rem 0;
     }
     
     .player-container iframe {
         height: 110px !important;
     }
     
-    /* FIXED: Footer with enough space for social icons */
+    /* Footer - compact but with full icon visibility */
     footer {
-        padding: 0.6rem 0.3rem;
-        margin-top: auto;
+        padding: 0.4rem 0.3rem;
+        margin-top: auto; /* Push to bottom */
         flex-shrink: 0;
     }
     
     .social-icons {
         gap: 1rem;
-        margin-bottom: 0.2rem;
+        margin: 0.2rem 0;
     }
     
     .social-icon {
@@ -404,13 +401,14 @@ footer {
     
     .copyright {
         font-size: 0.65rem;
-        margin-bottom: 0.1rem;
+        margin: 0.1rem 0;
     }
     
     .tech-badge {
         font-size: 0.55rem;
     }
     
+    /* Chat widget adjustment */
     #simple-chat-wrapper {
         bottom: 8px;
         right: 8px;
@@ -419,6 +417,12 @@ footer {
     #simple-chat-button {
         padding: 6px 14px;
         font-size: 12px;
+    }
+    
+    #simple-chat-window {
+        bottom: 50px;
+        width: 260px;
+        height: 330px;
     }
 }
 
@@ -436,10 +440,6 @@ footer {
         height: 105px !important;
     }
     
-    footer {
-        padding: 0.5rem 0.3rem;
-    }
-    
     .social-icon {
         width: 34px;
         height: 34px;
@@ -452,6 +452,11 @@ footer {
     
     .tech-badge {
         font-size: 0.5rem;
+    }
+    
+    #simple-chat-window {
+        width: 240px;
+        height: 310px;
     }
 }
 
