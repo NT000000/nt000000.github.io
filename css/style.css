@@ -104,13 +104,13 @@ body {
     padding: 0.5rem 1.5rem;
 }
 
-/* Player section - FIXED: Centered on PC */
+/* Player section - Centered on PC */
 .player-section {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    justify-content: center; /* This centers the player on PC */
+    justify-content: center;
 }
 
 .player-container {
@@ -339,22 +339,22 @@ footer {
     color: rgba(255, 255, 255, 0.95);
 }
 
-/* FIXED: Mobile optimizations - NO SCROLLING */
+/* FIXED: Mobile optimizations - Social icons fully visible */
 @media (max-width: 768px) {
     html, body {
         height: 100%;
-        overflow: hidden; /* Prevents any scrolling */
     }
     
     body {
         display: flex;
         flex-direction: column;
-        height: 100vh;
-        overflow-y: auto; /* Allows internal scrolling only if needed */
+        min-height: 100vh;
+        height: auto;
+        overflow-y: auto;
     }
     
     .station-header {
-        padding: 0.5rem 0.5rem 0.2rem 0.5rem;
+        padding: 0.6rem 0.5rem 0.2rem 0.5rem;
     }
     
     .station-header h1 {
@@ -370,32 +370,30 @@ footer {
     .main-content {
         justify-content: flex-start;
         padding: 0.1rem 0.8rem;
-        flex: 0 1 auto; /* Takes only needed space */
+        flex: 1 1 auto;
     }
     
     .player-section {
         display: flex;
         justify-content: center;
         padding-left: 0;
-        margin: 0.1rem 0;
-    }
-    
-    .player-container {
-        max-width: 100%;
+        margin: 0.2rem 0;
     }
     
     .player-container iframe {
         height: 110px !important;
     }
     
+    /* FIXED: Footer with enough space for social icons */
     footer {
-        padding: 0.4rem 0.3rem;
+        padding: 0.6rem 0.3rem;
         margin-top: auto;
         flex-shrink: 0;
     }
     
     .social-icons {
         gap: 1rem;
+        margin-bottom: 0.2rem;
     }
     
     .social-icon {
@@ -405,11 +403,12 @@ footer {
     }
     
     .copyright {
-        font-size: 0.6rem;
+        font-size: 0.65rem;
+        margin-bottom: 0.1rem;
     }
     
     .tech-badge {
-        font-size: 0.5rem;
+        font-size: 0.55rem;
     }
     
     #simple-chat-wrapper {
@@ -437,22 +436,22 @@ footer {
         height: 105px !important;
     }
     
+    footer {
+        padding: 0.5rem 0.3rem;
+    }
+    
     .social-icon {
         width: 34px;
         height: 34px;
         font-size: 0.95rem;
     }
     
-    footer {
-        padding: 0.3rem 0.3rem;
-    }
-    
     .copyright {
-        font-size: 0.55rem;
+        font-size: 0.6rem;
     }
     
     .tech-badge {
-        font-size: 0.45rem;
+        font-size: 0.5rem;
     }
 }
 
@@ -470,5 +469,13 @@ footer {
         width: 32px;
         height: 32px;
         font-size: 0.9rem;
+    }
+    
+    .copyright {
+        font-size: 0.55rem;
+    }
+    
+    .tech-badge {
+        font-size: 0.45rem;
     }
 }
