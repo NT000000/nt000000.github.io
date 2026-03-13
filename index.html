@@ -11,71 +11,72 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Simple Navigation -->
-    <nav class="main-nav">
-        <div class="nav-container">
-            <a href="index.html" class="active">🔊 Listen</a>
-            <a href="schedule.html">📅 Schedule</a>
-            <a href="about.html">ℹ️ About</a>
-        </div>
-    </nav>
-    
-    <!-- Minimal Header - Just the station name -->
-    <header class="station-header">
-        <h1>Escape The Algorithm</h1>
-        <p class="station-tagline">Freeform Radio · 🛰️Broadcasting 24/7</p>
-    </header>
-    
-    <!-- ONLY the AzuraCast player - nothing else -->
-    <main>
-        <div class="player-container">
-            <iframe 
-                src="https://nt00.xyz/public/escape_the_algorithm/embed?primary_color=000000&bg_color=000000&text_color=ffffff&rounded=1" 
-                frameborder="0" 
-                allowtransparency="true" 
-                style="width: 100%; height: 180px; border: 0; border-radius: 12px;"
-                allow="autoplay; encrypted-media"
-                title="Escape The Algorithm Radio Player">
-            </iframe>
-        </div>
-    </main>
-    
-    <!-- Simple Footer with Social Icons Only -->
-    <footer>
-        <div class="footer-content">
-            <div class="social-icons">
-                <a href="https://instagram.com/escape_the_algorithm" target="_blank" rel="noopener" class="social-icon instagram">
-                    <i class="fab fa-instagram"></i>
-                    <span class="sr-only">Instagram</span>
-                </a>
-                <a href="https://youtube.com/@escapethealgorithm" target="_blank" rel="noopener" class="social-icon youtube">
-                    <i class="fab fa-youtube"></i>
-                    <span class="sr-only">YouTube</span>
-                </a>
-                <a href="https://soundcloud.com/escape_the_algorithm" target="_blank" rel="noopener" class="social-icon soundcloud">
-                    <i class="fab fa-soundcloud"></i>
-                    <span class="sr-only">SoundCloud</span>
-                </a>
+    <div class="page-wrapper">
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <a href="index.html" class="active">🔊 Listen</a>
+                <a href="schedule.html">📅 Schedule</a>
+                <a href="about.html">ℹ️ About</a>
             </div>
-            <p class="copyright">© 2026 Escape The Algorithm. All rights reserved.
-                                   Powered by AzuraCast · Cloudflare · GitHub</p>
-        </div>
-    </footer>
+        </nav>
+        
+        <!-- Header -->
+        <header class="station-header">
+            <h1>Escape The Algorithm</h1>
+            <p class="station-tagline">Freeform Radio · Broadcasting 24/7</p>
+        </header>
+        
+        <!-- Main Content with Player -->
+        <main class="main-content">
+            <div class="player-wrapper">
+                <div class="player-container">
+                    <iframe 
+                        src="https://nt00.xyz/public/escape_the_algorithm/embed?primary_color=000000&bg_color=000000&text_color=ffffff&rounded=1" 
+                        frameborder="0" 
+                        allowtransparency="true" 
+                        style="width: 100%; height: 120px; border: 0; border-radius: 12px;"
+                        allow="autoplay; encrypted-media"
+                        title="Escape The Algorithm Radio Player">
+                    </iframe>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="social-icons">
+                    <a href="https://instagram.com/escape_the_algorithm" target="_blank" rel="noopener" class="social-icon instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span class="sr-only">Instagram</span>
+                    </a>
+                    <a href="https://youtube.com/@escapethealgorithm" target="_blank" rel="noopener" class="social-icon youtube">
+                        <i class="fab fa-youtube"></i>
+                        <span class="sr-only">YouTube</span>
+                    </a>
+                    <a href="https://soundcloud.com/escape_the_algorithm" target="_blank" rel="noopener" class="social-icon soundcloud">
+                        <i class="fab fa-soundcloud"></i>
+                        <span class="sr-only">SoundCloud</span>
+                    </a>
+                </div>
+                <p class="copyright">© 2026 Escape The Algorithm. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
 
-    <!-- Chat Widget - Keep as is -->
+    <!-- Chat Widget -->
     <div id="simple-chat-wrapper">
         <button id="simple-chat-button">💬 Chat</button>
         <div id="simple-chat-window" style="display: none;">
-            <div style="background: #111; padding: 12px; color: white; display: flex; justify-content: space-between;">
+            <div class="chat-header">
                 <span>💬 Radio Chat</span>
-                <span style="font-size: 12px; background: #222; padding: 4px 8px; border-radius: 12px;">⏱️ 10min</span>
+                <span class="chat-timer">⏱️ 10min</span>
             </div>
-            <div id="chat-messages" style="height: 290px; overflow-y: auto; padding: 12px; background: #000;"></div>
-            <div style="padding: 12px; border-top: 1px solid #333;">
-                <div style="display: flex; gap: 8px;">
-                    <input id="chat-input" type="text" placeholder="Type a message..." style="flex:1; padding:8px; background:#000; color:white; border:1px solid #333; border-radius:20px;">
-                    <button id="send-btn" style="background:#333; color:white; border:none; border-radius:20px; padding:8px 16px;">Send</button>
-                </div>
+            <div id="chat-messages" class="chat-messages"></div>
+            <div class="chat-input-area">
+                <input id="chat-input" type="text" placeholder="Type a message...">
+                <button id="send-btn">Send</button>
             </div>
         </div>
     </div>
