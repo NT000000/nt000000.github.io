@@ -1,4 +1,4 @@
-** {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -14,31 +14,47 @@ body {
     min-height: 100vh;
     color: white;
     width: 100%;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden; /* CRITICAL: Prevents horizontal scroll */
+    position: relative;
 }
 
-/* Navigation */
+/* Navigation - FIXED for mobile */
 .main-nav {
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
-    padding: 1rem;
+    padding: 1rem 0.5rem;
     position: sticky;
     top: 0;
     z-index: 100;
     text-align: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
+    left: 0;
+    right: 0;
+}
+
+.nav-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    margin: 0 auto;
+    gap: 0.3rem;
 }
 
 .main-nav a {
     color: white;
     text-decoration: none;
-    margin: 0 1rem;
-    padding: 0.5rem 1.5rem;
+    margin: 0.2rem;
+    padding: 0.4rem 0.8rem;
     border-radius: 30px;
     transition: all 0.3s ease;
     font-weight: 500;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
 }
 
 .main-nav a:hover {
@@ -51,99 +67,162 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.nav-icon {
+    font-size: 1rem;
+}
+
+.nav-text {
+    font-size: 0.9rem;
+}
+
 /* Header with Logo */
 .station-header {
     text-align: center;
-    padding: 2rem 1rem;
-    max-width: 1200px;
+    padding: 1.5rem 1rem;
+    max-width: 100%;
     margin: 0 auto;
     width: 100%;
 }
 
-.logo-container {
+.logo-wrapper {
     margin-bottom: 1rem;
 }
 
 .station-logo {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     border: 3px solid white;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease;
-    object-fit: cover; /* Prevents logo stretching */
+    object-fit: cover;
+    max-width: 100%;
 }
 
 .station-logo:hover {
     transform: scale(1.05);
 }
 
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+.station-title {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     word-break: break-word;
+    padding: 0 0.5rem;
 }
 
-.tagline {
-    font-size: 1.2rem;
+.station-tagline {
+    font-size: 1.1rem;
     opacity: 0.9;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    padding: 0 0.5rem;
+}
+
+.station-badge {
+    margin-top: 0.5rem;
+}
+
+.live-badge {
+    background: #ff0000;
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    display: inline-block;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
 }
 
 /* Main Content - FIXED for proper sizing */
 main {
     max-width: 800px;
-    width: 90%; /* Responsive width */
+    width: 95%; /* Slightly more responsive */
     margin: 0 auto;
-    padding: 0 1rem 2rem;
+    padding: 0 0.5rem 2rem;
 }
 
-.player-container {
+.player-card {
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(15px);
     border-radius: 20px;
-    padding: 2rem;
+    padding: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
     box-sizing: border-box;
 }
 
-.player-container h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-    text-align: center;
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.player-header h2 {
+    font-size: 1.5rem;
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 0;
 }
 
-/* AzuraCast Embed Container - FIXED for proper sizing */
-.embed-container {
-    margin: 1.5rem 0;
+.player-controls-hint .hint-text {
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+/* Player Embed - FIXED sizing */
+.player-embed {
+    width: 100%;
+    margin: 1rem 0;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    position: relative;
 }
 
-.embed-container iframe {
-    display: block;
-    background: rgba(0, 0, 0, 0.2);
-    width: 100% !important; /* Force full width */
-    height: 200px !important; /* Set fixed height */
+.player-embed iframe {
+    width: 100% !important;
+    height: 150px !important;
     border: none;
+    display: block;
     max-width: 100%;
+}
+
+/* Track Info */
+.track-info {
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.track-title {
+    font-size: 1rem;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-artist {
+    font-size: 0.9rem;
+    color: #aaa;
 }
 
 /* Chat Container - FIXED positioning */
 #simple-chat-wrapper {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 15px;
+    right: 15px;
     z-index: 9999;
-    max-width: 100%;
+    max-width: calc(100% - 30px);
 }
 
 #simple-chat-button {
@@ -151,157 +230,95 @@ main {
     color: white;
     border: 1px solid #333;
     border-radius: 50px;
-    padding: 12px 24px;
-    font-size: 16px;
+    padding: 10px 20px;
+    font-size: 14px;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     font-weight: bold;
-    width: 120px;
+    width: 110px;
     transition: transform 0.2s;
 }
 
 #simple-chat-window {
     position: absolute;
-    bottom: 70px;
+    bottom: 60px;
     right: 0;
-    width: 320px;
-    height: 400px;
+    width: 300px;
+    height: 380px;
     background: #000000;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.8);
     border: 1px solid #333333;
-    max-width: 90vw; /* Responsive on mobile */
+    max-width: 85vw; /* Responsive on mobile */
 }
 
-/* Listener Count */
-.listener-count {
-    background: rgba(40, 167, 69, 0.2);
-    color: #28a745;
-    padding: 0.5rem 1rem;
-    border-radius: 30px;
-    display: inline-block;
-    margin-top: 1rem;
-    font-weight: bold;
-    border: 1px solid rgba(40, 167, 69, 0.5);
-}
-
-/* Footer */
+/* Footer - FIXED for all devices */
 footer {
     text-align: center;
-    padding: 2rem;
+    padding: 1.5rem 1rem;
     margin-top: 2rem;
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
-}
-
-/* Schedule Page Styles */
-.schedule-container {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    width: 100%;
+    left: 0;
+    right: 0;
     box-sizing: border-box;
 }
 
-.day {
-    margin-bottom: 2rem;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    border-left: 3px solid #667eea;
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
 }
 
-.day h2 {
+.footer-section {
+    width: 100%;
+    padding: 0 0.5rem;
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
     color: #fff;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
 }
 
-.day p {
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 5px;
-    word-break: break-word;
+.footer-section p {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.4;
 }
 
-/* Responsive Design - IMPROVED */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2rem;
-    }
-    
-    .station-logo {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .main-nav a {
-        display: inline-block;
-        margin: 0.2rem;
-        padding: 0.4rem 1rem;
-        font-size: 0.9rem;
-    }
-    
-    .player-container {
-        padding: 1rem;
-    }
-    
-    .player-container h2 {
-        font-size: 1.5rem;
-    }
-    
-    .embed-container iframe {
-        height: 180px !important; /* Slightly smaller on mobile */
-    }
-    
-    #simple-chat-window {
-        width: 280px;
-        right: 0;
-    }
-}
-
-/* Extra small devices */
-@media (max-width: 380px) {
-    #simple-chat-window {
-        width: 260px;
-    }
-    
-    .main-nav a {
-        padding: 0.3rem 0.8rem;
-        font-size: 0.8rem;
-    }
-}
-
-/* ===== SOCIAL ICONS STYLES ===== */
+/* Social Icons - FIXED sizing and spacing */
 .social-icons {
     display: flex;
-    gap: 25px;
+    gap: 15px;
     justify-content: center;
     align-items: center;
-    margin-top: 15px;
-    margin-bottom: 10px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+    padding: 0 0.5rem;
 }
 
 .social-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    font-size: 30px;
+    font-size: 24px;
     transition: all 0.3s ease;
     text-decoration: none;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0; /* Prevents icons from shrinking */
 }
 
-/* Brand colors - always visible */
+/* Brand colors */
 .social-icon.instagram {
     background: linear-gradient(45deg, #f09433, #d62976, #962fbf, #4f5bd5);
     color: white;
@@ -317,10 +334,9 @@ footer {
     color: white;
 }
 
-/* Hover effect - lift up */
 .social-icon:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* Screen reader only text */
@@ -335,13 +351,179 @@ footer {
     border: 0;
 }
 
-/* Responsive for mobile */
-@media (max-width: 600px) {
-    .social-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 24px;
+.copyright, .tech-badge {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 0.2rem 0;
+}
+
+/* Schedule Page Styles */
+.schedule-container {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.day {
+    margin-bottom: 1.5rem;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border-left: 3px solid #667eea;
+}
+
+.day h2 {
+    color: #fff;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+}
+
+.day p {
+    margin: 0.3rem 0;
+    padding: 0.3rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    word-break: break-word;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design - COMPLETELY FIXED */
+@media (max-width: 768px) {
+    .station-title {
+        font-size: 1.8rem;
     }
+    
+    .station-logo {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .player-header h2 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .station-title {
+        font-size: 1.5rem;
+    }
+    
+    .station-tagline {
+        font-size: 1rem;
+    }
+    
+    .station-logo {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .main-nav {
+        padding: 0.5rem 0.2rem;
+    }
+    
+    .main-nav a {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .nav-icon {
+        font-size: 0.9rem;
+    }
+    
+    .nav-text {
+        font-size: 0.8rem;
+    }
+    
+    .player-card {
+        padding: 1rem;
+    }
+    
+    .player-embed iframe {
+        height: 130px !important;
+    }
+    
+    .track-title {
+        font-size: 0.9rem;
+    }
+    
+    .track-artist {
+        font-size: 0.8rem;
+    }
+    
+    #simple-chat-window {
+        width: 280px;
+        height: 350px;
+    }
+    
+    #simple-chat-button {
+        padding: 8px 16px;
+        width: 100px;
+        font-size: 13px;
+    }
+    
+    .social-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+    }
+    
+    .social-icons {
+        gap: 10px;
+    }
+    
+    .footer-section h3 {
+        font-size: 1rem;
+    }
+    
+    .footer-section p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 380px) {
+    .station-title {
+        font-size: 1.3rem;
+    }
+    
+    .main-nav a {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.75rem;
+    }
+    
+    .nav-icon {
+        font-size: 0.8rem;
+    }
+    
+    .nav-text {
+        font-size: 0.7rem;
+    }
+    
+    #simple-chat-window {
+        width: 250px;
+        height: 330px;
+    }
+    
+    #simple-chat-button {
+        padding: 6px 12px;
+        width: 90px;
+        font-size: 12px;
+    }
+    
+    .social-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+    }
+    
+    .social-icons {
+        gap: 8px;
+    }
+}
     
     .social-icons {
         gap: 15px;
