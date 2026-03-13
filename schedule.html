@@ -3,79 +3,309 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule - Escape The Algorithm</title>
+    <title>Schedule | Escape The Algorithm</title>
+    <meta name="description" content="Weekly schedule - Escape The Algorithm Freeform Radio">
+    
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Compact schedule styling - fits without scrolling */
+        .schedule-container {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 1rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+        }
+        
+        .day-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 0.8rem;
+            border-left: 3px solid #667eea;
+        }
+        
+        .day-card h3 {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            letter-spacing: 0.02em;
+        }
+        
+        .show-item {
+            margin: 0.3rem 0;
+            padding: 0.2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+        }
+        
+        .show-time {
+            color: #aaa;
+            font-size: 0.7rem;
+            display: block;
+        }
+        
+        .show-title {
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 350;
+        }
+        
+        .show-host {
+            color: #888;
+            font-size: 0.65rem;
+            font-weight: 300;
+        }
+        
+        /* Mobile styles - no scrolling needed */
+        @media (max-width: 768px) {
+            .schedule-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .schedule-container {
+                padding: 0.6rem;
+            }
+            
+            .day-card {
+                padding: 0.5rem;
+            }
+            
+            .day-card h3 {
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .schedule-grid {
+                grid-template-columns: 1fr;
+                gap: 0.4rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation - Schedule is active -->
     <nav class="main-nav">
-        <a href="index.html">🎵 Listen</a>
-        <a href="schedule.html" class="active">📅 Schedule</a>
+        <div class="nav-container">
+            <a href="index.html">🔊 Listen</a>
+            <a href="schedule.html" class="active">🗒 Schedule</a>
+            <a href="about.html">ℹ️ About</a>
+        </div>
     </nav>
     
-    <header>
-        <h1>Weekly Schedule   16/3 - 22/3</h1>
+    <!-- Header -->
+    <header class="station-header">
+        <h1>Weekly Schedule</h1>
+        <p class="station-tagline">Escape The Algorithm · 24/7</p>
     </header>
     
-    <main>
+    <!-- Main Content with Schedule -->
+    <main class="main-content">
         <div class="schedule-container">
-            <div class="day">
-                <h2>Monday</h2>
-                <p>6:00 AM - 10:00 AM: ...</p>
-                <p>10:00 AM - 2:00 PM: ...</p>
-                <p>2:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 10:00 PM: ...</p>
-            </div>
-            
-            <div class="day">
-                <h2>Tuesday</h2>
-                <p>6:00 AM - 10:00 AM: ...</p>
-                <p>10:00 AM - 2:00 PM: ...</p>
-                <p>2:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 10:00 PM: ...</p>
-            </div>
-            
-            <div class="day">
-                <h2>Wednesday</h2>
-                <p>6:00 AM - 10:00 AM: ...</p>
-                <p>10:00 AM - 2:00 PM: ...</p>
-                <p>2:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 10:00 PM: ...</p>
-            </div>
-            
-            <div class="day">
-                <h2>Thursday</h2>
-                <p>6:00 AM - 10:00 AM: ...</p>
-                <p>10:00 AM - 2:00 PM: ...</p>
-                <p>2:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 10:00 PM: ...</p>
-            </div>
-            
-            <div class="day">
-                <h2>Friday</h2>
-                <p>6:00 AM - 10:00 AM: ...</p>
-                <p>10:00 AM - 2:00 PM: ...</p>
-                <p>2:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 12:00 AM: ...</p>
-            </div>
-            
-            <div class="day">
-                <h2>Saturday</h2>
-                <p>8:00 AM - 12:00 PM: ...</p>
-                <p>12:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 2:00 AM: ...</p>
-            </div>
-            
-            <div class="day">
-                <h2>Sunday</h2>
-                <p>8:00 AM - 12:00 PM: ...</p>
-                <p>12:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 10:00 PM: ...</p>
+            <div class="schedule-grid">
+                <!-- Monday -->
+                <div class="day-card">
+                    <h3>MON</h3>
+                    <div class="show-item">
+                        <span class="show-time">06-10</span>
+                        <span class="show-title">Morning Drive</span>
+                        <span class="show-host">Sarah</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">10-14</span>
+                        <span class="show-title">Midday Mix</span>
+                        <span class="show-host">Mike</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">14-18</span>
+                        <span class="show-title">Drive Time</span>
+                        <span class="show-host">Alex</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">18-22</span>
+                        <span class="show-title">Evening Chill</span>
+                        <span class="show-host">Emma</span>
+                    </div>
+                </div>
+                
+                <!-- Tuesday -->
+                <div class="day-card">
+                    <h3>TUE</h3>
+                    <div class="show-item">
+                        <span class="show-time">06-10</span>
+                        <span class="show-title">Morning Drive</span>
+                        <span class="show-host">Sarah</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">10-14</span>
+                        <span class="show-title">Midday Mix</span>
+                        <span class="show-host">Mike</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">14-18</span>
+                        <span class="show-title">Drive Time</span>
+                        <span class="show-host">Alex</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">18-22</span>
+                        <span class="show-title">Evening Chill</span>
+                        <span class="show-host">Emma</span>
+                    </div>
+                </div>
+                
+                <!-- Wednesday -->
+                <div class="day-card">
+                    <h3>WED</h3>
+                    <div class="show-item">
+                        <span class="show-time">06-10</span>
+                        <span class="show-title">Morning Drive</span>
+                        <span class="show-host">Sarah</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">10-14</span>
+                        <span class="show-title">Midday Mix</span>
+                        <span class="show-host">Mike</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">14-18</span>
+                        <span class="show-title">Drive Time</span>
+                        <span class="show-host">Alex</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">18-22</span>
+                        <span class="show-title">Evening Chill</span>
+                        <span class="show-host">Emma</span>
+                    </div>
+                </div>
+                
+                <!-- Thursday -->
+                <div class="day-card">
+                    <h3>THU</h3>
+                    <div class="show-item">
+                        <span class="show-time">06-10</span>
+                        <span class="show-title">Morning Drive</span>
+                        <span class="show-host">Sarah</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">10-14</span>
+                        <span class="show-title">Midday Mix</span>
+                        <span class="show-host">Mike</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">14-18</span>
+                        <span class="show-title">Drive Time</span>
+                        <span class="show-host">Alex</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">18-22</span>
+                        <span class="show-title">Evening Chill</span>
+                        <span class="show-host">Emma</span>
+                    </div>
+                </div>
+                
+                <!-- Friday -->
+                <div class="day-card">
+                    <h3>FRI</h3>
+                    <div class="show-item">
+                        <span class="show-time">06-10</span>
+                        <span class="show-title">Morning Drive</span>
+                        <span class="show-host">Sarah</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">10-14</span>
+                        <span class="show-title">Midday Mix</span>
+                        <span class="show-host">Mike</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">14-18</span>
+                        <span class="show-title">Drive Time</span>
+                        <span class="show-host">Alex</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">18-00</span>
+                        <span class="show-title">Friday Party</span>
+                        <span class="show-host">Spark</span>
+                    </div>
+                </div>
+                
+                <!-- Saturday -->
+                <div class="day-card">
+                    <h3>SAT</h3>
+                    <div class="show-item">
+                        <span class="show-time">08-12</span>
+                        <span class="show-title">Weekend Breakfast</span>
+                        <span class="show-host">Chris</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">12-18</span>
+                        <span class="show-title">Saturday Sessions</span>
+                        <span class="show-host">Taylor</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">18-02</span>
+                        <span class="show-title">Night Live</span>
+                        <span class="show-host">Storm</span>
+                    </div>
+                </div>
+                
+                <!-- Sunday -->
+                <div class="day-card">
+                    <h3>SUN</h3>
+                    <div class="show-item">
+                        <span class="show-time">08-12</span>
+                        <span class="show-title">Sunday Morning</span>
+                        <span class="show-host">Chris</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">12-18</span>
+                        <span class="show-title">Relaxation</span>
+                        <span class="show-host">Taylor</span>
+                    </div>
+                    <div class="show-item">
+                        <span class="show-time">18-22</span>
+                        <span class="show-title">Evening Acoustics</span>
+                        <span class="show-host">Emma</span>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
     
+    <!-- Footer (same as index.html) -->
     <footer>
-        <p>© 2026 Escape The Algorithm</p>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="https://instagram.com/escalgorithm" target="_blank" rel="noopener" class="social-icon instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span class="sr-only">Instagram</span>
+                </a>
+                <a href="https://youtube.com/@escalgorithm" target="_blank" rel="noopener" class="social-icon youtube">
+                    <i class="fab fa-youtube"></i>
+                    <span class="sr-only">YouTube</span>
+                </a>
+                <a href="https://soundcloud.com/nt00" target="_blank" rel="noopener" class="social-icon soundcloud">
+                    <i class="fab fa-soundcloud"></i>
+                    <span class="sr-only">SoundCloud</span>
+                </a>
+            </div>
+            <p class="copyright">© 2026 Escape The Algorithm</p>
+            <p class="tech-badge">AzuraCast · Cloudflare · GitHub</p>
+        </div>
     </footer>
 </body>
 </html>
