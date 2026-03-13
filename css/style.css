@@ -19,13 +19,9 @@ body {
     color: white;
     width: 100%;
     overflow-x: hidden;
-}
-
-/* Page wrapper for flex layout */
-.page-wrapper {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Navigation */
@@ -33,10 +29,8 @@ body {
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
     padding: 1rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0; /* Prevents nav from shrinking */
 }
 
 .nav-container {
@@ -45,6 +39,7 @@ body {
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    flex-wrap: wrap;
 }
 
 .main-nav a {
@@ -71,6 +66,7 @@ body {
 .station-header {
     text-align: center;
     padding: 2rem 1rem 1rem 1rem;
+    flex-shrink: 0;
 }
 
 .station-header h1 {
@@ -85,23 +81,28 @@ body {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Main content - grows to push footer down */
+/* Main content - THIS IS THE KEY FIX */
 .main-content {
-    flex: 1;
+    flex: 1 0 auto; /* GROWS to fill available space */
     width: 100%;
     padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Aligns player to top */
 }
 
-/* Player wrapper - left aligned on desktop */
+/* Player wrapper */
 .player-wrapper {
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding-left: 5%; /* Creates space on right */
+    display: flex;
+    justify-content: flex-start; /* Left align on desktop */
 }
 
 .player-container {
     width: 100%;
-    max-width: 400px; /* Compact player width */
+    max-width: 400px;
 }
 
 .player-container iframe {
@@ -112,14 +113,15 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Footer */
+/* Footer - NOW STAYS AT BOTTOM */
 footer {
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1.5rem;
     width: 100%;
-    margin-top: 2rem;
+    flex-shrink: 0; /* Prevents footer from shrinking */
+    margin-top: auto; /* Pushes to bottom */
 }
 
 .footer-content {
@@ -137,6 +139,7 @@ footer {
     gap: 20px;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .social-icon {
@@ -224,74 +227,25 @@ footer {
     border-radius: 12px;
     border: 1px solid #333;
     box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-    display: flex;
+    display: none;
     flex-direction: column;
-}
-
-.chat-header {
-    background: #111;
-    padding: 12px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #333;
-}
-
-.chat-timer {
-    font-size: 12px;
-    background: #222;
-    padding: 4px 8px;
-    border-radius: 12px;
-    color: #aaa;
-}
-
-.chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 12px;
-    background: #000;
-}
-
-.chat-input-area {
-    padding: 12px;
-    border-top: 1px solid #333;
-    display: flex;
-    gap: 8px;
-}
-
-#chat-input {
-    flex: 1;
-    padding: 8px 12px;
-    background: #000;
-    color: white;
-    border: 1px solid #333;
-    border-radius: 20px;
-    outline: none;
-}
-
-#send-btn {
-    background: #333;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 16px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-#send-btn:hover {
-    background: #444;
 }
 
 /* Desktop styles */
 @media (min-width: 769px) {
     .player-wrapper {
-        padding-left: 10%; /* More space on right for desktop */
+        padding-left: 5%;
     }
 }
 
-/* Mobile styles */
+/* Mobile styles - COMPLETELY FIXED */
 @media (max-width: 768px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
     .nav-container {
         gap: 1rem;
     }
@@ -301,21 +255,26 @@ footer {
         font-size: 0.9rem;
     }
     
+    .station-header {
+        padding: 1.5rem 1rem 0.5rem 1rem;
+    }
+    
     .station-header h1 {
         font-size: 1.8rem;
     }
     
     .main-content {
+        flex: 1 0 auto; /* CRITICAL: Takes all available space */
         padding: 0 1rem;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: flex-start;
     }
     
     .player-wrapper {
         padding-left: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
+        justify-content: center; /* Center on mobile */
+        margin: 1rem 0;
     }
     
     .player-container {
@@ -324,6 +283,15 @@ footer {
     
     .player-container iframe {
         height: 120px !important;
+    }
+    
+    footer {
+        margin-top: auto; /* CRITICAL: Pushes footer to bottom */
+        padding: 1rem;
+    }
+    
+    .social-icons {
+        gap: 15px;
     }
     
     .social-icon {
@@ -361,7 +329,7 @@ footer {
     }
     
     .social-icons {
-        gap: 15px;
+        gap: 12px;
     }
     
     .social-icon {
@@ -382,6 +350,15 @@ footer {
 
 /* Extra small devices */
 @media (max-width: 360px) {
+    .station-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .main-nav a {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    
     .player-container iframe {
         height: 110px !important;
     }
