@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://unpkg.com/derin-chat-ui@latest/dist/index.umd.js"></script>
+</head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escape The Algorithm | Freeform Radio</title>
@@ -40,9 +42,31 @@
                 </iframe>
             </div>
         </div>
-    </main>
-    
-    <!-- Footer-->
+  
+        ---chat widget---
+ <div id="derin-chat" style="margin-top: 20px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto;"></div>
+
+    <script>
+      DerinChat.init({
+        target: '#derin-chat',
+        mock: true,
+        ui: {
+          texts: {
+            title: "Escape The Algorithm",
+            subtitle: "Chat with listeners",
+            placeholder: "Type a message...",
+            sendButton: "Send"
+          },
+          colors: {
+            primary: "#667eea",
+            background: "#000000",
+            text: "#ffffff"
+          }
+        }
+      });
+    </script>
+    </main>  
+ <!-- Footer-->
     <footer>
         <div class="footer-content">
             <div class="social-icons">
@@ -63,18 +87,6 @@
             <p class="tech-badge">Powered by AzuraCast · Cloudflare · GitHub</p>
         </div>
     </footer>
-
-    <!-- Simple Blarb.net Chat - No limits, no installation -->
-<div style="margin-top: 20px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto;">
-    <h3 style="color: white; margin-bottom: 10px; font-weight: 300; letter-spacing: 0.5px;">Live Chat</h3>
-    <iframe 
-        src="https://blarb.net/escape_algorithm_radio" 
-        width="100%" 
-        height="400px" 
-        frameborder="0"
-        style="border-radius: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);">
-    </iframe>
-    <p style="color: rgba(255,255,255,0.4); font-size: 0.7rem; text-align: center; margin-top: 5px;">⚡ Anonymous chat</p>
-</div>
+    
 </body>
 </html>
