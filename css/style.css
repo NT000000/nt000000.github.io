@@ -1,3 +1,9 @@
+Yes — I can see exactly what broke. Your current CSS has a missing closing brace inside the first @media (max-width: 540px) block, and after that the file contains duplicate schedule sections with conflicting values. That means the browser is reading part of your stylesheet in the wrong scope, so layout shifts are expected. A missing } in a media query is a classic cause of CSS “everything moved” problems, and duplicate selectors later in the file can override earlier working rules.
+
+Clean replacement
+Use this full CSS as a clean rewrite of your current file. It keeps your working setup, preserves your colors and structure, restores the schedule behavior you were aiming for, and adds the About block properly at the end without changing the rest of the design. Isolated About selectors like .about-* help prevent the new page styles from affecting the player, schedule, or footer.
+
+css
 /* ===========================
    THEME
    =========================== */
@@ -172,106 +178,6 @@ body {
 }
 
 /* ===========================
-   SCHEDULE PAGE
-   =========================== */
-.schedule-page {
-    justify-content: flex-start;
-    padding: 0.15rem 1rem 0.5rem;
-}
-
-.schedule-raw {
-    width: 100%;
-    max-width: 760px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.28rem;
-}
-
-.schedule-day {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.65rem;
-    padding-bottom: 0.18rem;
-    border-bottom: none;
-}
-
-.schedule-day-name {
-    width: 44px;
-    flex-shrink: 0;
-    color: rgba(255, 255, 255, 0.52);
-    font-size: 0.58rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    line-height: 1.3;
-    padding-top: 0.02rem;
-}
-
-.schedule-day-slots {
-    display: flex;
-    flex-direction: column;
-    gap: 0.08rem;
-    min-width: 0;
-}
-
-.schedule-slot {
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 0.6rem;
-    line-height: 1.18;
-    white-space: nowrap;
-}
-
-.schedule-slot time {
-    width: 64px;
-    flex-shrink: 0;
-    color: rgba(255, 255, 255, 0.28);
-    font-variant-numeric: tabular-nums;
-    margin-right: 0.06rem;
-}
-
-/* Mobile tightening */
-@media (max-width: 540px) {
-    .schedule-header {
-        padding: 0.35rem 0.8rem 0.12rem;
-    }
-
-    .schedule-header h1 {
-        font-size: 0.92rem;
-    }
-
-    .schedule-header .station-tagline {
-        font-size: 0.52rem;
-    }
-
-    .schedule-page {
-        padding: 0.12rem 0.8rem 0.45rem;
-    }
-
-    .schedule-raw {
-        gap: 0.24rem;
-    }
-
-    .schedule-day {
-        gap: 0.5rem;
-        padding-bottom: 0.16rem;
-        border-bottom: none;
-    }
-
-    .schedule-day-name {
-        width: 38px;
-        font-size: 0.54rem;
-    }
-
-    .schedule-slot {
-        font-size: 0.56rem;
-        line-height: 1.15;
-    }
-
-    .schedule-slot time {
-    width: 60px;
-    margin-right: 0.05rem;
-}
-/* ===========================
    MAIN
    =========================== */
 .main-content {
@@ -319,8 +225,7 @@ body {
    =========================== */
 .schedule-page {
     justify-content: flex-start;
-    padding-top: 0.5rem;
-    padding-bottom: 0.8rem;
+    padding: 0.15rem 1rem 0.5rem;
 }
 
 .schedule-raw {
@@ -328,46 +233,51 @@ body {
     max-width: 760px;
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
+    gap: 0.28rem;
 }
 
 .schedule-day {
     display: flex;
     align-items: flex-start;
-    gap: 0.8rem;
-    padding-bottom: 0.35rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    gap: 0.65rem;
+    padding-bottom: 0.18rem;
+    border-bottom: none;
 }
 
 .schedule-day-name {
-    width: 72px;
+    width: 44px;
     flex-shrink: 0;
-    color: var(--text-secondary);
-    font-size: 0.66rem;
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 0.58rem;
     font-weight: 600;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    line-height: 1.5;
-    padding-top: 0.05rem;
+    line-height: 1.3;
+    padding-top: 0.02rem;
 }
 
 .schedule-day-slots {
     display: flex;
     flex-direction: column;
-    gap: 0.18rem;
+    gap: 0.08rem;
     min-width: 0;
 }
 
 .schedule-slot {
+    display: flex;
+    align-items: baseline;
     color: rgba(255, 255, 255, 0.72);
-    font-size: 0.67rem;
+    font-size: 0.6rem;
+    line-height: 1.18;
     white-space: nowrap;
-    line-height: 1.35;
 }
 
 .schedule-slot time {
-    color: var(--text-muted);
-    margin-right: 0.22rem;
+    width: 64px;
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.28);
+    font-variant-numeric: tabular-nums;
+    margin-right: 0.06rem;
 }
 
 /* ===========================
@@ -395,9 +305,6 @@ footer {
     text-align: center;
 }
 
-/* ===========================
-   SOCIAL ICONS
-   =========================== */
 .social-icons {
     width: 100%;
     display: flex;
@@ -434,9 +341,6 @@ footer {
     color: #ffffff;
 }
 
-/* ===========================
-   FOOTER TEXT
-   =========================== */
 .copyright {
     width: 100%;
     margin: 0;
@@ -455,6 +359,74 @@ footer {
     color: rgba(255, 255, 255, 0.22);
     font-weight: 300;
     letter-spacing: 0.05em;
+}
+
+/* ===========================
+   ABOUT
+   =========================== */
+.about-header {
+    padding: 0.55rem 1rem 0.2rem;
+}
+
+.about-header h1 {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+}
+
+.about-header .station-tagline {
+    margin-top: 0.08rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.44);
+}
+
+.about-page {
+    justify-content: flex-start;
+    padding: 0.2rem 1rem 0.8rem;
+}
+
+.about-wrap {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.about-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.about-block h2 {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.about-block p,
+.about-list {
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.about-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.22rem;
+}
+
+.about-list li::before {
+    content: "— ";
+    color: rgba(255, 255, 255, 0.35);
 }
 
 /* ===========================
@@ -490,21 +462,74 @@ footer {
 }
 
 @media (max-width: 540px) {
+    .schedule-header {
+        padding: 0.35rem 0.8rem 0.12rem;
+    }
+
+    .schedule-header h1 {
+        font-size: 0.92rem;
+    }
+
+    .schedule-header .station-tagline {
+        font-size: 0.52rem;
+    }
+
+    .schedule-page {
+        padding: 0.12rem 0.8rem 0.45rem;
+    }
+
+    .schedule-raw {
+        gap: 0.24rem;
+    }
+
     .schedule-day {
-        gap: 0.55rem;
+        gap: 0.5rem;
+        padding-bottom: 0.16rem;
     }
 
     .schedule-day-name {
-        width: 54px;
-        font-size: 0.62rem;
-    }
-
-    .schedule-day-slots {
-        gap: 0.2rem 0.55rem;
+        width: 38px;
+        font-size: 0.54rem;
     }
 
     .schedule-slot {
-        font-size: 0.61rem;
+        font-size: 0.56rem;
+        line-height: 1.15;
+    }
+
+    .schedule-slot time {
+        width: 60px;
+        margin-right: 0.05rem;
+    }
+
+    .about-header {
+        padding: 0.4rem 0.8rem 0.15rem;
+    }
+
+    .about-header h1 {
+        font-size: 0.95rem;
+    }
+
+    .about-header .station-tagline {
+        font-size: 0.54rem;
+    }
+
+    .about-page {
+        padding: 0.15rem 0.8rem 0.7rem;
+    }
+
+    .about-wrap {
+        gap: 0.75rem;
+    }
+
+    .about-block h2 {
+        font-size: 0.64rem;
+    }
+
+    .about-block p,
+    .about-list {
+        font-size: 0.68rem;
+        line-height: 1.55;
     }
 }
 
