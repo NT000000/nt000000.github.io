@@ -4,33 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO -->
     <title>Escape The Algorithm | Freeform Radio</title>
     <meta name="description" content="Freeform Radio — 24/7 underground sounds and electronic music. No algorithms, no playlists, pure radio.">
     <meta name="theme-color" content="#000000">
-
-    <!-- Security Meta Tags -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com;
-        style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline';
-        frame-src https://nt00.xyz;
-        font-src 'self' https://cdnjs.cloudflare.com;
-        img-src 'self' data:;
-        connect-src 'self';
-    ">
     <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; frame-src https://nt00.xyz; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self';">
 
-    <!-- Open Graph -->
     <meta property="og:title" content="Escape The Algorithm | Freeform Radio">
     <meta property="og:description" content="24/7 underground sounds. No algorithms, pure radio.">
     <meta property="og:type" content="website">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-          integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plh7eecyn6CafegEI4ogSiratXDXA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -49,37 +34,36 @@
     </header>
 
     <main class="main-content" role="main">
-        <div class="player-section">
+        <section class="player-section" aria-label="Radio player">
             <div class="player-container">
                 <iframe
                     src="https://nt00.xyz/public/escape_the_algorithm/embed?primary_color=000000&bg_color=000000&text_color=ffffff&rounded=1"
-                    frameborder="0"
-                    allowtransparency="true"
                     allow="autoplay; encrypted-media"
-                    title="Escape The Algorithm — Live Radio Player"
                     loading="lazy"
+                    title="Escape The Algorithm Live Radio Player"
                     sandbox="allow-scripts allow-same-origin allow-presentation">
                 </iframe>
             </div>
-        </div>
+        </section>
     </main>
-<footer>
-    <div class="footer-content">
-        <div class="social-icons">
-            <a href="https://instagram.com/escalgorithm" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://youtube.com/@escalgorithm" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://soundcloud.com/nt00" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="SoundCloud">
-                <i class="fab fa-soundcloud"></i>
-            </a>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons" aria-label="Social links">
+                <a href="https://instagram.com/escalgorithm" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="https://youtube.com/@escalgorithm" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube">
+                    <i class="fab fa-youtube" aria-hidden="true"></i>
+                </a>
+                <a href="https://soundcloud.com/nt00" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="SoundCloud">
+                    <i class="fab fa-soundcloud" aria-hidden="true"></i>
+                </a>
+            </div>
+            <p class="copyright">© 2026 Escape The Algorithm. All rights reserved.</p>
+            <p class="tech-badge">Powered by AzuraCast · Cloudflare · GitHub</p>
         </div>
-        <p class="copyright">© 2026 Escape The Algorithm. All rights reserved.</p>
-        <p class="tech-badge">Powered by AzuraCast · Cloudflare · GitHub</p>
-    </div>
-</footer>
-    
+    </footer>
+
 </body>
 </html>
