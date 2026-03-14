@@ -3,79 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule - Escape The Algorithm</title>
+
+    <title>Schedule — Escape The Algorithm</title>
+    <meta name="description" content="Weekly broadcast schedule for Escape The Algorithm freeform radio.">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Security Meta Tags -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plh7eecyn6CafegEI4ogSiratXDXA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <nav class="main-nav">
-        <a href="index.html">🎵 Listen</a>
-        <a href="schedule.html" class="active">📅 Schedule</a>
+
+    <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="index.html">🔊 Listen</a>
+            <a href="schedule.html" class="active" aria-current="page">🗒 Schedule</a>
+            <a href="about.html">ℹ️ About</a>
+        </div>
     </nav>
-    
-    <header>
+
+    <header class="station-header" role="banner">
         <h1>Weekly Schedule</h1>
+        <p class="station-tagline">All times · Local timezone</p>
     </header>
-    
-    <main>
-        <div class="schedule-container">
-            <div class="day">
-                <h2>Monday</h2>
-                <p>6:00 AM - 10:00 AM: ...</p>
-                <p>10:00 AM - 2:00 PM: ...</p>
-                <p>2:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 10:00 PM: ...</p>
+
+    <main class="main-content schedule-page" role="main">
+        <div class="schedule-grid">
+
+            <div class="day-card">
+                <h2 class="day-name">Monday</h2>
+                <ul class="day-slots">
+                    <li><span class="slot-time">06:00 – 10:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">10:00 – 14:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">14:00 – 18:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">18:00 – 22:00</span><span class="slot-show">—</span></li>
+                </ul>
             </div>
-            
-            <div class="day">
-                <h2>Tuesday</h2>
-                <p>6:00 AM - 10:00 AM: ...</p>
-                <p>10:00 AM - 2:00 PM: ...</p>
-                <p>2:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 10:00 PM: ...</p>
+
+            <div class="day-card">
+                <h2 class="day-name">Tuesday</h2>
+                <ul class="day-slots">
+                    <li><span class="slot-time">06:00 – 10:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">10:00 – 14:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">14:00 – 18:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">18:00 – 22:00</span><span class="slot-show">—</span></li>
+                </ul>
             </div>
-            
-            <div class="day">
-                <h2>Wednesday</h2>
-                <p>6:00 AM - 10:00 AM: ...</p>
-                <p>10:00 AM - 2:00 PM: ...</p>
-                <p>2:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 10:00 PM: ...</p>
+
+            <div class="day-card">
+                <h2 class="day-name">Wednesday</h2>
+                <ul class="day-slots">
+                    <li><span class="slot-time">06:00 – 10:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">10:00 – 14:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">14:00 – 18:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">18:00 – 22:00</span><span class="slot-show">—</span></li>
+                </ul>
             </div>
-            
-            <div class="day">
-                <h2>Thursday</h2>
-                <p>6:00 AM - 10:00 AM: ...</p>
-                <p>10:00 AM - 2:00 PM: ...</p>
-                <p>2:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 10:00 PM: ...</p>
+
+            <div class="day-card">
+                <h2 class="day-name">Thursday</h2>
+                <ul class="day-slots">
+                    <li><span class="slot-time">06:00 – 10:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">10:00 – 14:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">14:00 – 18:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">18:00 – 22:00</span><span class="slot-show">—</span></li>
+                </ul>
             </div>
-            
-            <div class="day">
-                <h2>Friday</h2>
-                <p>6:00 AM - 10:00 AM: ...</p>
-                <p>10:00 AM - 2:00 PM: ...</p>
-                <p>2:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 12:00 AM: ...</p>
+
+            <div class="day-card">
+                <h2 class="day-name">Friday</h2>
+                <ul class="day-slots">
+                    <li><span class="slot-time">06:00 – 10:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">10:00 – 14:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">14:00 – 18:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">18:00 – 00:00</span><span class="slot-show">—</span></li>
+                </ul>
             </div>
-            
-            <div class="day">
-                <h2>Saturday</h2>
-                <p>8:00 AM - 12:00 PM: ...</p>
-                <p>12:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 2:00 AM: ...</p>
+
+            <div class="day-card">
+                <h2 class="day-name">Saturday</h2>
+                <ul class="day-slots">
+                    <li><span class="slot-time">08:00 – 12:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">12:00 – 18:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">18:00 – 02:00</span><span class="slot-show">—</span></li>
+                </ul>
             </div>
-            
-            <div class="day">
-                <h2>Sunday</h2>
-                <p>8:00 AM - 12:00 PM: ...</p>
-                <p>12:00 PM - 6:00 PM: ...</p>
-                <p>6:00 PM - 10:00 PM: ...</p>
+
+            <div class="day-card">
+                <h2 class="day-name">Sunday</h2>
+                <ul class="day-slots">
+                    <li><span class="slot-time">08:00 – 12:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">12:00 – 18:00</span><span class="slot-show">—</span></li>
+                    <li><span class="slot-time">18:00 – 22:00</span><span class="slot-show">—</span></li>
+                </ul>
             </div>
+
         </div>
     </main>
-    
-    <footer>
-        <p>© 2026 Escape The Algorithm</p>
+
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <nav class="social-icons" aria-label="Social media links">
+                <a href="https://instagram.com/escalgorithm"
+                   target="_blank" rel="noopener noreferrer"
+                   class="social-icon instagram" aria-label="Follow on Instagram">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="https://youtube.com/@escalgorithm"
+                   target="_blank" rel="noopener noreferrer"
+                   class="social-icon youtube" aria-label="Watch on YouTube">
+                    <i class="fab fa-youtube" aria-hidden="true"></i>
+                </a>
+                <a href="https://soundcloud.com/nt00"
+                   target="_blank" rel="noopener noreferrer"
+                   class="social-icon soundcloud" aria-label="Listen on SoundCloud">
+                    <i class="fab fa-soundcloud" aria-hidden="true"></i>
+                </a>
+            </nav>
+            <p class="copyright">© 2026 Escape The Algorithm. All rights reserved.</p>
+            <p class="tech-badge">Powered by AzuraCast · Cloudflare · GitHub</p>
+        </div>
     </footer>
+
 </body>
 </html>
