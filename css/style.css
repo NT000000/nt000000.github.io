@@ -1,9 +1,3 @@
-Yes — I can see exactly what broke. Your current CSS has a missing closing brace inside the first @media (max-width: 540px) block, and after that the file contains duplicate schedule sections with conflicting values. That means the browser is reading part of your stylesheet in the wrong scope, so layout shifts are expected. A missing } in a media query is a classic cause of CSS “everything moved” problems, and duplicate selectors later in the file can override earlier working rules.
-
-Clean replacement
-Use this full CSS as a clean rewrite of your current file. It keeps your working setup, preserves your colors and structure, restores the schedule behavior you were aiming for, and adds the About block properly at the end without changing the rest of the design. Isolated About selectors like .about-* help prevent the new page styles from affecting the player, schedule, or footer.
-
-css
 /* ===========================
    THEME
    =========================== */
