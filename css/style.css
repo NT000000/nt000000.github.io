@@ -231,8 +231,8 @@ body {
 
 .schedule-day-slots {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem 0.8rem;
+    flex-direction: column;
+    gap: 0.18rem;
     min-width: 0;
 }
 
@@ -240,6 +240,7 @@ body {
     color: rgba(255, 255, 255, 0.72);
     font-size: 0.67rem;
     white-space: nowrap;
+    line-height: 1.35;
 }
 
 .schedule-slot time {
