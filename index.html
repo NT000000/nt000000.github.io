@@ -42,7 +42,31 @@
                 </iframe>
             </div>
         </div>
-  <!-- Custom Minimal Black Chat with 5-Hour Auto-Delete -->
+
+    </main>  
+
+    <!-- Footer-->
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="https://instagram.com/escalgorithm" target="_blank" rel="noopener" class="social-icon instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span class="sr-only">Instagram</span>
+                </a>
+                <a href="https://youtube.com/@escalgorithm" target="_blank" rel="noopener" class="social-icon youtube">
+                    <i class="fab fa-youtube"></i>
+                    <span class="sr-only">YouTube</span>
+                </a>
+                <a href="https://soundcloud.com/nt00" target="_blank" rel="noopener" class="social-icon soundcloud">
+                    <i class="fab fa-soundcloud"></i>
+                    <span class="sr-only">SoundCloud</span>
+                </a>
+            </div>
+            <p class="copyright">© 2026 Escape The Algorithm. All rights reserved.</p>
+            <p class="tech-badge">Powered by AzuraCast · Cloudflare · GitHub</p>
+        </div>
+    </footer>
+<!-- Custom Minimal Black Chat with 5-Hour Auto-Delete - CROSS-LISTENER SYNC FIXED -->
 <div style="margin-top: 25px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto;">
     <!-- Chat Header with Icon -->
     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
@@ -73,61 +97,73 @@
     
     <!-- Status Text -->
     <div style="display: flex; justify-content: space-between; margin-top: 8px; color: rgba(255,255,255,0.3); font-size: 0.65rem;">
-        <span>⚡ Anonymous · No tracking</span>
+        <span>⚡ Anonymous · Real-time sync</span>
         <span id="message-count">0 messages</span>
     </div>
 </div>
 
 <script>
 (function() {
-    // Configuration
+    // ===== CONFIGURATION =====
     const CHAT_KEY = 'escape_algorithm_chat';
+    const SYNC_KEY = 'escape_algorithm_chat_sync';
     const FIVE_HOURS = 5 * 60 * 60 * 1000; // 5 hours in milliseconds
     const MAX_MESSAGES = 100;
     
     // Generate anonymous username
     const username = 'Listener_' + Math.random().toString(36).substring(2, 6);
     
-    // Get elements
+    // ===== GET ELEMENTS =====
     const messagesDiv = document.getElementById('custom-chat-messages');
     const input = document.getElementById('custom-chat-input');
     const sendBtn = document.getElementById('custom-chat-send');
     const messageCountSpan = document.getElementById('message-count');
     
-    // Load and clean old messages
+    // ===== MESSAGE STORAGE =====
     let messages = [];
-    try {
-        const saved = localStorage.getItem(CHAT_KEY);
-        if (saved) {
-            const allMessages = JSON.parse(saved);
-            const now = Date.now();
-            
-            // Filter out messages older than 5 hours
-            messages = allMessages.filter(msg => 
-                (now - msg.timestamp) < FIVE_HOURS
-            );
-            
-            // Keep only last MAX_MESSAGES
-            if (messages.length > MAX_MESSAGES) {
-                messages = messages.slice(-MAX_MESSAGES);
+    
+    // Load and clean old messages
+    function loadMessages() {
+        try {
+            const saved = localStorage.getItem(CHAT_KEY);
+            if (saved) {
+                const allMessages = JSON.parse(saved);
+                const now = Date.now();
+                
+                // Filter out messages older than 5 hours
+                messages = allMessages.filter(msg => 
+                    (now - msg.timestamp) < FIVE_HOURS
+                );
+                
+                // Keep only last MAX_MESSAGES
+                if (messages.length > MAX_MESSAGES) {
+                    messages = messages.slice(-MAX_MESSAGES);
+                }
+                
+                // Save cleaned messages back
+                localStorage.setItem(CHAT_KEY, JSON.stringify(messages));
             }
-            
-            // Save cleaned messages back
-            localStorage.setItem(CHAT_KEY, JSON.stringify(messages));
+        } catch(e) {
+            console.log('Error loading messages:', e);
+            messages = [];
         }
-    } catch(e) {
-        console.log('Error loading messages:', e);
     }
     
-    // Display existing messages
-    messages.forEach(msg => {
-        addMessageToDOM(msg.text, msg.sender === username, msg.sender);
-    });
+    // Initial load
+    loadMessages();
     
-    updateMessageCount();
+    // ===== DISPLAY MESSAGES =====
+    function displayAllMessages() {
+        messagesDiv.innerHTML = '';
+        messages.forEach(msg => {
+            addMessageToDOM(msg.text, msg.sender === username, msg.sender, false);
+        });
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        updateMessageCount();
+    }
     
     // Function to add message to DOM
-    function addMessageToDOM(text, isMe = false, senderName = '') {
+    function addMessageToDOM(text, isMe = false, senderName = '', save = true) {
         const msgDiv = document.createElement('div');
         msgDiv.style.margin = '12px 0';
         msgDiv.style.display = 'flex';
@@ -135,7 +171,7 @@
         msgDiv.style.opacity = '0';
         msgDiv.style.animation = 'fadeIn 0.3s ease forwards';
         
-        // Add animation style
+        // Add animation style if not exists
         if (!document.getElementById('chat-animation')) {
             const style = document.createElement('style');
             style.id = 'chat-animation';
@@ -176,30 +212,113 @@
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
     
-    // Save message to localStorage
+    // ===== SAVE MESSAGE =====
     function saveMessage(text, isMe, senderName) {
-        messages.push({
+        const newMessage = {
             text: text,
             sender: senderName,
             isMe: isMe,
             timestamp: Date.now()
-        });
+        };
+        
+        messages.push(newMessage);
         
         // Keep only last MAX_MESSAGES
         if (messages.length > MAX_MESSAGES) {
             messages = messages.slice(-MAX_MESSAGES);
         }
         
+        // Save to localStorage
         localStorage.setItem(CHAT_KEY, JSON.stringify(messages));
+        
+        // Trigger sync event for other tabs/windows
+        localStorage.setItem(SYNC_KEY, JSON.stringify({
+            type: 'new_message',
+            message: newMessage,
+            time: Date.now()
+        }));
+        
+        // Clean up sync trigger (optional)
+        setTimeout(() => {
+            localStorage.removeItem(SYNC_KEY);
+        }, 100);
+        
         updateMessageCount();
     }
     
-    // Update message count display
-    function updateMessageCount() {
-        messageCountSpan.textContent = `${messages.length} messages`;
+    // ===== SYNC BETWEEN TABS/WINDOWS =====
+    window.addEventListener('storage', (e) => {
+        if (e.key === SYNC_KEY && e.newValue) {
+            try {
+                const syncData = JSON.parse(e.newValue);
+                if (syncData.type === 'new_message') {
+                    const newMsg = syncData.message;
+                    
+                    // Check if we already have this message
+                    const exists = messages.some(m => 
+                        m.timestamp === newMsg.timestamp && 
+                        m.sender === newMsg.sender &&
+                        m.text === newMsg.text
+                    );
+                    
+                    if (!exists && newMsg.sender !== username) {
+                        // Add to messages array
+                        messages.push(newMsg);
+                        
+                        // Keep only last MAX_MESSAGES
+                        if (messages.length > MAX_MESSAGES) {
+                            messages = messages.slice(-MAX_MESSAGES);
+                        }
+                        
+                        // Save to localStorage
+                        localStorage.setItem(CHAT_KEY, JSON.stringify(messages));
+                        
+                        // Display the message
+                        addMessageToDOM(newMsg.text, false, newMsg.sender, false);
+                        updateMessageCount();
+                    }
+                }
+            } catch(e) {
+                console.log('Sync error:', e);
+            }
+        }
+        
+        // Also listen for direct chat key changes (backup sync)
+        if (e.key === CHAT_KEY && e.newValue) {
+            try {
+                const newMessages = JSON.parse(e.newValue);
+                if (newMessages.length > messages.length) {
+                    // Find the newest message
+                    const newMsg = newMessages[newMessages.length - 1];
+                    const exists = messages.some(m => 
+                        m.timestamp === newMsg.timestamp && 
+                        m.sender === newMsg.sender
+                    );
+                    
+                    if (!exists && newMsg.sender !== username) {
+                        messages = newMessages;
+                        displayAllMessages();
+                    }
+                }
+            } catch(e) {}
+        }
+    });
+    
+    // ===== SEND MESSAGE =====
+    function sendMessage() {
+        const text = input.value.trim();
+        if (!text) return;
+        
+        // Add to DOM immediately
+        addMessageToDOM(text, true, username);
+        
+        // Save and sync
+        saveMessage(text, true, username);
+        
+        input.value = '';
     }
     
-    // Clean old messages (runs every hour)
+    // ===== CLEAN OLD MESSAGES =====
     function cleanOldMessages() {
         const now = Date.now();
         const beforeCount = messages.length;
@@ -210,97 +329,44 @@
         
         if (messages.length !== beforeCount) {
             // Refresh display
-            messagesDiv.innerHTML = '';
-            messages.forEach(msg => {
-                addMessageToDOM(msg.text, msg.sender === username, msg.sender);
-            });
+            displayAllMessages();
             localStorage.setItem(CHAT_KEY, JSON.stringify(messages));
-            updateMessageCount();
+            
+            // Trigger sync for cleanup
+            localStorage.setItem(SYNC_KEY, JSON.stringify({
+                type: 'cleanup',
+                time: Date.now()
+            }));
         }
     }
     
-    // Send message
-    function sendMessage() {
-        const text = input.value.trim();
-        if (!text) return;
-        
-        // Add to DOM
-        addMessageToDOM(text, true, username);
-        
-        // Save
-        saveMessage(text, true, username);
-        
-        // Simulate receiving message (for demo - replace with real sync)
-        // In a real implementation, you'd use WebSocket or polling
-        setTimeout(() => {
-            if (Math.random() > 0.7) { // 30% chance of "response"
-                const demoResponse = [
-                    "Great track!",
-                    "Love this station",
-                    "🎵🎵🎵",
-                    "Hello from another listener!",
-                    "What's playing?",
-                    "🔥🔥🔥"
-                ][Math.floor(Math.random() * 6)];
-                
-                const randomUser = 'Listener_' + Math.random().toString(36).substring(2, 4);
-                addMessageToDOM(demoResponse, false, randomUser);
-                saveMessage(demoResponse, false, randomUser);
-            }
-        }, 2000);
-        
-        input.value = '';
+    // ===== UPDATE MESSAGE COUNT =====
+    function updateMessageCount() {
+        messageCountSpan.textContent = `${messages.length} messages`;
     }
     
-    // Event listeners
+    // ===== INITIAL DISPLAY =====
+    displayAllMessages();
+    
+    // ===== EVENT LISTENERS =====
     sendBtn.onclick = sendMessage;
     input.onkeypress = (e) => {
         if (e.key === 'Enter') sendMessage();
     };
     
-    // Auto-clean every hour
+    // ===== AUTO-CLEAN EVERY HOUR =====
     setInterval(cleanOldMessages, 60 * 60 * 1000);
     
-    // Handle storage events for cross-tab sync
-    window.addEventListener('storage', (e) => {
-        if (e.key === CHAT_KEY && e.newValue) {
-            const newMessages = JSON.parse(e.newValue);
-            if (newMessages.length > messages.length) {
-                const newMsg = newMessages[newMessages.length - 1];
-                if (newMsg.sender !== username) {
-                    addMessageToDOM(newMsg.text, false, newMsg.sender);
-                    messages = newMessages;
-                    updateMessageCount();
-                }
-            }
-        }
-    });
+    // ===== PERIODIC SYNC (backup every 30 seconds) =====
+    setInterval(() => {
+        // Request sync from other tabs
+        localStorage.setItem(SYNC_KEY, JSON.stringify({
+            type: 'ping',
+            time: Date.now()
+        }));
+    }, 30000);
+    
 })();
 </script>
- 
-    </main>  
-
-    <!-- Footer-->
-    <footer>
-        <div class="footer-content">
-            <div class="social-icons">
-                <a href="https://instagram.com/escalgorithm" target="_blank" rel="noopener" class="social-icon instagram">
-                    <i class="fab fa-instagram"></i>
-                    <span class="sr-only">Instagram</span>
-                </a>
-                <a href="https://youtube.com/@escalgorithm" target="_blank" rel="noopener" class="social-icon youtube">
-                    <i class="fab fa-youtube"></i>
-                    <span class="sr-only">YouTube</span>
-                </a>
-                <a href="https://soundcloud.com/nt00" target="_blank" rel="noopener" class="social-icon soundcloud">
-                    <i class="fab fa-soundcloud"></i>
-                    <span class="sr-only">SoundCloud</span>
-                </a>
-            </div>
-            <p class="copyright">© 2026 Escape The Algorithm. All rights reserved.</p>
-            <p class="tech-badge">Powered by AzuraCast · Cloudflare · GitHub</p>
-        </div>
-    </footer>
-
 </body>
 </html>
