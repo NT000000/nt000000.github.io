@@ -1,12 +1,7 @@
-/* ===========================
-   THEME
-   =========================== */
 :root {
-    --bg-primary: #000000;
     --bg-overlay: rgba(0, 0, 0, 0.78);
-    --bg-panel: rgba(255, 255, 255, 0.03);
-    --bg-panel-hover: rgba(255, 255, 255, 0.06);
     --bg-nav: rgba(0, 0, 0, 0.45);
+    --bg-panel-hover: rgba(255, 255, 255, 0.06);
 
     --text-primary: rgba(255, 255, 255, 0.92);
     --text-secondary: rgba(255, 255, 255, 0.55);
@@ -24,9 +19,6 @@
     --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* ===========================
-   RESET
-   =========================== */
 *,
 *::before,
 *::after {
@@ -36,12 +28,12 @@
 }
 
 html {
-    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
-    min-height: 100svh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
@@ -56,9 +48,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===========================
-   ACCESSIBILITY
-   =========================== */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -71,16 +60,14 @@ body {
     border: 0;
 }
 
-/* ===========================
-   NAV
-   =========================== */
+/* NAV */
 .main-nav {
     position: sticky;
     top: 0;
     z-index: 100;
+    min-height: 48px;
     display: flex;
     align-items: center;
-    min-height: 48px;
     background: var(--bg-nav);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
@@ -101,8 +88,8 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-secondary);
     text-decoration: none;
+    color: var(--text-secondary);
     padding: 0.38rem 0.85rem;
     border-radius: var(--radius-full);
     font-size: 0.8rem;
@@ -119,14 +106,7 @@ body {
     color: var(--text-primary);
 }
 
-.main-nav a:focus-visible {
-    outline: 2px solid var(--border-light);
-    outline-offset: 2px;
-}
-
-/* ===========================
-   HEADER
-   =========================== */
+/* HEADERS */
 .station-header {
     text-align: center;
     padding: 1.25rem 1rem 0.55rem;
@@ -149,9 +129,6 @@ body {
     text-transform: uppercase;
 }
 
-/* ===========================
-   SCHEDULE HEADER
-   =========================== */
 .schedule-header {
     padding: 0.4rem 1rem 0.15rem;
 }
@@ -171,9 +148,26 @@ body {
     color: rgba(255, 255, 255, 0.42);
 }
 
-/* ===========================
-   MAIN
-   =========================== */
+.about-header {
+    padding: 0.55rem 1rem 0.2rem;
+}
+
+.about-header h1 {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+}
+
+.about-header .station-tagline {
+    margin-top: 0.08rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.44);
+}
+
+/* MAIN */
 .main-content {
     flex: 1;
     width: 100%;
@@ -184,9 +178,7 @@ body {
     padding: 0.8rem 1rem 1rem;
 }
 
-/* ===========================
-   PLAYER
-   =========================== */
+/* PLAYER */
 .player-section {
     width: 100%;
     max-width: 420px;
@@ -209,14 +201,7 @@ body {
     transition: opacity var(--transition), box-shadow var(--transition);
 }
 
-.player-container iframe:hover {
-    opacity: 1;
-    box-shadow: 0 16px 46px rgba(0, 0, 0, 0.58);
-}
-
-/* ===========================
-   SCHEDULE
-   =========================== */
+/* SCHEDULE */
 .schedule-page {
     justify-content: flex-start;
     padding: 0.15rem 1rem 0.5rem;
@@ -235,7 +220,6 @@ body {
     align-items: flex-start;
     gap: 0.65rem;
     padding-bottom: 0.18rem;
-    border-bottom: none;
 }
 
 .schedule-day-name {
@@ -274,9 +258,54 @@ body {
     margin-right: 0.06rem;
 }
 
-/* ===========================
-   FOOTER
-   =========================== */
+/* ABOUT */
+.about-page {
+    justify-content: flex-start;
+    padding: 0.2rem 1rem 0.8rem;
+}
+
+.about-wrap {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.about-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.about-block h2 {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.about-block p,
+.about-list {
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.about-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.22rem;
+}
+
+.about-list li::before {
+    content: "— ";
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* FOOTER */
 footer {
     width: 100%;
     margin-top: auto;
@@ -355,77 +384,7 @@ footer {
     letter-spacing: 0.05em;
 }
 
-/* ===========================
-   ABOUT
-   =========================== */
-.about-header {
-    padding: 0.55rem 1rem 0.2rem;
-}
-
-.about-header h1 {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    margin: 0;
-    line-height: 1.1;
-    letter-spacing: 0.03em;
-}
-
-.about-header .station-tagline {
-    margin-top: 0.08rem;
-    font-size: 0.58rem;
-    letter-spacing: 0.04em;
-    text-transform: none;
-    color: rgba(255, 255, 255, 0.44);
-}
-
-.about-page {
-    justify-content: flex-start;
-    padding: 0.2rem 1rem 0.8rem;
-}
-
-.about-wrap {
-    width: 100%;
-    max-width: 700px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-}
-
-.about-block {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-}
-
-.about-block h2 {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
-}
-
-.about-block p,
-.about-list {
-    font-size: 0.72rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.78);
-}
-
-.about-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.22rem;
-}
-
-.about-list li::before {
-    content: "— ";
-    color: rgba(255, 255, 255, 0.35);
-}
-
-/* ===========================
-   RESPONSIVE
-   =========================== */
+/* RESPONSIVE */
 @media (min-width: 768px) {
     .station-header {
         padding: 1.55rem 1rem 0.65rem;
