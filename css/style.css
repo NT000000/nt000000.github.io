@@ -371,6 +371,106 @@ body {
 }
 
 /* ===========================
+   ABOUT
+   =========================== */
+.about-header {
+    padding: 0.55rem 1rem 0.2rem;
+}
+
+.about-header h1 {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+}
+
+.about-header .station-tagline {
+    margin-top: 0.08rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.44);
+}
+
+.about-page {
+    justify-content: flex-start;
+    padding: 0.2rem 1rem 0.8rem;
+}
+
+.about-wrap {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.about-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.about-block h2 {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.about-block p,
+.about-list {
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.about-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.22rem;
+}
+
+.about-list li::before {
+    content: "— ";
+    color: rgba(255, 255, 255, 0.35);
+}
+
+@media (max-width: 540px) {
+    .about-header {
+        padding: 0.4rem 0.8rem 0.15rem;
+    }
+
+    .about-header h1 {
+        font-size: 0.95rem;
+    }
+
+    .about-header .station-tagline {
+        font-size: 0.54rem;
+    }
+
+    .about-page {
+        padding: 0.15rem 0.8rem 0.7rem;
+    }
+
+    .about-wrap {
+        gap: 0.75rem;
+    }
+
+    .about-block h2 {
+        font-size: 0.64rem;
+    }
+
+    .about-block p,
+    .about-list {
+        font-size: 0.68rem;
+        line-height: 1.55;
+    }
+}
+     
+   /* ===========================
    FOOTER
    =========================== */
 footer {
