@@ -222,8 +222,11 @@ body {
 }
 
 .schedule-slot time {
+    display: inline-block;
+    width: 78px;
     color: rgba(255, 255, 255, 0.28);
-    margin-right: 0.16rem;
+    margin-right: 0.2rem;
+    font-variant-numeric: tabular-nums;
 }
 
 /* Mobile tightening */
