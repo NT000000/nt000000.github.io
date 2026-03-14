@@ -42,8 +42,77 @@
                 </iframe>
             </div>
         </div>
+   <div id="radio-chat" style="margin-top: 20px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto;"></div>
+
+<script>
+  // Custom localStorage persistence for Derin Chat
+  (function() {
+    // Initialize Derin Chat
+    DerinChat.init({
+      target: '#radio-chat',
+      mock: true, // No backend needed
+      ui: {
+        texts: {
+          title: "Escape The Algorithm",
+          subtitle: "Listener Chat",
+          placeholder: "Type a message...",
+          sendButton: "Send"
+        },
+        colors: {
+          primary: "#667eea",
+          background: "#111111",
+          text: "#ffffff"
+        }
+      }
+    });
+
+    // Wait for chat to initialize
+    setTimeout(() => {
+      const chatContainer = document.querySelector('#radio-chat .derin-chat-messages');
+      if (!chatContainer) return;
+
+      // Load saved messages from localStorage
+      const savedMessages = localStorage.getItem('radio_chat_messages');
+      if (savedMessages) {
+        const messages = JSON.parse(savedMessages);
+        messages.forEach(msg => {
+          // Add message to chat display
+          const msgEl = document.createElement('div');
+          msgEl.className = 'derin-chat-message';
+          msgEl.innerHTML = `
+            <div style="margin: 8px 0; display: flex; ${msg.isMe ? 'justify-content: flex-end' : 'justify-content: flex-start'}">
+              <div style="max-width: 80%; padding: 8px 12px; border-radius: 18px; background: ${msg.isMe ? '#333' : '#111'}; color: white; border: 1px solid #444;">
+                <div style="font-size: 11px; opacity: 0.7; margin-bottom: 4px; color: #999;">${msg.sender}</div>
+                <div>${msg.text}</div>
+              </div>
+            </div>
+          `;
+          chatContainer.appendChild(msgEl);
+        });
+      }
+
+      // Save messages when new ones arrive
+      const observer = new MutationObserver(() => {
+        const messages = [];
+        document.querySelectorAll('.derin-chat-message').forEach(el => {
+          messages.push({
+            text: el.querySelector('div:last-child').textContent,
+            sender: el.querySelector('div:first-child').textContent,
+            isMe: el.style.justifyContent === 'flex-end',
+            timestamp: Date.now()
+          });
+        });
+        localStorage.setItem('radio_chat_messages', JSON.stringify(messages.slice(-50)));
+      });
+
+      observer.observe(chatContainer, { childList: true, subtree: true });
+    }, 1000);
+  })();
+</script>
+    
     </main>  
- <!-- Footer-->
+
+    <!-- Footer-->
     <footer>
         <div class="footer-content">
             <div class="social-icons">
