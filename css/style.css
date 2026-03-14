@@ -150,6 +150,61 @@ body {
 }
 
 /* ===========================
+   SCHEDULE HEADER
+   =========================== */
+.schedule-header {
+    padding: 0.45rem 1rem 0.2rem;
+}
+
+.schedule-header h1 {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin: 0;
+    line-height: 1.15;
+}
+
+.schedule-header .station-tagline {
+    margin-top: 0.1rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* Make schedule page tighter overall */
+.schedule-page {
+    justify-content: flex-start;
+    padding-top: 0.2rem;
+    padding-bottom: 0.55rem;
+}
+
+.schedule-raw {
+    gap: 0.38rem;
+}
+
+.schedule-day {
+    gap: 0.7rem;
+    padding-bottom: 0.22rem;
+}
+
+.schedule-day-name {
+    width: 68px;
+    font-size: 0.62rem;
+}
+
+.schedule-day-slots {
+    gap: 0.12rem;
+}
+
+.schedule-slot {
+    font-size: 0.63rem;
+    line-height: 1.25;
+}
+
+.schedule-slot time {
+    margin-right: 0.18rem;
+}
+
+/* ===========================
    MAIN
    =========================== */
 .main-content {
