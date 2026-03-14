@@ -64,150 +64,17 @@
         </div>
     </footer>
 
-    <!-- Complete Chat Widget - FULLY WORKING -->
-    <div id="simple-chat-wrapper">
-        <button id="simple-chat-button">🗨️ Chat</button>
-        <div id="simple-chat-window" style="display: none;">
-            <div class="chat-header">
-                <span>🗨️ Radio Chat</span>
-                <span class="chat-timer">⏱️ 10min</span>
-            </div>
-            <div id="chat-messages" class="chat-messages"></div>
-            <div class="chat-input-area">
-                <input id="chat-input" type="text" placeholder="Type a message...">
-                <button id="send-btn">Send</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Complete Chat JavaScript  -->
-    <script>
-        (function() {
-            // CONFIGURATION
-            const SIGNALING_SERVER = 'https://ghostchat-signaling.nt00-161.workers.dev';
-            const ROOM_NAME = 'escape_algorithm_radio';
-            const clientId = Math.random().toString(36).substring(2, 10);
-            
-            // Get elements
-            const button = document.getElementById('simple-chat-button');
-            const chatWindow = document.getElementById('simple-chat-window');
-            const messagesDiv = document.getElementById('chat-messages');
-            const input = document.getElementById('chat-input');
-            const sendBtn = document.getElementById('send-btn');
-            
-            // Track seen messages
-            const seenIds = new Set();
-            
-            // Toggle chat window
-            button.onclick = function() {
-                if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
-                    chatWindow.style.display = 'flex';
-                    button.innerHTML = '✖ Close';
-                } else {
-                    chatWindow.style.display = 'none';
-                    button.innerHTML = '🗨️ Chat';
-                }
-            };
-            
-            // Display message function
-            function addMessage(sender, text, isMe = false) {
-                const msgDiv = document.createElement('div');
-                msgDiv.style.margin = '8px 0';
-                msgDiv.style.display = 'flex';
-                msgDiv.style.justifyContent = isMe ? 'flex-end' : 'flex-start';
-                
-                const bubble = document.createElement('div');
-                bubble.style.maxWidth = '80%';
-                bubble.style.padding = '8px 12px';
-                bubble.style.borderRadius = '18px';
-                bubble.style.background = isMe ? '#333' : '#111';
-                bubble.style.color = 'white';
-                bubble.style.border = '1px solid #444';
-                bubble.style.wordWrap = 'break-word';
-                
-                const nameSpan = document.createElement('div');
-                nameSpan.style.fontSize = '11px';
-                nameSpan.style.opacity = '0.7';
-                nameSpan.style.marginBottom = '4px';
-                nameSpan.style.color = '#999';
-                nameSpan.textContent = isMe ? 'You' : 'Listener ' + sender.substr(0, 4);
-                
-                const textSpan = document.createElement('div');
-                textSpan.textContent = text;
-                
-                bubble.appendChild(nameSpan);
-                bubble.appendChild(textSpan);
-                msgDiv.appendChild(bubble);
-                messagesDiv.appendChild(msgDiv);
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            }
-            
-            // System message
-            const systemMsg = document.createElement('div');
-            systemMsg.style.cssText = 'color: #666; font-style: italic; text-align: center; margin: 8px 0; font-size: 12px;';
-            systemMsg.textContent = '✨ Messages last 10 minutes.';
-            messagesDiv.appendChild(systemMsg);
-            
-            // Send message function
-            async function sendMessage() {
-                const text = input.value.trim();
-                if (!text) return;
-                
-                const msgId = Date.now() + '-' + Math.random();
-                const message = {
-                    id: msgId,
-                    sender: clientId,
-                    text: text,
-                    timestamp: Date.now()
-                };
-                
-                // Show immediately
-                addMessage(clientId, text, true);
-                seenIds.add(msgId);
-                
-                // Send to server
-                try {
-                    await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(message)
-                    });
-                } catch(e) {
-                    console.log('Send error:', e);
-                }
-                
-                input.value = '';
-            }
-            
-            // Get messages function
-            async function getMessages() {
-                try {
-                    const res = await fetch(`${SIGNALING_SERVER}?room=${ROOM_NAME}`);
-                    const messages = await res.json();
-                    
-                    if (Array.isArray(messages)) {
-                        messages.forEach(msg => {
-                            if (!seenIds.has(msg.id) && msg.sender !== clientId) {
-                                seenIds.add(msg.id);
-                                addMessage(msg.sender, msg.text, false);
-                            }
-                        });
-                    }
-                } catch(e) {
-                    console.log('Poll error:', e);
-                }
-            }
-            
-            // Event listeners
-            sendBtn.onclick = sendMessage;
-            input.onkeypress = (e) => {
-                if (e.key === 'Enter') sendMessage();
-            };
-            
-            // Start polling
-            setInterval(getMessages, 2000);
-            getMessages();
-        })();
-    </script>
+    <!-- Simple Blarb.net Chat - No limits, no installation -->
+<div style="margin-top: 20px; width: 100%; max-width: 400px; margin-left: auto; margin-right: auto;">
+    <h3 style="color: white; margin-bottom: 10px; font-weight: 300; letter-spacing: 0.5px;">Live Chat</h3>
+    <iframe 
+        src="https://blarb.net/escape_algorithm_radio" 
+        width="100%" 
+        height="400px" 
+        frameborder="0"
+        style="border-radius: 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);">
+    </iframe>
+    <p style="color: rgba(255,255,255,0.4); font-size: 0.7rem; text-align: center; margin-top: 5px;">⚡ Anonymous chat</p>
+</div>
 </body>
 </html>
