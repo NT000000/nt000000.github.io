@@ -1,9 +1,3 @@
-Yes — that usually means the CSS file became structurally broken or the new block was pasted into the wrong place. The most common cause is a missing or extra } around a media query, which can make the browser treat later sections as part of the wrong block and shift layout across the whole page. Page-specific CSS should also stay isolated with unique class names like .about-* so it does not leak into other sections.
-
-Replace with this full CSS
-To avoid hidden brace problems, replace your entire current style.css with this clean version. It includes the About page safely, keeps the footer centered, keeps social icons visible, and preserves the raw aligned schedule layout.
-
-css
 /* ===========================
    THEME
    =========================== */
