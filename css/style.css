@@ -10,13 +10,18 @@
     --border-subtle: rgba(255, 255, 255, 0.05);
     --border-light: rgba(255, 255, 255, 0.10);
 
-    --radius-md: 14px;
+    --radius-md: 10px;
     --radius-full: 999px;
 
     --transition: 0.2s ease;
     --blur: blur(12px);
 
     --font-main: "Roboto Condensed", Arial, Helvetica, sans-serif;
+
+    --accent: #9fb7ff;
+    --accent-soft: rgba(159, 183, 255, 0.18);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --shadow-deep: 0 18px 48px rgba(0, 0, 0, 0.42);
 }
 
 *,
@@ -37,6 +42,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    position: relative;
     font-family: var(--font-main);
     font-weight: 400;
     line-height: 1.5;
@@ -44,8 +50,21 @@ body {
     background:
         linear-gradient(var(--bg-overlay), var(--bg-overlay)),
         url('../images/background.jpg') no-repeat center center / cover fixed;
+    background-color: #050505;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 220px 220px;
 }
 
 .sr-only {
@@ -71,6 +90,16 @@ button {
     letter-spacing: 0.03em;
 }
 
+.main-nav,
+.main-content,
+footer,
+.station-header,
+.schedule-header,
+.about-header {
+    position: relative;
+    z-index: 1;
+}
+
 /* NAV */
 .main-nav {
     position: sticky;
@@ -79,10 +108,10 @@ button {
     min-height: 48px;
     display: flex;
     align-items: center;
-    background: var(--bg-nav);
+    background: rgba(0, 0, 0, 0.52);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-light);
 }
 
 .nav-container {
@@ -100,12 +129,12 @@ button {
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.68);
     padding: 0.38rem 0.85rem;
     border-radius: var(--radius-full);
     font-size: 0.8rem;
-    font-weight: 400;
-    letter-spacing: 0.05em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     white-space: nowrap;
     transition: background var(--transition), color var(--transition);
@@ -113,8 +142,8 @@ button {
 
 .main-nav a:hover,
 .main-nav a.active {
-    background: var(--bg-panel-hover);
-    color: var(--text-primary);
+    background: var(--accent-soft);
+    color: #ffffff;
 }
 
 /* HEADERS */
@@ -124,19 +153,20 @@ button {
 }
 
 .station-header h1 {
-    font-size: clamp(1.35rem, 4vw, 1.95rem);
-    font-weight: 300;
-    letter-spacing: 0.04em;
+    font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
     color: var(--text-primary);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
 }
 
 .station-tagline {
     margin-top: 0.2rem;
     font-size: clamp(0.68rem, 2vw, 0.84rem);
-    color: var(--text-secondary);
-    font-weight: 300;
-    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 400;
+    letter-spacing: 0.04em;
     text-transform: none;
 }
 
@@ -148,7 +178,8 @@ button {
     font-size: clamp(0.95rem, 1.8vw, 1.15rem);
     margin: 0;
     line-height: 1.1;
-    letter-spacing: 0.03em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
 }
 
 .schedule-header .station-tagline {
@@ -167,7 +198,8 @@ button {
     font-size: clamp(1rem, 2vw, 1.2rem);
     margin: 0;
     line-height: 1.1;
-    letter-spacing: 0.03em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
 }
 
 .about-header .station-tagline {
@@ -205,9 +237,9 @@ button {
     display: block;
     width: 100%;
     height: 150px;
-    border: 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-md);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--shadow-deep);
     opacity: 0.96;
     transition: opacity var(--transition), box-shadow var(--transition);
 }
@@ -236,10 +268,10 @@ button {
 .schedule-day-name {
     width: 44px;
     flex-shrink: 0;
-    color: rgba(255, 255, 255, 0.52);
+    color: rgba(255, 255, 255, 0.62);
     font-size: 0.58rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     line-height: 1.3;
     padding-top: 0.02rem;
@@ -292,9 +324,9 @@ button {
 .about-block h2 {
     font-size: 0.68rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.62);
 }
 
 .about-block p,
@@ -321,10 +353,10 @@ footer {
     width: 100%;
     margin-top: auto;
     padding: 0.45rem 0.8rem 0.5rem;
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.42);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-top: 1px solid var(--border-subtle);
 }
 
 .footer-content {
@@ -357,14 +389,14 @@ footer {
     justify-content: center;
     text-decoration: none;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     transition: background var(--transition), border-color var(--transition), transform var(--transition);
 }
 
 .social-icon:hover {
-    background: rgba(255, 255, 255, 0.10);
-    border-color: rgba(255, 255, 255, 0.14);
+    background: var(--accent-soft);
+    border-color: rgba(159, 183, 255, 0.35);
     transform: translateY(-1px);
 }
 
@@ -380,7 +412,7 @@ footer {
     margin: 0;
     text-align: center;
     font-size: 0.58rem;
-    color: rgba(255, 255, 255, 0.38);
+    color: rgba(255, 255, 255, 0.46);
     font-weight: 300;
     letter-spacing: 0.03em;
 }
@@ -390,131 +422,13 @@ footer {
     margin: 0;
     text-align: center;
     font-size: 0.52rem;
-    color: rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.26);
     font-weight: 300;
     letter-spacing: 0.05em;
 }
 
 /* RESPONSIVE */
 @media (min-width: 768px) {
-    
-    /* EDITORIAL UPGRADE */
-:root {
-    --accent: #9fb7ff;
-    --accent-soft: rgba(159, 183, 255, 0.18);
-    --border-strong: rgba(255, 255, 255, 0.14);
-    --shadow-deep: 0 18px 48px rgba(0, 0, 0, 0.42);
-    --radius-md: 10px;
-}
-
-body {
-    position: relative;
-    background-color: #050505;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.055;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 220px 220px;
-}
-
-.main-nav,
-.main-content,
-footer,
-.station-header,
-.schedule-header,
-.about-header {
-    position: relative;
-    z-index: 1;
-}
-
-.main-nav {
-    border-bottom: 1px solid var(--border-light);
-    background: rgba(0, 0, 0, 0.52);
-}
-
-.main-nav a {
-    color: rgba(255, 255, 255, 0.68);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-}
-
-.main-nav a:hover,
-.main-nav a.active {
-    background: var(--accent-soft);
-    color: #ffffff;
-}
-
-.station-header h1 {
-    font-size: clamp(1.5rem, 4.5vw, 2.2rem);
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
-    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
-}
-
-.station-tagline {
-    color: rgba(255, 255, 255, 0.72);
-    font-weight: 400;
-    letter-spacing: 0.04em;
-}
-
-.schedule-header h1,
-.about-header h1 {
-    font-weight: 700;
-    letter-spacing: 0.02em;
-}
-
-.schedule-day-name,
-.about-block h2 {
-    color: rgba(255, 255, 255, 0.62);
-    letter-spacing: 0.1em;
-}
-
-.player-container iframe {
-    box-shadow: var(--shadow-deep);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-footer {
-    background: rgba(0, 0, 0, 0.42);
-    border-top: 1px solid var(--border-subtle);
-}
-
-.social-icon {
-    background: rgba(255, 255, 255, 0.035);
-    border: 1px solid rgba(255, 255, 255, 0.10);
-}
-
-.social-icon:hover {
-    background: var(--accent-soft);
-    border-color: rgba(159, 183, 255, 0.35);
-}
-
-.copyright {
-    color: rgba(255, 255, 255, 0.46);
-}
-
-.tech-badge {
-    color: rgba(255, 255, 255, 0.26);
-}
-
-@media (max-width: 768px) {
-    body {
-        background-attachment: scroll;
-    }
-
-    body::before {
-        opacity: 0.04;
-    }
-}
-    
     .station-header {
         padding: 1.55rem 1rem 0.65rem;
     }
@@ -639,5 +553,52 @@ footer {
 
     .social-icon i {
         font-size: 0.8rem;
+    }
+}
+
+/* MOBILE REINFORCEMENT */
+@media (max-width: 768px) {
+    body {
+        background:
+            linear-gradient(rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.82)),
+            url('../images/background.jpg') no-repeat center center / cover;
+        background-attachment: scroll;
+    }
+
+    body::before {
+        opacity: 0.05;
+        background-size: 180px 180px;
+    }
+
+    .main-nav {
+        background: rgba(0, 0, 0, 0.6);
+    }
+
+    .main-nav a {
+        color: rgba(255, 255, 255, 0.75);
+        font-weight: 700;
+    }
+
+    .station-header h1 {
+        font-size: clamp(1.35rem, 7vw, 1.9rem);
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+    }
+
+    .station-tagline {
+        color: rgba(255, 255, 255, 0.76);
+        font-weight: 400;
+        letter-spacing: 0.03em;
+        text-transform: none;
+    }
+
+    .player-container iframe {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+    }
+
+    footer {
+        background: rgba(0, 0, 0, 0.5);
     }
 }
