@@ -397,6 +397,124 @@ footer {
 
 /* RESPONSIVE */
 @media (min-width: 768px) {
+    
+    /* EDITORIAL UPGRADE */
+:root {
+    --accent: #9fb7ff;
+    --accent-soft: rgba(159, 183, 255, 0.18);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --shadow-deep: 0 18px 48px rgba(0, 0, 0, 0.42);
+    --radius-md: 10px;
+}
+
+body {
+    position: relative;
+    background-color: #050505;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 220px 220px;
+}
+
+.main-nav,
+.main-content,
+footer,
+.station-header,
+.schedule-header,
+.about-header {
+    position: relative;
+    z-index: 1;
+}
+
+.main-nav {
+    border-bottom: 1px solid var(--border-light);
+    background: rgba(0, 0, 0, 0.52);
+}
+
+.main-nav a {
+    color: rgba(255, 255, 255, 0.68);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    background: var(--accent-soft);
+    color: #ffffff;
+}
+
+.station-header h1 {
+    font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+}
+
+.station-tagline {
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+}
+
+.schedule-header h1,
+.about-header h1 {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.schedule-day-name,
+.about-block h2 {
+    color: rgba(255, 255, 255, 0.62);
+    letter-spacing: 0.1em;
+}
+
+.player-container iframe {
+    box-shadow: var(--shadow-deep);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+footer {
+    background: rgba(0, 0, 0, 0.42);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.social-icon {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.social-icon:hover {
+    background: var(--accent-soft);
+    border-color: rgba(159, 183, 255, 0.35);
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.46);
+}
+
+.tech-badge {
+    color: rgba(255, 255, 255, 0.26);
+}
+
+@media (max-width: 768px) {
+    body {
+        background-attachment: scroll;
+    }
+
+    body::before {
+        opacity: 0.04;
+    }
+}
+    
     .station-header {
         padding: 1.55rem 1rem 0.65rem;
     }
