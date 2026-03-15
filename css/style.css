@@ -604,3 +604,19 @@ footer {
         background: rgba(0, 0, 0, 0.5);
     }
 }
+
+/* MOBILE IFRAME FIX */
+@media (max-width: 768px) {
+    .player-container {
+        overflow: hidden;
+        border-radius: var(--radius-md);
+        background: transparent;
+    }
+
+    .player-container iframe {
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+        opacity: 1;
+    }
+}
