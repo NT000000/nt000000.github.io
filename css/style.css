@@ -108,6 +108,9 @@ footer,
 }
 
 .player-bar {
+    position: sticky;
+    top: 48px;
+    z-index: 110;
     background: rgba(0, 0, 0, 0.88);
     border-bottom: 1px solid var(--border-light);
 }
