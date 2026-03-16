@@ -9,6 +9,10 @@ const CONFIG = {
 let pollTimer = null;
 let currentController = null;
 
+const STORAGE_KEYS = {
+    shouldPlay: 'nt00_radio_should_play'
+};
+
 function getElements() {
     return {
         audio: document.getElementById('ntRadioAudio'),
@@ -22,19 +26,22 @@ function getElements() {
     };
 }
 
-function updatePlayerFromApi(data) {
-    const { liveBadge, art } = getElements();
-    if (!liveBadge || !art) return;
+function savePlaybackState(shouldPlay) {
+    sessionStorage.setItem(STORAGE_KEYS.shouldPlay, shouldPlay ? '1' : '0');
+}
 
-    const isLive = data && data.live && data.live.is_live === true;
+function getSavedPlaybackState() {
+    return sessionStorage.getItem(STORAGE_KEYS.shouldPlay) === '1';
+}
 
-    liveBadge.hidden = true;
+function updatePlayButton() {
+    const { audio, toggle, playLabel, pauseLabel } = getElements();
+    if (!audio || !toggle || !playLabel || !pauseLabel) return;
 
-    if (isLive) {
-        liveBadge.hidden = false;
-    }
-
-    art.src = CONFIG.defaultArt;
+    const isPlaying = !audio.paused;
+    playLabel.hidden = isPlaying;
+    pauseLabel.hidden = !isPlaying;
+    toggle.setAttribute('aria-label', isPlaying ? 'Pause Nt00 Radio' : 'Play Nt00 Radio');
 }
 
 function setDefaultPlayerState() {
@@ -113,6 +120,21 @@ function startPolling() {
     }, CONFIG.pollInterval);
 }
 
+async function restorePlaybackState() {
+    const { audio } = getElements();
+    if (!audio) return;
+
+    if (getSavedPlaybackState()) {
+        try {
+            await audio.play();
+        } catch (error) {
+            console.log('Autoplay resume blocked:', error);
+        }
+    }
+
+    updatePlayButton();
+}
+
 function bindPlayer() {
     const { audio, toggle, art } = getElements();
     if (!audio || !toggle) return;
@@ -124,8 +146,10 @@ function bindPlayer() {
         try {
             if (audio.paused) {
                 await audio.play();
+                savePlaybackState(true);
             } else {
                 audio.pause();
+                savePlaybackState(false);
             }
             updatePlayButton();
         } catch (error) {
@@ -133,9 +157,21 @@ function bindPlayer() {
         }
     });
 
-    audio.addEventListener('play', updatePlayButton);
-    audio.addEventListener('pause', updatePlayButton);
-    audio.addEventListener('ended', updatePlayButton);
+    audio.addEventListener('play', () => {
+        savePlaybackState(true);
+        updatePlayButton();
+    });
+
+    audio.addEventListener('pause', () => {
+        savePlaybackState(false);
+        updatePlayButton();
+    });
+
+    audio.addEventListener('ended', () => {
+        savePlaybackState(false);
+        updatePlayButton();
+    });
+
     audio.addEventListener('error', updatePlayButton);
 
     updatePlayButton();
@@ -149,10 +185,11 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     setDefaultPlayerState();
     bindPlayer();
     startPolling();
+    await restorePlaybackState();
 });
 
 window.addEventListener('beforeunload', stopPolling);
