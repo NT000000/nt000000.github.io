@@ -1,20 +1,83 @@
-<section class="chat-section" aria-labelledby="chat-title">
-    <div class="chat-wrap">
-        <header class="chat-header">
-            <h1 id="chat-title">Listener Chat</h1>
-            <p class="station-tagline">Open room for Nt00 Radio listeners.</p>
-        </header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <div class="chat-frame">
-            <iframe
-    src="https://chitchatter.im/public/Nt00%20Radio?embed=1"
-    title="Nt00 Radio Chat"
-    loading="lazy"
-    referrerpolicy="no-referrer"
-    allow="fullscreen"
-    width="800"
-    height="800">
-</iframe>
-        </div>
+  <title>Nt00 | Listener Chat</title>
+  <meta name="description" content="Public listener chat for Nt00 Radio.">
+  <meta name="theme-color" content="#000000">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <link rel="canonical" href="https://radio.nt00.xyz/chat.html">
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-src https://nt00.xyz https://chitchatter.im;">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <nav class="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <a href="index.html">✌︎㋡ Listen</a>
+      <a href="schedule.html">🗒 Schedule</a>
+      <a href="about.html">❕ About</a>
+      <a href="chat.html" class="active" aria-current="page">✦ Chat</a>
     </div>
-</section>
+  </nav>
+
+  <header class="about-header" role="banner">
+    <h1>Listener Chat</h1>
+    <p class="station-tagline">Open room for Nt00 Radio listeners.</p>
+  </header>
+
+  <main class="main-content chat-page" role="main">
+    <section aria-labelledby="chat-title" class="chat-wrap">
+      <header class="chat-header">
+        <h1 id="chat-title" class="sr-only">Nt00 Radio Chat</h1>
+      </header>
+
+      <div class="chat-frame">
+        <iframe
+          src="https://chitchatter.im/public/Nt00%20Radio?embed=1"
+          title="Nt00 Radio Chat"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          allow="fullscreen">
+        </iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="social-icons" aria-label="Social links">
+        <a href="https://instagram.com/nt00radio" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+        </a>
+        <a href="https://youtube.com/@escalgorithm" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube">
+          <i class="fab fa-youtube" aria-hidden="true"></i>
+        </a>
+        <a href="https://soundcloud.com/nt00" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="SoundCloud">
+          <i class="fab fa-soundcloud" aria-hidden="true"></i>
+        </a>
+      </div>
+      <p class="copyright">© 2026 Escape The Algorithm. All rights are not reserved.</p>
+      <p class="tech-badge">Powered by AzuraCast · GitHub</p>
+    </div>
+  </footer>
+
+</body>
+</html>
