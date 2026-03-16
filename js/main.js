@@ -1,36 +1,98 @@
 const CONFIG = {
-    // Your AzuraCast API endpoint for now playing data
     apiUrl: 'https://nt00.xyz/api/nowplaying/escape_the_algorithm',
-    
-    // Your stream URL for the audio player
-    streamUrl: 'https://nt00.xyz/listen/escape_the_algorithm/radio.mp3'
+    pollInterval: 10000,
+    requestTimeout: 5000
 };
 
-// Update now playing information
+let pollTimer = null;
+let currentController = null;
+
+function getNowPlayingElements() {
+    return {
+        songTitle: document.querySelector('.song-title'),
+        artistName: document.querySelector('.artist-name')
+    };
+}
+
+function updateNowPlayingUI(title, artist) {
+    const { songTitle, artistName } = getNowPlayingElements();
+    if (!songTitle || !artistName) return;
+
+    songTitle.textContent = title;
+    artistName.textContent = artist;
+}
+
 async function updateNowPlaying() {
+    const { songTitle, artistName } = getNowPlayingElements();
+    if (!songTitle || !artistName) return;
+
+    if (currentController) {
+        currentController.abort();
+    }
+
+    currentController = new AbortController();
+    const timeoutId = setTimeout(() => currentController.abort(), CONFIG.requestTimeout);
+
     try {
-        const response = await fetch(CONFIG.apiUrl);
-        
+        const response = await fetch(CONFIG.apiUrl, {
+            signal: currentController.signal,
+            cache: 'no-store'
+        });
+
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP ${response.status}`);
         }
-        
+
         const data = await response.json();
-        
-        const songTitle = document.querySelector('.song-title');
-        const artistName = document.querySelector('.artist-name');
-        
-        if (data.now_playing && data.now_playing.song) {
-            songTitle.textContent = data.now_playing.song.title || 'Unknown Title';
-            artistName.textContent = data.now_playing.song.artist || 'Unknown Artist';
-        }
+        const song = data?.now_playing?.song;
+
+        updateNowPlayingUI(
+            song?.title || 'Unknown Title',
+            song?.artist || 'Unknown Artist'
+        );
     } catch (error) {
-        console.log('Could not fetch now playing:', error);
-        document.querySelector('.song-title').textContent = 'Now Playing';
-        document.querySelector('.artist-name').textContent = 'Loading stream...';
+        if (error.name !== 'AbortError') {
+            console.log('Could not fetch now playing:', error);
+            updateNowPlayingUI('Now Playing', 'Loading stream...');
+        }
+    } finally {
+        clearTimeout(timeoutId);
+        currentController = null;
     }
 }
 
-// Update every 10 seconds
-updateNowPlaying();
-setInterval(updateNowPlaying, 10000);
+function startNowPlayingPolling() {
+    stopNowPlayingPolling();
+    updateNowPlaying();
+    pollTimer = setInterval(() => {
+        if (!document.hidden) {
+            updateNowPlaying();
+        }
+    }, CONFIG.pollInterval);
+}
+
+function stopNowPlayingPolling() {
+    if (pollTimer) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+    }
+
+    if (currentController) {
+        currentController.abort();
+        currentController = null;
+    }
+}
+
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        if (currentController) currentController.abort();
+    } else {
+        updateNowPlaying();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    startNowPlayingPolling();
+});
+
+window.addEventListener('beforeunload', stopNowPlayingPolling);
