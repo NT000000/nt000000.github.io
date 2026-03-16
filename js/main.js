@@ -34,7 +34,6 @@ function updatePlayButton() {
 
 function setDefaultPlayerState() {
     const { track, artist, liveBadge, art } = getElements();
-
     if (track) track.textContent = 'Now Playing';
     if (artist) artist.textContent = 'Loading stream...';
     if (liveBadge) liveBadge.hidden = true;
@@ -46,11 +45,11 @@ function updatePlayerFromApi(data) {
     if (!track || !artist || !liveBadge || !art) return;
 
     const song = data?.now_playing?.song || {};
-    const live = data?.live || {};
+    const isLive = data?.live?.is_live === true;
 
     track.textContent = song.title || 'Now Playing';
     artist.textContent = song.artist || 'Loading stream...';
-    liveBadge.hidden = !live.is_live;
+    liveBadge.hidden = !isLive;
     art.src = CONFIG.defaultArt;
 }
 
