@@ -135,6 +135,19 @@ async function restorePlaybackState() {
     updatePlayButton();
 }
 
+function bindNavStateSaving() {
+    const navLinks = document.querySelectorAll('.main-nav a');
+
+    navLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+            const { audio } = getElements();
+            if (!audio) return;
+
+            savePlaybackState(!audio.paused);
+        });
+    });
+}
+
 function bindPlayer() {
     const { audio, toggle, art } = getElements();
     if (!audio || !toggle) return;
@@ -188,6 +201,7 @@ document.addEventListener('visibilitychange', () => {
 document.addEventListener('DOMContentLoaded', async () => {
     setDefaultPlayerState();
     bindPlayer();
+    bindNavStateSaving();
     startPolling();
     await restorePlaybackState();
 });
