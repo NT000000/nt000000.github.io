@@ -27,11 +27,11 @@ function getElements() {
 }
 
 function savePlaybackState(shouldPlay) {
-    sessionStorage.setItem(STORAGE_KEYS.shouldPlay, shouldPlay ? '1' : '0');
+    localStorage.setItem(STORAGE_KEYS.shouldPlay, shouldPlay ? '1' : '0');
 }
 
 function getSavedPlaybackState() {
-    return sessionStorage.getItem(STORAGE_KEYS.shouldPlay) === '1';
+    return localStorage.getItem(STORAGE_KEYS.shouldPlay) === '1';
 }
 
 function updatePlayButton() {
@@ -144,7 +144,7 @@ function bindNavStateSaving() {
             if (!audio) return;
 
             savePlaybackState(!audio.paused);
-        });
+        }, { capture: true });
     });
 }
 
@@ -153,6 +153,7 @@ function bindPlayer() {
     if (!audio || !toggle) return;
 
     audio.src = CONFIG.streamUrl;
+    audio.preload = 'auto';
     if (art) art.src = CONFIG.defaultArt;
 
     toggle.addEventListener('click', async () => {
