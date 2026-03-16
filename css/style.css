@@ -597,6 +597,7 @@ footer {
         grid-template-columns: 40px 42px minmax(0, 1fr);
         gap: 6px;
         padding: 6px;
+        align-items: center;
     }
 
     .nt-player-toggle {
@@ -610,12 +611,23 @@ footer {
         height: 42px;
     }
 
+    .nt-player-meta {
+        gap: 2px;
+    }
+
     .nt-player-title {
         font-size: 0.76rem;
+        line-height: 1;
     }
 
     .nt-player-subtitle {
+        display: block;
         font-size: 0.46rem;
+        line-height: 1.1;
+        color: rgba(255, 255, 255, 0.68);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .nt-player-track,
