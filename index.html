@@ -14,23 +14,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/style.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="page-home">
     <nav class="main-nav">
         <div class="nav-container">
             <a href="index.html" class="active">Listen</a>
             <a href="schedule.html">Schedule</a>
             <a href="about.html">About</a>
-            <a href="chat.html">Chat</a>
+            <a href="chat.html" target="_blank" rel="noopener noreferrer">Chat</a>
         </div>
     </nav>
 
-    <header class="station-header">
-        <div class="station-header-inner">
+    <div class="player-bar">
+        <div class="player-bar-inner">
             <section class="player-section" aria-label="Nt00 Radio player">
                 <div class="nt-mini-player" id="ntMiniPlayer">
                     <button class="nt-player-toggle" id="ntPlayerToggle" aria-label="Play Nt00 Radio" type="button">
@@ -62,7 +60,11 @@
                         src="https://nt00.xyz/listen/escape_the_algorithm/radio.mp3"></audio>
                 </div>
             </section>
+        </div>
+    </div>
 
+    <header class="station-header">
+        <div class="station-header-inner station-header-inner--center">
             <div class="station-heading">
                 <h1>Escape The Algorithm</h1>
                 <p class="station-tagline">Nt00 Radio · 🛰️ Broadcasting 24/7</p>
