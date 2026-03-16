@@ -123,7 +123,7 @@ footer,
 
 .player-section {
     width: 100%;
-    max-width: 380px;
+    max-width: 300px;
 }
 
 .nt-mini-player {
@@ -223,21 +223,7 @@ footer,
 
 .nt-player-track,
 .nt-player-artist {
-    font-size: 0.58rem;
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    letter-spacing: 0.04em;
-}
-
-.nt-player-track {
-    margin-top: 4px;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.nt-player-artist {
-    color: rgba(255, 255, 255, 0.52);
+    display: none;
 }
 
 .station-header {
