@@ -192,4 +192,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     await restorePlaybackState();
 });
 
-window.addEventListener('beforeunload', stopPolling);
+window.addEventListener('pagehide', stopPolling);
