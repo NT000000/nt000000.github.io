@@ -3,145 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule | Nt00 Radio</title>
+    <meta name="description" content="Nt00 Radio schedule — Escape The Algorithm.">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="shortcut icon" href="/favicon.ico">
-<link rel="manifest" href="/site.webmanifest">
-    
-    <title>Schedule | Escape The Algorithm</title>
-    <meta name="description" content="Weekly schedule for Escape The Algorithm freeform radio.">
-    <meta name="theme-color" content="#000000">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self';">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-
-    <nav class="main-nav" role="navigation" aria-label="Main navigation">
+<body class="page-schedule">
+    <nav class="main-nav">
         <div class="nav-container">
-            <a href="index.html">♫ Listen</a>
-            <a href="schedule.html" class="active" aria-current="page">📅 Schedule</a>
-            <a href="about.html">❕ About</a>
+            <a href="index.html">Listen</a>
+            <a href="schedule.html" class="active">Schedule</a>
+            <a href="about.html">About</a>
+            <a href="chat.html" target="_blank" rel="noopener noreferrer">Chat</a>
         </div>
     </nav>
 
-    <header class="station-header schedule-header" role="banner">
-        <h1>Weekly Schedule</h1>
-        <p class="station-tagline">All scheduled times are based on GMT time</p>
+    <div class="player-bar">
+        <div class="player-bar-inner">
+            <section class="player-section" aria-label="Nt00 Radio player">
+                <div class="nt-mini-player" id="ntMiniPlayer">
+                    <button class="nt-player-toggle" id="ntPlayerToggle" aria-label="Play Nt00 Radio" type="button">
+                        <span class="nt-player-label nt-player-label--play">▶</span>
+                        <span class="nt-player-label nt-player-label--pause" hidden>❚❚</span>
+                    </button>
+
+                    <div class="nt-player-art-wrap">
+                        <img
+                            class="nt-player-art"
+                            id="ntPlayerArt"
+                            src="https://radio.nt00.xyz/android-chrome-512x512.png"
+                            alt="Nt00 Radio logo">
+                        <span class="nt-live-badge" id="ntLiveBadge" hidden>LIVE</span>
+                    </div>
+
+                    <div class="nt-player-meta">
+                        <div class="nt-player-title">Nt00 Radio</div>
+                        <div class="nt-player-subtitle">Escape The Algorithm</div>
+                        <div class="nt-player-track" id="ntPlayerTrack">Now Playing</div>
+                        <div class="nt-player-artist" id="ntPlayerArtist">Loading stream...</div>
+                    </div>
+
+                    <audio
+                        id="ntRadioAudio"
+                        preload="none"
+                        crossorigin="anonymous"
+                        playsinline
+                        src="https://nt00.xyz/listen/escape_the_algorithm/radio.mp3"></audio>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <header class="station-header">
+        <div class="station-header-inner station-header-inner--center">
+            <div class="station-heading">
+                <h1>Schedule</h1>
+                <p class="station-tagline">Nt00 Radio · Escape The Algorithm</p>
+            </div>
+        </div>
     </header>
 
-    <main class="main-content schedule-page" role="main">
-        <section class="schedule-raw" aria-label="Weekly schedule">
-
+    <main class="main-content schedule-page">
+        <section class="schedule-raw">
             <div class="schedule-day">
-                <div class="schedule-day-name">Mon.</div>
+                <div class="schedule-day-name">Mon</div>
                 <div class="schedule-day-slots">
-                    <div class="schedule-slot"><time>00:00–06:00</time> —</div>
-                    <div class="schedule-slot"><time>06:00–10:00</time> —</div>
-                    <div class="schedule-slot"><time>10:00–14:00</time> —</div>
-                    <div class="schedule-slot"><time>14:00–18:00</time> —</div>
-                    <div class="schedule-slot"><time>18:00–22:00</time> —</div>
-                    <div class="schedule-slot"><time>22:00–00:00</time> —</div>
+                    <div class="schedule-slot"><time>18:00</time><span>Resident Session</span></div>
+                    <div class="schedule-slot"><time>22:00</time><span>Late Transmission</span></div>
                 </div>
             </div>
 
             <div class="schedule-day">
-                <div class="schedule-day-name">Tue.</div>
+                <div class="schedule-day-name">Tue</div>
                 <div class="schedule-day-slots">
-                    <div class="schedule-slot"><time>00:00–06:00</time> —</div>
-                    <div class="schedule-slot"><time>06:00–10:00</time> —</div>
-                    <div class="schedule-slot"><time>10:00–14:00</time> —</div>
-                    <div class="schedule-slot"><time>14:00–18:00</time> —</div>
-                    <div class="schedule-slot"><time>18:00–22:00</time> —</div>
-                    <div class="schedule-slot"><time>22:00–00:00</time> —</div>
+                    <div class="schedule-slot"><time>20:00</time><span>Guest Selection</span></div>
                 </div>
             </div>
 
             <div class="schedule-day">
-                <div class="schedule-day-name">Wed.</div>
+                <div class="schedule-day-name">Wed</div>
                 <div class="schedule-day-slots">
-                    <div class="schedule-slot"><time>00:00–06:00</time> —</div>
-                    <div class="schedule-slot"><time>06:00–10:00</time> —</div>
-                    <div class="schedule-slot"><time>10:00–14:00</time> —</div>
-                    <div class="schedule-slot"><time>14:00–18:00</time> —</div>
-                    <div class="schedule-slot"><time>18:00–22:00</time> —</div>
-                    <div class="schedule-slot"><time>22:00–00:00</time> —</div>
+                    <div class="schedule-slot"><time>19:00</time><span>Deep Cuts</span></div>
                 </div>
             </div>
 
             <div class="schedule-day">
-                <div class="schedule-day-name">Thur.</div>
+                <div class="schedule-day-name">Thu</div>
                 <div class="schedule-day-slots">
-                    <div class="schedule-slot"><time>00:00–06:00</time> —</div>
-                    <div class="schedule-slot"><time>06:00–10:00</time> —</div>
-                    <div class="schedule-slot"><time>10:00–14:00</time> —</div>
-                    <div class="schedule-slot"><time>14:00–18:00</time> —</div>
-                    <div class="schedule-slot"><time>18:00–22:00</time> —</div>
-                    <div class="schedule-slot"><time>22:00–00:00</time> —</div>
+                    <div class="schedule-slot"><time>21:00</time><span>Club Signal</span></div>
                 </div>
             </div>
 
             <div class="schedule-day">
-                <div class="schedule-day-name">Fri.</div>
+                <div class="schedule-day-name">Fri</div>
                 <div class="schedule-day-slots">
-                    <div class="schedule-slot"><time>00:00–06:00</time> —</div>
-                    <div class="schedule-slot"><time>06:00–10:00</time> —</div>
-                    <div class="schedule-slot"><time>10:00–14:00</time> —</div>
-                    <div class="schedule-slot"><time>14:00–18:00</time> —</div>
-                    <div class="schedule-slot"><time>18:00–22:00</time> —</div>
-                    <div class="schedule-slot"><time>22:00–00:00</time> —</div>
+                    <div class="schedule-slot"><time>23:00</time><span>Night Shift</span></div>
                 </div>
             </div>
 
             <div class="schedule-day">
-                <div class="schedule-day-name">Sat.</div>
+                <div class="schedule-day-name">Sat</div>
                 <div class="schedule-day-slots">
-                    <div class="schedule-slot"><time>00:00–08:00</time> —</div>
-                    <div class="schedule-slot"><time>08:00–12:00</time> —</div>
-                    <div class="schedule-slot"><time>12:00–16:00</time> —</div>
-                    <div class="schedule-slot"><time>16:00–18:00</time> —</div>
-                    <div class="schedule-slot"><time>18:00–22:00</time> —</div>
-                    <div class="schedule-slot"><time>22:00–02:00</time> —</div>
+                    <div class="schedule-slot"><time>20:00</time><span>Live Broadcast</span></div>
                 </div>
             </div>
 
             <div class="schedule-day">
-                <div class="schedule-day-name">Sun.</div>
+                <div class="schedule-day-name">Sun</div>
                 <div class="schedule-day-slots">
-                    <div class="schedule-slot"><time>00:00–08:00</time> —</div>
-                    <div class="schedule-slot"><time>08:00–12:00</time> —</div>
-                    <div class="schedule-slot"><time>12:00–16:00</time> —</div>
-                    <div class="schedule-slot"><time>16:00–18:00</time> —</div>
-                    <div class="schedule-slot"><time>18:00–22:00</time> —</div>
-                    <div class="schedule-slot"><time>22:00–00:00</time> —</div>
+                    <div class="schedule-slot"><time>18:00</time><span>Archive Rotation</span></div>
                 </div>
             </div>
-
         </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <div class="social-icons" aria-label="Social links">
-                <a href="https://instagram.com/nt00radio" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
-                    <i class="fab fa-instagram" aria-hidden="true"></i>
-                </a>
-                <a href="https://youtube.com/@escalgorithm" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube">
-                    <i class="fab fa-youtube" aria-hidden="true"></i>
-                </a>
-                <a href="https://soundcloud.com/nt00" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="SoundCloud">
-                    <i class="fab fa-soundcloud" aria-hidden="true"></i>
-                </a>
+            <div class="social-icons">
+                <a class="social-icon" href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a class="social-icon" href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a class="social-icon" href="#" aria-label="SoundCloud"><i class="fab fa-soundcloud"></i></a>
             </div>
-            <p class="copyright">© 2026 Escape The Algorithm. All rights are not reserved.</p>
-            <p class="tech-badge">Powered by AzuraCast · GitHub</p>
+            <p class="copyright">© 2026 Escape The Algorithm. All rights reserved.</p>
+            <p class="tech-badge">Powered by AzuraCast</p>
         </div>
     </footer>
 
+    <script src="js/main.js"></script>
 </body>
 </html>
