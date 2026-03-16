@@ -22,14 +22,19 @@ function getElements() {
     };
 }
 
-function updatePlayButton() {
-    const { audio, toggle, playLabel, pauseLabel } = getElements();
-    if (!audio || !toggle || !playLabel || !pauseLabel) return;
+function updatePlayerFromApi(data) {
+    const { liveBadge, art } = getElements();
+    if (!liveBadge || !art) return;
 
-    const isPlaying = !audio.paused;
-    playLabel.hidden = isPlaying;
-    pauseLabel.hidden = !isPlaying;
-    toggle.setAttribute('aria-label', isPlaying ? 'Pause Nt00 Radio' : 'Play Nt00 Radio');
+    const isLive = data && data.live && data.live.is_live === true;
+
+    liveBadge.hidden = true;
+
+    if (isLive) {
+        liveBadge.hidden = false;
+    }
+
+    art.src = CONFIG.defaultArt;
 }
 
 function setDefaultPlayerState() {
