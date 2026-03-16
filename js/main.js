@@ -9,10 +9,6 @@ const CONFIG = {
 let pollTimer = null;
 let currentController = null;
 
-const STORAGE_KEYS = {
-    shouldPlay: 'nt00_radio_should_play'
-};
-
 function getElements() {
     return {
         audio: document.getElementById('ntRadioAudio'),
@@ -20,18 +16,8 @@ function getElements() {
         playLabel: document.querySelector('.nt-player-label--play'),
         pauseLabel: document.querySelector('.nt-player-label--pause'),
         liveBadge: document.getElementById('ntLiveBadge'),
-        track: document.getElementById('ntPlayerTrack'),
-        artist: document.getElementById('ntPlayerArtist'),
         art: document.getElementById('ntPlayerArt')
     };
-}
-
-function savePlaybackState(shouldPlay) {
-    localStorage.setItem(STORAGE_KEYS.shouldPlay, shouldPlay ? '1' : '0');
-}
-
-function getSavedPlaybackState() {
-    return localStorage.getItem(STORAGE_KEYS.shouldPlay) === '1';
 }
 
 function updatePlayButton() {
@@ -120,50 +106,19 @@ function startPolling() {
     }, CONFIG.pollInterval);
 }
 
-async function restorePlaybackState() {
-    const { audio } = getElements();
-    if (!audio) return;
-
-    if (getSavedPlaybackState()) {
-        try {
-            await audio.play();
-        } catch (error) {
-            console.log('Autoplay resume blocked:', error);
-        }
-    }
-
-    updatePlayButton();
-}
-
-function bindNavStateSaving() {
-    const navLinks = document.querySelectorAll('.main-nav a');
-
-    navLinks.forEach((link) => {
-        link.addEventListener('click', () => {
-            const { audio } = getElements();
-            if (!audio) return;
-
-            savePlaybackState(!audio.paused);
-        }, { capture: true });
-    });
-}
-
 function bindPlayer() {
     const { audio, toggle, art } = getElements();
     if (!audio || !toggle) return;
 
     audio.src = CONFIG.streamUrl;
-    audio.preload = 'auto';
     if (art) art.src = CONFIG.defaultArt;
 
     toggle.addEventListener('click', async () => {
         try {
             if (audio.paused) {
                 await audio.play();
-                savePlaybackState(true);
             } else {
                 audio.pause();
-                savePlaybackState(false);
             }
             updatePlayButton();
         } catch (error) {
@@ -171,21 +126,9 @@ function bindPlayer() {
         }
     });
 
-    audio.addEventListener('play', () => {
-        savePlaybackState(true);
-        updatePlayButton();
-    });
-
-    audio.addEventListener('pause', () => {
-        savePlaybackState(false);
-        updatePlayButton();
-    });
-
-    audio.addEventListener('ended', () => {
-        savePlaybackState(false);
-        updatePlayButton();
-    });
-
+    audio.addEventListener('play', updatePlayButton);
+    audio.addEventListener('pause', updatePlayButton);
+    audio.addEventListener('ended', updatePlayButton);
     audio.addEventListener('error', updatePlayButton);
 
     updatePlayButton();
@@ -199,12 +142,10 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     setDefaultPlayerState();
     bindPlayer();
-    bindNavStateSaving();
     startPolling();
-    await restorePlaybackState();
 });
 
 window.addEventListener('pagehide', stopPolling);
