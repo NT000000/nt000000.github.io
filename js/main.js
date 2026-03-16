@@ -33,23 +33,24 @@ function updatePlayButton() {
 }
 
 function setDefaultPlayerState() {
-    const { track, artist, liveBadge, art } = getElements();
-    if (track) track.textContent = 'Now Playing';
-    if (artist) artist.textContent = 'Loading stream...';
+    const { liveBadge, art } = getElements();
+
     if (liveBadge) liveBadge.hidden = true;
     if (art) art.src = CONFIG.defaultArt;
 }
 
 function updatePlayerFromApi(data) {
-    const { track, artist, liveBadge, art } = getElements();
-    if (!track || !artist || !liveBadge || !art) return;
+    const { liveBadge, art } = getElements();
+    if (!liveBadge || !art) return;
 
-    const song = data?.now_playing?.song || {};
-    const isLive = data?.live?.is_live === true;
+    const isLive = data && data.live && data.live.is_live === true;
 
-    track.textContent = song.title || 'Now Playing';
-    artist.textContent = song.artist || 'Loading stream...';
-    liveBadge.hidden = !isLive;
+    liveBadge.hidden = true;
+
+    if (isLive) {
+        liveBadge.hidden = false;
+    }
+
     art.src = CONFIG.defaultArt;
 }
 
