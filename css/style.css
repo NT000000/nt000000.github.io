@@ -1,17 +1,13 @@
 :root {
     --bg-overlay: rgba(0, 0, 0, 0.82);
-    --bg-nav: rgba(0, 0, 0, 0.88);
+    --bg-nav: rgba(0, 0, 0, 0.9);
     --bg-panel: rgba(0, 0, 0, 0.96);
-
     --text-primary: rgba(255, 255, 255, 0.96);
     --text-secondary: rgba(255, 255, 255, 0.72);
     --text-muted: rgba(255, 255, 255, 0.42);
-
     --border-subtle: rgba(255, 255, 255, 0.08);
     --border-light: rgba(255, 255, 255, 0.18);
     --border-strong: rgba(255, 255, 255, 0.32);
-
-    --radius-md: 0px;
     --transition: 0.18s ease;
     --font-main: "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
     --live: #d10000;
@@ -61,6 +57,7 @@ body::before {
 }
 
 .main-nav,
+.player-bar,
 .main-content,
 footer,
 .station-header {
@@ -71,7 +68,7 @@ footer,
 .main-nav {
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 120;
     min-height: 48px;
     display: flex;
     align-items: center;
@@ -110,44 +107,23 @@ footer,
     color: #000;
 }
 
-.station-header {
-    padding: 1rem 1rem 0.5rem;
+.player-bar {
+    background: rgba(0, 0, 0, 0.88);
+    border-bottom: 1px solid var(--border-light);
 }
 
-.station-header-inner {
+.player-bar-inner {
     width: 100%;
     max-width: 1240px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: minmax(290px, 380px) 1fr;
-    gap: 1.4rem;
-    align-items: start;
-}
-
-.station-heading {
-    text-align: center;
-    padding-top: 0.1rem;
-}
-
-.station-heading h1 {
-    font-size: clamp(1.55rem, 4.5vw, 2.35rem);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: #fff;
-}
-
-.station-tagline {
-    margin-top: 0.2rem;
-    font-size: clamp(0.68rem, 2vw, 0.82rem);
-    color: rgba(255, 255, 255, 0.72);
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    padding: 0.55rem 1rem;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .player-section {
     width: 100%;
+    max-width: 380px;
 }
 
 .nt-mini-player {
@@ -195,7 +171,6 @@ footer,
     height: 100%;
     display: block;
     object-fit: cover;
-    filter: contrast(1.04);
 }
 
 .nt-live-badge {
@@ -265,6 +240,44 @@ footer,
     color: rgba(255, 255, 255, 0.52);
 }
 
+.station-header {
+    padding: 1rem 1rem 0.5rem;
+}
+
+.station-header-inner {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.station-header-inner--center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.station-heading {
+    width: 100%;
+    text-align: center;
+}
+
+.station-heading h1 {
+    font-size: clamp(1.55rem, 4.5vw, 2.35rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.station-tagline {
+    margin-top: 0.2rem;
+    font-size: clamp(0.68rem, 2vw, 0.82rem);
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
 .main-content {
     flex: 1;
     width: 100%;
@@ -280,6 +293,119 @@ footer,
     min-height: 260px;
 }
 
+/* SCHEDULE */
+.schedule-page {
+    width: 100%;
+    max-width: 1100px;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0.3rem 1rem 1rem;
+}
+
+.schedule-raw {
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.schedule-day {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    align-items: start;
+    gap: 1rem;
+    padding-bottom: 0.3rem;
+}
+
+.schedule-day-name {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    text-align: left;
+}
+
+.schedule-day-slots {
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+    min-width: 0;
+}
+
+.schedule-slot {
+    display: flex;
+    align-items: baseline;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.72rem;
+    line-height: 1.35;
+    white-space: nowrap;
+}
+
+.schedule-slot time {
+    width: 78px;
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.44);
+    font-size: 0.66rem;
+    font-variant-numeric: tabular-nums;
+    margin-right: 0.25rem;
+    text-align: left;
+}
+
+/* ABOUT */
+.about-page {
+    width: 100%;
+    max-width: 980px;
+    justify-content: flex-start;
+    padding: 0.3rem 1rem 1rem;
+}
+
+.about-wrap {
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+}
+
+.about-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.32rem;
+}
+
+.about-block h2 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.64);
+}
+
+.about-block p,
+.about-list {
+    font-size: 0.74rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.about-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.24rem;
+}
+
+.about-list li::before {
+    content: "— ";
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* FOOTER */
 footer {
     width: 100%;
     margin-top: auto;
@@ -358,21 +484,6 @@ footer {
     text-transform: uppercase;
 }
 
-@media (max-width: 900px) {
-    .station-header-inner {
-        grid-template-columns: 1fr;
-        gap: 0.9rem;
-    }
-
-    .station-heading {
-        order: 1;
-    }
-
-    .player-section {
-        order: 2;
-    }
-}
-
 @media (max-width: 768px) {
     body {
         background:
@@ -381,12 +492,14 @@ footer {
         background-attachment: scroll;
     }
 
-    .station-header {
-        padding: 0.85rem 0.8rem 0.45rem;
+    .player-bar-inner,
+    .nav-container {
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
     }
 
-    .station-heading h1 {
-        font-size: clamp(1.35rem, 7vw, 1.9rem);
+    .player-section {
+        max-width: 100%;
     }
 
     .nt-mini-player {
@@ -418,6 +531,20 @@ footer {
     .nt-player-artist {
         font-size: 0.54rem;
     }
+
+    .schedule-day {
+        grid-template-columns: 52px 1fr;
+        gap: 0.5rem;
+    }
+
+    .schedule-slot {
+        font-size: 0.6rem;
+        white-space: normal;
+    }
+
+    .schedule-slot time {
+        width: 62px;
+    }
 }
 
 @media (max-width: 540px) {
@@ -431,8 +558,8 @@ footer {
         padding: 0.3rem 0.5rem;
     }
 
-    .station-header {
-        padding: 0.7rem 0.65rem 0.35rem;
+    .player-bar-inner {
+        padding: 0.45rem 0.65rem;
     }
 
     .nt-mini-player {
@@ -469,5 +596,18 @@ footer {
         min-width: 28px;
         height: 13px;
         font-size: 7px;
+    }
+
+    .schedule-day {
+        grid-template-columns: 1fr;
+        gap: 0.18rem;
+    }
+
+    .schedule-day-name {
+        width: auto;
+    }
+
+    .about-wrap {
+        max-width: 100%;
     }
 }
