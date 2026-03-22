@@ -65,7 +65,7 @@ function renderHistory(data) {
 
     if (!history.length) {
         const li = document.createElement('li');
-        li.className = 'nt-history-item nt-history-item--empty';
+        li.className = 'nt-history-item-header nt-history-item--empty';
         li.textContent = 'No recent tracks.';
         container.appendChild(li);
         return;
@@ -85,15 +85,15 @@ function renderHistory(data) {
         }
 
         const li = document.createElement('li');
-        li.className = 'nt-history-item';
+        li.className = 'nt-history-item-header';
 
         li.innerHTML = `
-    <span class="nt-history-item-time-aside">${started}</span>
-    <span class="nt-history-item-main-aside">
-        <span class="nt-history-item-title-aside">${title}</span>
-        ${artist ? `<span class="nt-history-item-artist-aside">${artist}</span>` : ''}
-    </span>
-`;
+            <span class="nt-history-item-time-header">${started}</span>
+            <span class="nt-history-item-main-header">
+                <span class="nt-history-item-title-header">${title}</span>
+                <span class="nt-history-item-artist-header">${artist}</span>
+            </span>
+        `;
 
         container.appendChild(li);
     });
