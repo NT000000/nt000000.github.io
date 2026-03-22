@@ -126,7 +126,80 @@ footer,
 
 .player-section {
     width: 100%;
-    max-width: 300px;
+    max-width: 420px;
+}
+
+/* TRACK HISTORY */
+.nt-history-section {
+    width: 100%;
+    max-width: 1240px;
+    margin-top: 0.4rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.nt-history {
+    width: 100%;
+    max-width: 420px; /* match .player-section max-width */
+    padding: 0.4rem 0.5rem 0.45rem;
+    background: #000;
+    border: 1px solid var(--border-light);
+}
+
+.nt-history-heading {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.nt-history-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+    font-size: 0.64rem;
+    color: var(--text-secondary);
+}
+
+.nt-history-item {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nt-history-item span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nt-history-item-time {
+    flex-shrink: 0;
+    width: 50px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+    font-size: 0.58rem;
+}
+
+.nt-history-item-main {
+    flex: 1;
+}
+
+.nt-history-item-title {
+    font-weight: 700;
+}
+
+.nt-history-item-artist {
+    opacity: 0.8;
+}
+
+.nt-history-item--empty {
+    color: var(--text-muted);
 }
 
 .nt-mini-player {
@@ -572,6 +645,14 @@ footer {
         padding: 0.25rem 0.8rem 0.9rem;
     }
 
+    .nt-history-section {
+    justify-content: center;
+}
+
+.nt-history {
+    max-width: 100%;
+}
+    
     .chat-frame iframe {
         height: 68vh;
         min-height: 540px;
