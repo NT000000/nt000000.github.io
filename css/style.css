@@ -743,5 +743,18 @@ footer {
     .chat-frame iframe {
         height: 66vh;
         min-height: 500px;
+   
+    .nt-live-badge {
+    right: 6px;
+    height: 15px;
+    padding: 0 5px;
+    font-size: 6.5px;
+    gap: 4px;
+}
+
+.nt-player-meta {
+    padding-right: 46px;
+}
+    
     }
 }
