@@ -50,6 +50,55 @@ function updatePlayerFromApi(data) {
     }
 
     art.src = CONFIG.defaultArt;
+
+    // Update track history list in the main content
+    renderHistory(data);
+}
+
+function renderHistory(data) {
+    const container = document.getElementById('ntHistoryList');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const history = (data && Array.isArray(data.song_history))
+        ? data.song_history.slice(0, 5)
+        : [];
+
+    if (!history.length) {
+        const li = document.createElement('li');
+        li.className = 'nt-history-item nt-history-item--empty';
+        li.textContent = 'No recent tracks.';
+        container.appendChild(li);
+        return;
+    }
+
+    history.forEach(entry => {
+        const song = entry.song || {};
+        const title = song.title || 'Unknown title';
+        const artist = song.artist || 'Unknown artist';
+
+        let started = '';
+        if (entry.played_at) {
+            const d = new Date(entry.played_at * 1000);
+            const h = String(d.getHours()).padStart(2, '0');
+            const m = String(d.getMinutes()).padStart(2, '0');
+            started = `${h}:${m}`;
+        }
+
+        const li = document.createElement('li');
+        li.className = 'nt-history-item';
+
+        li.innerHTML = `
+            <span class="nt-history-item-time">${started}</span>
+            <span class="nt-history-item-main">
+                <span class="nt-history-item-title">${title}</span>
+                <span class="nt-history-item-artist"> — ${artist}</span>
+            </span>
+        `;
+
+        container.appendChild(li);
+    });
 }
 
 async function updateNowPlaying() {
