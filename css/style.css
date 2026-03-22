@@ -281,8 +281,8 @@ footer,
 .nt-history-header {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 300px;
+    left: 1rem;
+    width: 320px;
     background: #000;
     border: 1px solid var(--border-light);
     padding: 0.6rem 0.5rem;
