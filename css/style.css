@@ -130,77 +130,7 @@ footer,
 }
 
 
-.station-heading {
-    flex: 1;
-    text-align: center;
-    min-width: 0;  /* prevents title squeezing */
-}
 
-.station-heading h1 {
-    font-size: clamp(1.8rem, 5vw, 2.6rem);  /* bigger, 1 line */
-    white-space: nowrap;  /* force 1 line */
-}
-
-.nt-history-header {
-    flex-shrink: 0;
-    width: 420px;  /* exact player width */
-    background: #000;  /* BLACK PANEL */
-    border: 1px solid var(--border-light);
-    padding: 0.6rem 0.5rem;
-}
-
-.nt-history-list-header {
-    list-style: none;
-    font-size: 0.6rem;
-    color: var(--text-secondary);
-    line-height: 1.25;
-}
-
-.nt-history-item-header {
-    display: flex;
-    gap: 0.35rem;
-    margin-bottom: 0.12rem;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.nt-history-item-time-header {
-    flex-shrink: 0;
-    width: 42px;
-    font-size: 0.55rem;
-    color: var(--text-muted);
-}
-
-.nt-history-item-main-header {
-    flex: 1;
-}
-
-.nt-history-item-title-header {
-    font-weight: 700;
-}
-
-.nt-history-item-artist-header {
-    opacity: 0.75;
-    font-size: 0.95em;
-}
-
-.nt-history-item--empty {
-    color: var(--text-muted);
-    font-style: italic;
-}
-
-/* Mobile: full width under title */
-@media (max-width: 768px) {
-    .station-header-inner--center {
-        flex-direction: column;
-        gap: 0.8rem;
-        padding: 0 1rem;
-    }
-    .nt-history-header {
-        width: 100%;
-        order: 2;  /* history below title */
-    }
-}
 
 .nt-mini-player {
     display: grid;
@@ -336,58 +266,69 @@ footer,
 }
 
 
-.station-heading {
-    flex: 1;
-    max-width: 360px;
-    text-align: center;
+.station-header-inner {
+    position: relative;
+    min-height: 92px;
 }
 
-.nt-history-aside {
-    flex-shrink: 0;
-    width: 145px;  /* narrow + fits */
-}
-
-.nt-history-list-aside {
-    list-style: none;
-    font-size: 0.54rem;  /* smaller */
-    line-height: 1.15;
-    color: var(--text-secondary);
-}
-
-.nt-history-item-aside {
+.station-header-inner--center {
     display: flex;
-    gap: 0.2rem;
-    margin-bottom: 0.07rem;
+    justify-content: center;
+    align-items: center;
+    min-height: 92px;
+}
+
+.nt-history-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 420px;
+    background: #000;
+    border: 1px solid var(--border-light);
+    padding: 0.6rem 0.5rem;
+}
+
+.nt-history-list-header {
+    list-style: none;
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    line-height: 1.25;
+}
+
+.nt-history-item-header {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.12rem;
     white-space: nowrap;
     overflow: hidden;
 }
 
-.nt-history-item-time-aside {
+.nt-history-item-time-header {
     flex-shrink: 0;
-    width: 28px;
-    font-size: 0.48rem;
+    width: 42px;
+    font-size: 0.55rem;
     color: var(--text-muted);
 }
 
-.nt-history-item-main-aside {
+.nt-history-item-main-header {
     flex: 1;
     overflow: hidden;
 }
 
-.nt-history-item-title-aside {
+.nt-history-item-title-header {
     font-weight: 700;
-    display: block;
 }
 
-.nt-history-item-artist-aside {
-    opacity: 0.7;
-    font-size: 0.9em;
+.nt-history-item-artist-header {
+    opacity: 0.75;
+    font-size: 0.95em;
 }
 
 .nt-history-item--empty {
     color: var(--text-muted);
     font-style: italic;
 }
+
 
 .main-content {
     flex: 1;
@@ -636,6 +577,20 @@ footer {
         background-attachment: scroll;
     }
 
+    .station-header-inner {
+        min-height: auto;
+    }
+
+    .station-header-inner--center {
+        min-height: auto;
+    }
+
+    .nt-history-header {
+        position: static;
+        width: 100%;
+        margin-top: 0.75rem;
+    }
+    
     .player-bar-inner,
     .nav-container {
         padding-left: 0.8rem;
@@ -692,17 +647,6 @@ footer {
 
     .chat-page {
         padding: 0.25rem 0.8rem 0.9rem;
-    }
-
-    /* Mobile */
-@media (max-width: 768px) {
-    .station-header-inner--center {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    .nt-history-aside {
-        width: 100%;
-        max-width: 360px;
     }
 }
 
