@@ -200,16 +200,7 @@ footer,
     text-transform: uppercase;
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 999px;
-    backdrop-filter: blur(2px);
-}
-
-.nt-live-badge::before {
-    content: "";
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--live);
-    box-shadow: 0 0 6px rgba(209, 0, 0, 0.65);
+    z-index: 3;
 }
 
 .nt-player-meta {
