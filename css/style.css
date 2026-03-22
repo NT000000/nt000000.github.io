@@ -133,6 +133,7 @@ footer,
 
 
 .nt-mini-player {
+    position: relative;
     display: grid;
     grid-template-columns: 48px 80px minmax(0, 1fr);
     align-items: center;
@@ -181,8 +182,9 @@ footer,
 
 .nt-live-badge {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
     display: inline-flex;
     align-items: center;
     gap: 5px;
