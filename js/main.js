@@ -88,12 +88,12 @@ function renderHistory(data) {
         li.className = 'nt-history-item';
 
         li.innerHTML = `
-            <span class="nt-history-item-time">${started}</span>
-            <span class="nt-history-item-main">
-                <span class="nt-history-item-title">${title}</span>
-                <span class="nt-history-item-artist"> — ${artist}</span>
-            </span>
-        `;
+    <span class="nt-history-item-time-aside">${started}</span>
+    <span class="nt-history-item-main-aside">
+        <span class="nt-history-item-title-aside">${title}</span>
+        ${artist ? `<span class="nt-history-item-artist-aside">${artist}</span>` : ''}
+    </span>
+`;
 
         container.appendChild(li);
     });
