@@ -282,7 +282,7 @@ footer,
     position: absolute;
     top: 0;
     left: 0;
-    width: 420px;
+    width: 380px;
     background: #000;
     border: 1px solid var(--border-light);
     padding: 0.6rem 0.5rem;
