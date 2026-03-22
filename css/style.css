@@ -129,77 +129,77 @@ footer,
     max-width: 420px;
 }
 
-/* TRACK HISTORY */
-.nt-history-section {
-    width: 100%;
-    max-width: 1240px;
-    margin-top: 0.4rem;
-    display: flex;
-    justify-content: flex-start;
+
+.station-heading {
+    flex: 1;
+    text-align: center;
+    min-width: 0;  /* prevents title squeezing */
 }
 
-.nt-history {
-    width: 100%;
-    max-width: 420px; /* match .player-section max-width */
-    padding: 0.4rem 0.5rem 0.45rem;
-    background: #000;
+.station-heading h1 {
+    font-size: clamp(1.8rem, 5vw, 2.6rem);  /* bigger, 1 line */
+    white-space: nowrap;  /* force 1 line */
+}
+
+.nt-history-header {
+    flex-shrink: 0;
+    width: 420px;  /* exact player width */
+    background: #000;  /* BLACK PANEL */
     border: 1px solid var(--border-light);
+    padding: 0.6rem 0.5rem;
 }
 
-.nt-history-heading {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 0.25rem;
-}
-
-.nt-history-list {
+.nt-history-list-header {
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.12rem;
-    font-size: 0.64rem;
+    font-size: 0.6rem;
     color: var(--text-secondary);
+    line-height: 1.25;
 }
 
-.nt-history-item {
+.nt-history-item-header {
     display: flex;
-    justify-content: flex-start;
-    gap: 0.4rem;
+    gap: 0.35rem;
+    margin-bottom: 0.12rem;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-.nt-history-item span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.nt-history-item-time {
+.nt-history-item-time-header {
     flex-shrink: 0;
-    width: 50px;
-    font-variant-numeric: tabular-nums;
+    width: 42px;
+    font-size: 0.55rem;
     color: var(--text-muted);
-    font-size: 0.58rem;
 }
 
-.nt-history-item-main {
+.nt-history-item-main-header {
     flex: 1;
 }
 
-.nt-history-item-title {
+.nt-history-item-title-header {
     font-weight: 700;
 }
 
-.nt-history-item-artist {
-    opacity: 0.8;
+.nt-history-item-artist-header {
+    opacity: 0.75;
+    font-size: 0.95em;
 }
 
 .nt-history-item--empty {
     color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Mobile: full width under title */
+@media (max-width: 768px) {
+    .station-header-inner--center {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 0 1rem;
+    }
+    .nt-history-header {
+        width: 100%;
+        order: 2;  /* history below title */
+    }
 }
 
 .nt-mini-player {
@@ -312,11 +312,6 @@ footer,
     margin: 0 auto;
 }
 
-.station-header-inner--center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .station-heading {
     width: 100%;
@@ -340,13 +335,6 @@ footer,
     text-transform: uppercase;
 }
 
-/* HEADER HISTORY (NEW) */
-.station-header-inner--center {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 0.9rem;
-}
 
 .station-heading {
     flex: 1;
