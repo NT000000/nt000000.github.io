@@ -41,18 +41,16 @@ function updatePlayerFromApi(data) {
     const { liveBadge, art } = getElements();
     if (!liveBadge || !art) return;
 
+    // Fix: properly hide/show LIVE badge
+    liveBadge.hidden = true;  // Always hide first
+    
     const isLive = data && data.live && data.live.is_live === true;
-
-    liveBadge.hidden = true;
-
     if (isLive) {
         liveBadge.hidden = false;
     }
 
     art.src = CONFIG.defaultArt;
-
-    // Update track history list in the main content
-    renderHistory(data);
+    renderHistory(data);  // history function
 }
 
 function renderHistory(data) {
