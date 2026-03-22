@@ -583,14 +583,23 @@ footer {
 
     .station-header-inner--center {
         min-height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .station-heading {
+        width: 100%;
+        text-align: center;
     }
 
     .nt-history-header {
         position: static;
         width: 100%;
+        max-width: 420px;
         margin-top: 0.75rem;
     }
-    
+
     .player-bar-inner,
     .nav-container {
         padding-left: 0.8rem;
