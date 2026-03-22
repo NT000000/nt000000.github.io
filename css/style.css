@@ -181,21 +181,32 @@ footer,
 
 .nt-live-badge {
     position: absolute;
-    top: 3px;
-    right: 3px;
+    top: 5px;
+    right: 5px;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    min-width: 30px;
-    height: 14px;
-    padding: 0 4px;
-    background: var(--live);
-    color: #fff;
-    font-size: 8px;
+    gap: 5px;
+    height: 16px;
+    padding: 0 6px;
+    background: rgba(0, 0, 0, 0.88);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 7px;
     line-height: 1;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    border: 1px solid rgba(255, 255, 255, 0.24);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    backdrop-filter: blur(2px);
+}
+
+.nt-live-badge::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--live);
+    box-shadow: 0 0 6px rgba(209, 0, 0, 0.65);
 }
 
 .nt-player-meta {
