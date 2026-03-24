@@ -16,6 +16,8 @@ function getElements() {
         playLabel: document.querySelector('.nt-player-label--play'),
         pauseLabel: document.querySelector('.nt-player-label--pause'),
         liveBadge: document.getElementById('ntLiveBadge'),
+        liveDot: document.getElementById('ntLiveDot'),
+        nowPlaying: document.getElementById('ntNowPlaying'),
         art: document.getElementById('ntPlayerArt')
     };
 }
@@ -38,19 +40,26 @@ function setDefaultPlayerState() {
 }
 
 function updatePlayerFromApi(data) {
-    const { liveBadge, art } = getElements();
+    const { liveBadge, liveDot, art, nowPlaying } = getElements();
     if (!liveBadge || !art) return;
 
-    // Fix: properly hide/show LIVE badge
-    liveBadge.hidden = true;  // Always hide first
-    
     const isLive = data && data.live && data.live.is_live === true;
+
     if (isLive) {
         liveBadge.hidden = false;
+        if (liveDot) liveDot.hidden = false;
+        const djName = data.live.streamer_name || 'Live DJ';
+        if (nowPlaying) nowPlaying.textContent = `On Air: ${djName}`;
+    } else {
+        liveBadge.hidden = true;
+        if (liveDot) liveDot.hidden = true;
+        const title = data?.now_playing?.song?.title || '';
+        const artist = data?.now_playing?.song?.artist || '';
+        if (nowPlaying) nowPlaying.textContent = artist ? `${artist} — ${title}` : title || 'Now Playing';
     }
 
     art.src = CONFIG.defaultArt;
-    renderHistory(data);  // history function
+    renderHistory(data);
 }
 
 function renderHistory(data) {
