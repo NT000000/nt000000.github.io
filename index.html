@@ -65,12 +65,14 @@
 
                     <div class="nt-player-meta">
                         <div class="nt-player-title">Nt00 Radio</div>
-                        <div class="nt-player-subtitle">Now Playing: Dnb mix </div>
+                        <div class="nt-player-subtitle" id="ntNowPlaying">Now Playing</div>
                         <div class="nt-player-track" id="ntPlayerTrack">Now Playing</div>
                         <div class="nt-player-artist" id="ntPlayerArtist">Loading stream...</div>
                     </div>
 
-                      <span class="nt-live-badge" id="ntLiveBadge" hidden>LIVE</span>
+                      <span class="nt-live-badge" id="ntLiveBadge" hidden>
+    <span class="nt-live-dot" id="ntLiveDot"></span>LIVE
+</span>
                     
                     <audio
                         id="ntRadioAudio"
