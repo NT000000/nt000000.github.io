@@ -79,9 +79,9 @@ function renderHistory(data) {
         let started = '';
         if (entry.played_at) {
             const d = new Date(entry.played_at * 1000);
-            const h = String(d.getHours()).padStart(2, '0');
-            const m = String(d.getMinutes()).padStart(2, '0');
-            started = `${h}:${m}`;
+            const h = String(d.getUTCHours()).padStart(2, '0');
+            const m = String(d.getUTCMinutes()).padStart(2, '0');
+            started = `GMT ${h}:${m}`;;
         }
 
         const li = document.createElement('li');
@@ -161,17 +161,19 @@ function bindPlayer() {
     if (art) art.src = CONFIG.defaultArt;
 
     toggle.addEventListener('click', async () => {
-        try {
-            if (audio.paused) {
-                await audio.play();
-            } else {
-                audio.pause();
-            }
-            updatePlayButton();
-        } catch (error) {
-            console.log('Player error:', error);
+    try {
+        if (audio.paused) {
+            audio.src = CONFIG.streamUrl + '?t=' + Date.now();
+            await audio.play();
+        } else {
+            audio.pause();
+            audio.src = '';
         }
-    });
+        updatePlayButton();
+    } catch (error) {
+        console.log('Player error:', error);
+    }
+});
 
     audio.addEventListener('play', updatePlayButton);
     audio.addEventListener('pause', updatePlayButton);
