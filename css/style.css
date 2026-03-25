@@ -523,6 +523,25 @@ footer,
     background: transparent;
 }
 
+/* Homepage footer fix */
+.page-home footer {
+    position: relative !important;
+    z-index: 1000;
+    margin-top: 40vh;  /* Push below hero */
+}
+
+/* Player bar no overlap */
+.player-bar {
+    z-index: 9999;
+}
+
+/* Hero spacer correct */
+.hero-spacer {
+    height: 100vh;
+    min-height: 600px;
+}
+
+
 /* FOOTER */
 footer {
     width: 100%;
