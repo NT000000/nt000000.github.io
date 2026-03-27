@@ -523,12 +523,6 @@ footer,
     background: transparent;
 }
 
-/* Homepage footer fix */
-.page-home footer {
-    position: relative !important;
-    z-index: 1000;
-    margin-top: 1.5rem;  /* Push below hero */
-}
 
 /* Player bar no overlap */
 .player-bar {
