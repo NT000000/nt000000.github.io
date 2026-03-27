@@ -684,16 +684,16 @@ footer {
 
     .schedule-day {
         grid-template-columns: 52px 1fr;
-        gap: 0.5rem;
+        gap: 0.6rem;
     }
 
     .schedule-slot {
-        font-size: 0.6rem;
+        font-size: 0.78rem;
         white-space: normal;
     }
 
     .schedule-slot time {
-        width: 62px;
+        width: 76px;
     }
 
     .chat-page {
