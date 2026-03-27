@@ -379,6 +379,15 @@ footer,
 }
 
 /* SCHEDULE */
+.schedule-page {
+    width: 100%;
+    max-width: 1100px;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0.3rem 1rem 1rem;
+}
+
+
 .schedule-raw {
     width: 100%;
     max-width: 920px;
