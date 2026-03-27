@@ -527,7 +527,7 @@ footer,
 .page-home footer {
     position: relative !important;
     z-index: 1000;
-    margin-top: 40vh;  /* Push below hero */
+    margin-top: 1.5rem;  /* Push below hero */
 }
 
 /* Player bar no overlap */
