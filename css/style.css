@@ -391,7 +391,7 @@ footer,
 .schedule-raw {
     width: 100%;
     max-width: 920px;
-    margin: 0 auto;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 0.7rem;          /* space between days */
