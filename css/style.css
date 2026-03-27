@@ -529,10 +529,8 @@ footer,
     z-index: 9999;
 }
 
-/* Hero spacer correct */
 .hero-spacer {
-    height: 100vh;
-    min-height: 600px;
+    min-height: 260px;
 }
 
 
