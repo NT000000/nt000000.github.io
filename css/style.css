@@ -96,7 +96,7 @@ footer,
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    text-transform: uppercase;
+    text-transform: none;
     white-space: nowrap;
     transition: background var(--transition), color var(--transition);
 }
@@ -197,7 +197,7 @@ footer,
     line-height: 1;
     font-weight: 700;
     letter-spacing: 0.14em;
-    text-transform: uppercase;
+    text-transform: none;
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 999px;
     z-index: 3;
@@ -285,7 +285,7 @@ footer,
     font-size: clamp(1.55rem, 4.5vw, 2.35rem);
     font-weight: 700;
     letter-spacing: 0.02em;
-    text-transform: uppercase;
+    text-transform: none;
     color: #fff;
 }
 
@@ -295,7 +295,7 @@ footer,
     color: rgba(255, 255, 255, 0.72);
     font-weight: 400;
     letter-spacing: 0.05em;
-    text-transform: uppercase;
+    text-transform: none;
 }
 
 
@@ -465,7 +465,7 @@ footer,
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    text-transform: uppercase;
+    text-transform: none;
     color: rgba(255, 255, 255, 0.64);
 }
 
@@ -599,7 +599,7 @@ footer {
     font-size: 0.58rem;
     color: rgba(255, 255, 255, 0.46);
     letter-spacing: 0.04em;
-    text-transform: uppercase;
+    text-transform: none;
 }
 
 .tech-badge {
@@ -608,7 +608,7 @@ footer {
     font-size: 0.52rem;
     color: rgba(255, 255, 255, 0.26);
     letter-spacing: 0.05em;
-    text-transform: uppercase;
+    text-transform: none;
 }
 
 @media (max-width: 768px) {
