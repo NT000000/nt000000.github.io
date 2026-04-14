@@ -90,7 +90,7 @@ function renderHistory(data) {
             const d = new Date(entry.played_at * 1000);
             const h = String(d.getUTCHours()).padStart(2, '0');
             const m = String(d.getUTCMinutes()).padStart(2, '0');
-            started = `GMT ${h}:${m}`;
+            started = `GMT+1 ${h}:${m}`;
         }
 
         const li = document.createElement('li');
