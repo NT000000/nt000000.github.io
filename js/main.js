@@ -88,9 +88,9 @@ function renderHistory(data) {
         let started = '';
         if (entry.played_at) {
             const d = new Date(entry.played_at * 1000);
-            const h = String(d.getUTCHours()).padStart(2, '0');
-            const m = String(d.getUTCMinutes()).padStart(2, '0');
-            started = `GMT+1 ${h}:${m}`;
+            const h = String(d.getGMT1Hours()).padStart(2, '0');
+            const m = String(d.getGMT1Minutes()).padStart(2, '0');
+            started = ` ${h}:${m}`;
         }
 
         const li = document.createElement('li');
